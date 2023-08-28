@@ -3,7 +3,43 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  position: relative;
 }
+
+
+ul{
+  list-style: none;
+}
+
+header{
+  position: absolute;
+  top: 0;
+}
+
+header nav {
+  width: 80vw;
+}
+
+.header-ul{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+footer{
+  position: absolute;
+   bottom: 0;
+}
+
+
+.page-container{
+  margin-bottom: 200px;
+  margin-top: 200px;
+  min-width: 80vw;
+}
+
 
 .logo {
   height: 6em;
