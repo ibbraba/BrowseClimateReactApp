@@ -14,15 +14,15 @@ import LoginPage from './pages/LoginPage'
 function App() {
   const [response, setResponse] = useState(null)
 
-    const client = axios.create({
+  const client = axios.create({
       baseURL : "https://localhost:7226/api/"
-    })
+    })  
 
 
     useEffect(() => {
       
       console.log("calling getData");
-      getData()
+      //getData()
       console.log("endCall");
     })
 

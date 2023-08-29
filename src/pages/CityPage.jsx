@@ -1,4 +1,5 @@
 import React from 'react'
+import CityComponent from '../compenents/CityComponent'
 
 const CityPage = () => {
   return (
@@ -7,7 +8,7 @@ const CityPage = () => {
         
         <div className="intro">
         <h3>Les plus belles villes à découvrir </h3>
-
+        <CityComponent>  </CityComponent>
         </div>
 
         <div> Classement des plus belles villes </div>

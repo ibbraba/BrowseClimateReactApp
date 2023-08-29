@@ -10,16 +10,16 @@
 
 ul{
   list-style: none;
+  padding: 0;
 }
 
-header{
-  position: absolute;
-  top: 0;
-}
+
 
 header nav {
-  width: 80vw;
+  width: 80%;
+  margin: 0 auto;
 }
+
 
 .header-ul{
   display: flex;
@@ -30,7 +30,10 @@ header nav {
 
 footer{
   position: absolute;
-   bottom: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
 }
 
 
