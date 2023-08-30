@@ -10,6 +10,7 @@ import CityPage from './pages/CityPage'
 import DiscoverPage from './pages/DiscoverPage'
 import ProfilePage from './pages/ProfilePage'
 import LoginPage from './pages/LoginPage'
+import SingleArticlePage from './pages/SingleArticlePage'
 
 function App() {
   const [response, setResponse] = useState(null)
@@ -65,10 +66,11 @@ function App() {
           <Route path='/discover' element={<DiscoverPage></DiscoverPage>}></Route>
           <Route path='/profile' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
+          <Route path='/article/single' element={<SingleArticlePage></SingleArticlePage>}></Route>
        </Routes>
 
 
-      </div>
+      </div> 
 
    
     
