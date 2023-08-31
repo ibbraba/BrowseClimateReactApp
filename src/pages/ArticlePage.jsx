@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleComponent from '../compenents/Article'
+import ArticleComponent from '../compenents/ArticleComponent'
 
 const ArticlePage = () => {
   return (

@@ -1,30 +1,23 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import SingleArticleComponent from '../compenents/SingleArticleComponent'
 
-const SingleArticlePage = (props) => {
+const SingleArticlePage = () => {
   
     const [article, setArticle] = useState(null)
 
-    const id = 1006
-
-    useEffect(() => {
-        GetArticle()
-       console.log("Update:" + article)
-   }, [] )
-
-    async function GetArticle(){
-        console.log("Call Single article");
-        const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
-        console.log( res.data );
-        setArticle(res.data)
-       
-    }
+    const idDefault = 1006
     
+
+
+ 
   
     return (
     <div>
 
-
+    
+        <SingleArticleComponent></SingleArticleComponent>
 
     </div>
   )

@@ -19,7 +19,7 @@ function App() {
       baseURL : "https://localhost:7226/api/"
     })  
 
-
+/*
     useEffect(() => {
       
       console.log("calling getData");
@@ -27,7 +27,7 @@ function App() {
       console.log("endCall");
     })
 
-
+*/
     async function getData() {
       const response = await client.get("App/Index");
       setResponse(response.data);
@@ -66,7 +66,7 @@ function App() {
           <Route path='/discover' element={<DiscoverPage></DiscoverPage>}></Route>
           <Route path='/profile' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
-          <Route path='/article/single' element={<SingleArticlePage></SingleArticlePage>}></Route>
+          <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
        </Routes>
 
 

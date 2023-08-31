@@ -33,8 +33,7 @@ const LoginComponent = () => {
 
     }
 
-    
-   
+
     return (
     <div>  
         <h3> Connectez-vous </h3>
