@@ -6,7 +6,7 @@ const LoginComponent = () => {
 
     const [pseudo, setPseudo ] = useState("")
     const [password, setPassword ] = useState("")
-    const [response, setResponse ] = useState("")
+  
 
     
     async function Login() {
@@ -14,7 +14,7 @@ const LoginComponent = () => {
             console.log("Call login");
             const response = await axios.post(`https://localhost:7226/api/User/login?pseudo=${pseudo}&password=${password}`)
             console.log(response.data);
-                
+            localStorage.setItem("bc-token", response.data)    
             DecodeUser(response.data)
 
         }catch(err){
@@ -25,6 +25,14 @@ const LoginComponent = () => {
         
     }
    
+    /**
+     * Check if a User is logged in by looking at localstorage token
+     */
+    async function IsUserLoggedIn(){
+
+       
+        
+    }
 
     async function DecodeUser(token){
 
