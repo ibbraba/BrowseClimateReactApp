@@ -40,7 +40,7 @@ function App() {
       <header>
 
       <h3>Browse Climate</h3>
-        <p>Explore the world</p>
+        <p>Explore your world</p>
 
         <nav>
           <ul className='header-ul'>
@@ -76,6 +76,10 @@ function App() {
     
 
       <footer>
+
+
+        <h4 className='footer-quote'>Explore your world</h4>
+
 
         <p>Mentions légales</p>
         <p>Politique de confidentilité</p>

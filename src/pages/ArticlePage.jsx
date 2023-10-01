@@ -1,29 +1,40 @@
 import React from 'react'
 import ArticleComponent from '../compenents/ArticleComponent'
+import { Link } from 'react-router-dom'
 
 const ArticlePage = () => {
   return (
     <div className='page-container'>
         
         <div className="best-articles">
-        <h3> Meilleurs articles </h3>
+        <h3> Articles </h3>
         </div>
 
-      <div className="last-articles">
-        <h3>Derniers articles  </h3>
 
+
+        <div className='articles-sort'>
+
+          <p>Trier par : </p> 
+          <button> Date </button>
+         
+          <button> Popularité </button>
+
+        </div>
+     
         <ArticleComponent></ArticleComponent>
-      </div>
 
 
-      <div>   
+      <div className='write-article'>   
         <h3> Inspiré ? A vous de jouer. </h3>
 
         <div> 
           
-          <h3>Ecrire un article</h3>
+          <button className='btn btn-primary'>Ecrire un article</button>
 
-          <form method='POST' >
+
+
+
+    {/*       <form method='POST' >
             <div>
             <label>Titre</label>
             <input type='text' name="title" />
@@ -43,7 +54,7 @@ const ArticlePage = () => {
             <button type='submit'> Envoyer </button>
 
           </form>
-
+ */}
 
 
 

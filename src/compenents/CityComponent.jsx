@@ -3,40 +3,45 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const CityComponent = () => {
-    
-    const [cities, setCities] = useState([])
 
-    
-    useEffect(() => {
-      GetAllCities()
-        console.log("Update effect:")
-        console.log(cities);
-    }, [])
+  const [cities, setCities] = useState([])
 
-    async function GetAllCities(){
-      try {
-      
+
+  useEffect(() => {
+    GetAllCities()
+    console.log("Update effect:")
+    console.log(cities);
+  }, [])
+
+  async function GetAllCities() {
+    try {
+
       console.log("call cities");
-      const response =  await axios.get("https://localhost:7226/api/City/GetAll")
+      const response = await axios.get("https://localhost:7226/api/City/GetAll")
       setCities(response.data)
 
       console.log("End call cities");
-      } catch (error) {
-        
+    } catch (error) {
+
       console.log(error);
-     }
     }
- 
-    return (
+  }
+
+  return (
     <div className='cities-list'>
-          {cities && cities.map(city =>
-              <div key={city.name}>
-              <h4>  {city.name}</h4>
-              </div>
-              
-          )}
+      {cities && cities.map(city =>
+
+        <div className="card city-card"  key={city.id}>
+          
+          <div className="card-body">
+            <h5 className="card-title">{city.name}</h5>
+            <p className="card-text">{city.country}</p>
+            <a href="#" className="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      )}
     </div>
-    
+
   )
 }
 

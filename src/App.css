@@ -15,10 +15,16 @@ ul{
 }
 
 
+header{
+  background-image: url(../src/assets/ny-modified.png);
+  background-origin: padding-box;
+  background-repeat: no-repeat;
+}
 
 header nav {
   width: 80%;
   margin: 0 auto;
+  margin-top: 30px;
 }
 
 
@@ -35,6 +41,7 @@ footer{
     display: flex;
     justify-content: space-around;
     width: 100%;
+    flex-direction: column;
 }
 
 
@@ -79,4 +86,112 @@ footer{
 
 .read-the-docs {
   color: #888;
+}
+
+
+
+
+
+
+
+
+
+/* 
+
+CITIES PAGE 
+
+*/
+
+.cities-list{ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.city-card{
+  border: 1px solid;
+    min-height: 400px;
+    width: 18em;
+}
+
+
+
+
+/* ARTICLES PAGE */
+
+.articles-sort {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 200px;
+}
+
+.articles-list{
+  width: 60%;
+  margin: 0 auto;
+}
+
+.articles-list > div {
+  margin-bottom: 200px;
+}
+
+.single-article-display{
+  margin-top: 200px;
+  margin-bottom: 500px;
+}
+
+.article-description{
+  text-align: justify;
+}
+
+.write-article{
+  margin-bottom: 200px;
+}
+
+
+.article-title{
+  font-size: 2em;
+}
+
+
+
+
+
+/* 
+PROFILE PAGE */
+
+
+
+.profile-page{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+
+
+.profile-menu{
+  width: 30%;
+  min-height: 800px;
+  border: 1px solid;
+}
+
+.profile-page-display{
+  width: 65%;
+  min-height: 800px;
+  border: 1px solid;
+}
+
+.profile-page-menu{
+  border: 1px solid;
+  width: 30%;
+}
+
+.profile-page-menulist{
+  display: flex;
+    list-style: none;
+    padding: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
+    padding: 15% 0;
 }

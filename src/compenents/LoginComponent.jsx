@@ -2,11 +2,37 @@ import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import React, { useState } from 'react'
 
+
+
+export async function IsUserLoggedIn(){
+    const token = localStorage.getItem('gf-token')
+  //  console.log(token);
+
+
+    const headers = {
+      "Authorization": token
+    }
+
+    if(!token) {
+
+      return false
+    }else{
+      const response = await axios.get("http://localhost:3000/validate", {
+        headers: headers
+      })
+
+      return response
+    }
+}
+
+
+
 const LoginComponent = () => {
 
     const [pseudo, setPseudo ] = useState("")
     const [password, setPassword ] = useState("")
   
+    
 
     
     async function Login() {
