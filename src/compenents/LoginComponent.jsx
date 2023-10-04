@@ -1,6 +1,7 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -29,13 +30,31 @@ export async function IsUserLoggedIn(){
 
 
 
+export async function DecodeUser(){
+
+  const token = localStorage.getItem('bc-token')
+  if(token){
+    const decoded = jwtDecode(token)
+    console.log(decoded);
+
+  }else{
+    console.error("No token stored")
+  }
+
+}
+
+
 const LoginComponent = () => {
 
     const [pseudo, setPseudo ] = useState("")
     const [password, setPassword ] = useState("")
   
+    const navigate = useNavigate();
     
-
+    const isLogged =  IsUserLoggedIn()
+    if(isLogged == true) {
+      navigate("/profile")
+    }
     
     async function Login() {
         try{
@@ -44,6 +63,7 @@ const LoginComponent = () => {
             console.log(response.data);
             localStorage.setItem("bc-token", response.data)    
             DecodeUser(response.data)
+            navigate("/")
 
         }catch(err){
             console.log(err);
@@ -62,12 +82,6 @@ const LoginComponent = () => {
         
     }
 
-    async function DecodeUser(token){
-
-        const decoded = jwtDecode(token)
-        console.log(decoded);
-
-    }
 
 
     return (

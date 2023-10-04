@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Index from './pages/indexPage'
 import ArticlePage from './pages/ArticlePage'
 import CityPage from './pages/CityPage'
@@ -13,17 +13,24 @@ import LoginPage from './pages/LoginPage'
 import SingleArticlePage from './pages/SingleArticlePage'
 import CityComponent from './compenents/CityComponent'
 import SingleCityPage from './pages/SingleCityPage'
-import {IsUserLoggedIn} from  './compenents/LoginComponent';
+import {DecodeUser, IsUserLoggedIn} from  './compenents/LoginComponent';
+import jwtDecode from 'jwt-decode'
+
 
 function App() {
   const [response, setResponse] = useState(null)
   const [userLogged, setUserLogged] = useState(null)
 
+  console.log("Main called");
+  console.log(userLogged);
 
   useEffect(() => {
+    console.log("UseEffect form main");
       CheckUserLogged()
-  }, [])
+  }, [location.pathname])
   
+  const navigate = useNavigate()
+
 
   const client = axios.create({
       baseURL : "https://localhost:7226/api/"
@@ -32,12 +39,17 @@ function App() {
 
 
     async function CheckUserLogged() {
+
+      console.log("Calling CheckUserLogged from main");
+
       try{
         const res =await IsUserLoggedIn()
         console.log(res.data);
         if(res.data == true){
           console.log("User logged");
           setUserLogged(true)
+          DecodeUser()
+          
           
         }else{
           console.log("User not logged");
