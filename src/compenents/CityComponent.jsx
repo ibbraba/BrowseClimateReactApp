@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import bg from '../assets/images/city/bangkok.jpg'
+
 
 const CityComponent = () => {
 
@@ -27,16 +29,19 @@ const CityComponent = () => {
     }
   }
 
+
+
+
   return (
     <div className='cities-list'>
       {cities && cities.map(city =>
-
-        <div className="card city-card"  key={city.id}>
+        
+        <div style={{"backgroundImage" : `url(../assets/images/city/${city.name}.jpg)`  }} className="card city-card"  key={city.id} >
           
-          <div className="card-body">
+          <div className="card-body"  >
             <h5 className="card-title">{city.name}</h5>
             <p className="card-text">{city.country}</p>
-            <a href="#" className="btn btn-primary">Go somewhere</a>
+            <button ><Link to={"/city/" + city.id  }> Visiter </Link>  </button>
           </div>
         </div>
       )}

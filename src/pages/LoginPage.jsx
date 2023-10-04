@@ -4,9 +4,12 @@ import LoginComponent from '../compenents/LoginComponent'
 const LoginPage = () => {
   return (
     <> 
-     <div className='page-container'>LoginPage</div>
-
+     <div className='page-container'>LoginPage
+     
     <LoginComponent></LoginComponent>
+     
+     </div>
+
 
     </>
 

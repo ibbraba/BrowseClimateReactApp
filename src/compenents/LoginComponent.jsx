@@ -5,21 +5,23 @@ import React, { useState } from 'react'
 
 
 export async function IsUserLoggedIn(){
-    const token = localStorage.getItem('gf-token')
-  //  console.log(token);
+    const token = localStorage.getItem('bc-token')
+    console.log(token);
 
 
-    const headers = {
-      "Authorization": token
+  /*  const headers = {
+      "Authorization":  token
     }
+*/
+    console.log("Calling Token validation...");
 
     if(!token) {
 
       return false
     }else{
-      const response = await axios.get("http://localhost:3000/validate", {
-        headers: headers
-      })
+
+      axios.defaults.headers.common['Authorization'] = `Bearer      ${token}` ;
+      const response = await axios.get("https://localhost:7226/api/User/validate" )
 
       return response
     }

@@ -11,15 +11,50 @@ import DiscoverPage from './pages/DiscoverPage'
 import ProfilePage from './pages/ProfilePage'
 import LoginPage from './pages/LoginPage'
 import SingleArticlePage from './pages/SingleArticlePage'
+import CityComponent from './compenents/CityComponent'
+import SingleCityPage from './pages/SingleCityPage'
+import {IsUserLoggedIn} from  './compenents/LoginComponent';
 
 function App() {
   const [response, setResponse] = useState(null)
+  const [userLogged, setUserLogged] = useState(null)
+
+
+  useEffect(() => {
+      CheckUserLogged()
+  }, [])
+  
 
   const client = axios.create({
       baseURL : "https://localhost:7226/api/"
     })  
 
+
+
+    async function CheckUserLogged() {
+      try{
+        const res =await IsUserLoggedIn()
+        console.log(res.data);
+        if(res.data == true){
+          console.log("User logged");
+          setUserLogged(true)
+          
+        }else{
+          console.log("User not logged");
+          setUserLogged(false)
+        }
+        
+      }catch(err){
+       
+        console.log(err);
+      }
+
+      
+    }
 /*
+
+
+
     useEffect(() => {
       
       console.log("calling getData");
@@ -36,11 +71,11 @@ function App() {
 
   return (
     <>
+      <h3 className='bc-top'>Browse Climate</h3>
+      <p className='bc-speech'>Explore your world</p>
 
       <header>
 
-      <h3>Browse Climate</h3>
-        <p>Explore your world</p>
 
         <nav>
           <ul className='header-ul'>
@@ -52,7 +87,9 @@ function App() {
               </li>
             <li><Link to={"/article"}>Articles</Link></li>
             <li><Link to={"/discover"}>Discover</Link></li>
-            <li><Link to={"/profile"}>Profil</Link></li>
+            {userLogged &&  <li><Link to={"/profile"}>Profil</Link></li>}
+            {!userLogged && <li><Link to={"/login"}>Connectez-vous</Link></li>}
+           
           </ul>
         </nav>
        
@@ -67,6 +104,8 @@ function App() {
           <Route path='/profile' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
+          <Route path='/city/:id' element={<SingleCityPage></SingleCityPage>}></Route>
+          <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route> 
        </Routes>
 
 
