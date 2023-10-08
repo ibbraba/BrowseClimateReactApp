@@ -20,13 +20,15 @@ import jwtDecode from 'jwt-decode'
 function App() {
   const [response, setResponse] = useState(null)
   const [userLogged, setUserLogged] = useState(null)
+  const [user, setUser] = useState(null)
 
-  console.log("Main called");
-  console.log(userLogged);
+
 
   useEffect(() => {
-    console.log("UseEffect form main");
-      CheckUserLogged()
+
+    CheckUserLogged()     
+    console.log(user);
+
   }, [location.pathname])
   
   const navigate = useNavigate()
@@ -38,30 +40,23 @@ function App() {
 
 
 
-    async function CheckUserLogged() {
+    const CheckUserLogged = async () =>   {
 
       console.log("Calling CheckUserLogged from main");
 
       try{
-        const res =await IsUserLoggedIn()
-        console.log(res.data);
-        if(res.data == true){
-          console.log("User logged");
-          setUserLogged(true)
-          DecodeUser()
-          
-          
-        }else{
-          console.log("User not logged");
-          setUserLogged(false)
+        const user = await IsUserLoggedIn()
+
+        if(user){
+          const decoded = await DecodeUser()
+          setUser(decoded)
         }
-        
+      
       }catch(err){
        
         console.log(err);
       }
-
-      
+     
     }
 /*
 
@@ -83,10 +78,12 @@ function App() {
 
   return (
     <>
-      <h3 className='bc-top'>Browse Climate</h3>
-      <p className='bc-speech'>Explore your world</p>
+
 
       <header>
+
+      <h3 className='bc-top'>Browse Climate</h3>
+      <p className='bc-speech'>Explore your world</p>
 
 
         <nav>
@@ -99,15 +96,20 @@ function App() {
               </li>
             <li><Link to={"/article"}>Articles</Link></li>
             <li><Link to={"/discover"}>Discover</Link></li>
-            {userLogged &&  <li><Link to={"/profile"}>Profil</Link></li>}
-            {!userLogged && <li><Link to={"/login"}>Connectez-vous</Link></li>}
+            {user &&  <li><Link to={"/profile/" + user.UserId}>Profil</Link></li>}
+            {!user &&
+            
+            <li><Link to={"/login"}>Connectez-vous</Link></li>
+            
+            
+            }
            
           </ul>
         </nav>
        
       </header>
 
-      <div>
+      <div className='page-container'>
       <Routes>
           <Route path='/' element={<Index></Index>}></Route>
           <Route path='/article' element={<ArticlePage></ArticlePage>}></Route>

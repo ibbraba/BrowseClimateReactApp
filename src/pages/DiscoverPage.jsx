@@ -2,7 +2,7 @@ import React from 'react'
 
 const DiscoverPage = () => {
   return (
-    <div className='page-container'>
+    <div>
 
         <h3>Explorez, découvrez, ressentez </h3>
 

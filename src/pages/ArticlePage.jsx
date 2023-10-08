@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const ArticlePage = () => {
   return (
-    <div className='page-container'>
+    <div>
         
         <div className="best-articles">
         <h3> Articles </h3>

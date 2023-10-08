@@ -3,7 +3,7 @@ import CityComponent from '../compenents/CityComponent'
 
 const CityPage = () => {
   return (
-    <div className='page-container'>
+    <div>
         
         
         <div className="intro">

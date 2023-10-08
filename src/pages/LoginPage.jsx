@@ -31,7 +31,7 @@ const LoginPage = () => {
   return (
     <> 
     {!userLogged && 
-     <div className='page-container'>LoginPage
+     <div>LoginPage
      
     <LoginComponent></LoginComponent>
      

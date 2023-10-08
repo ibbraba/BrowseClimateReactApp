@@ -5,7 +5,7 @@ const ProfilePage = () => {
   
 
   return (
-    <div className='page-container'>
+    <div>
    
 
             <ProfileComponent></ProfileComponent>

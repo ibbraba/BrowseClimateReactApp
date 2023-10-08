@@ -4,107 +4,118 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 
+export function GetToken(){
+  const token = localStorage.getItem('bc-token')
+  return token
+}
 
-export async function IsUserLoggedIn(){
-    const token = localStorage.getItem('bc-token')
-    console.log(token);
+
+export async function IsUserLoggedIn() {
+  const token = localStorage.getItem('bc-token')
+
 
 
   /*  const headers = {
       "Authorization":  token
     }
 */
-    console.log("Calling Token validation...");
 
-    if(!token) {
 
-      return false
-    }else{
+  if (!token) {
 
-      axios.defaults.headers.common['Authorization'] = `Bearer      ${token}` ;
-      const response = await axios.get("https://localhost:7226/api/User/validate" )
+    return false
+  } else {
 
-      return response
-    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.get("https://localhost:7226/api/User/validate")
+
+    return response
+  }
 }
 
 
 
-export async function DecodeUser(){
+export async function DecodeUser() {
 
   const token = localStorage.getItem('bc-token')
-  if(token){
+  if (token) {
+    console.log("Token detected, decoding user");
     const decoded = jwtDecode(token)
-    console.log(decoded);
 
-  }else{
+    return decoded
+
+  } else {
     console.error("No token stored")
   }
 
 }
 
 
+
+
+
+
 const LoginComponent = () => {
 
-    const [pseudo, setPseudo ] = useState("")
-    const [password, setPassword ] = useState("")
-  
-    const navigate = useNavigate();
-    
-    const isLogged =  IsUserLoggedIn()
-    if(isLogged == true) {
-      navigate("/profile")
-    }
-    
-    async function Login() {
-        try{
-            console.log("Call login");
-            const response = await axios.post(`https://localhost:7226/api/User/login?pseudo=${pseudo}&password=${password}`)
-            console.log(response.data);
-            localStorage.setItem("bc-token", response.data)    
-            DecodeUser(response.data)
-            navigate("/")
+  const [pseudo, setPseudo] = useState("")
+  const [password, setPassword] = useState("")
 
-        }catch(err){
-            console.log(err);
-        }
+  const navigate = useNavigate();
 
-        console.log("End call login")
-        
-    }
-   
-    /**
-     * Check if a User is logged in by looking at localstorage token
-     */
-    async function IsUserLoggedIn(){
+  const isLogged = IsUserLoggedIn()
+  if (isLogged == true) {
+    navigate("/profile")
+  }
 
-       
-        
+  async function Login() {
+    try {
+      console.log("Call login");
+      const response = await axios.post(`https://localhost:7226/api/User/login?pseudo=${pseudo}&password=${password}`)
+      console.log(response.data);
+      localStorage.setItem("bc-token", response.data)
+      DecodeUser(response.data)
+      navigate("/")
+
+    } catch (err) {
+      console.log(err);
     }
 
+    console.log("End call login")
+
+  }
+
+  /**
+   * Check if a User is logged in by looking at localstorage token
+   */
+  async function IsUserLoggedIn() {
 
 
-    return (
-    <div>  
-        <h3> Connectez-vous </h3>
 
-        <div>
-            <form>
-                <label> Pseudo </label>
-                <input type='text' onChange={(event) => setPseudo(event.target.value)} name='pseudo'/> 
+  }
 
-                <label> Mot se passe </label>
-                <input type='text' onChange={(event) => setPassword(event.target.value)} name='password'/>
 
-                <button type='submit' onClick={(event) => {
-                    event.preventDefault()
-                    Login()   
-                }}> Se connecter </button>
-            </form>
 
-        </div>
+  return (
+    <div>
+      <h3> Connectez-vous </h3>
+
+      <div>
+        <form>
+          <label> Pseudo </label>
+          <input type='text' onChange={(event) => setPseudo(event.target.value)} name='pseudo' />
+
+          <label> Mot se passe </label>
+          <input type='text' onChange={(event) => setPassword(event.target.value)} name='password' />
+
+          <button type='submit' onClick={(event) => {
+            event.preventDefault()
+            Login()
+          }}> Se connecter </button>
+        </form>
+
+      </div>
     </div>)
-  
+
 }
 
 export default LoginComponent
