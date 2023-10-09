@@ -10,6 +10,7 @@ const ProfileComponent = () => {
 
   const [user, setUser] = useState(null)
   const [tab, setTab] = useState(false)
+  const [tab2, setTab2] = useState(true)
   const [userArticles, setUserArticles] = useState([])
   const [inputName, setName] = useState("")
   const [inputFirstName, setFirstname] = useState("")
@@ -67,17 +68,17 @@ const ProfileComponent = () => {
     try {
       console.log("Updating User ... ");
       const token = GetToken()
-      
+
       user.name = inputName
       user.firstName = inputFirstName
-      user.email = inputEmail 
+      user.email = inputEmail
       user.password = inputPassword
       user.favoriteCity = inputavoriteCity
 
 
-      console.log(user)       
-      
-      
+      console.log(user)
+
+
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       const res = await axios.post("https://localhost:7226/api/User/Get?id=" + id, {
@@ -137,12 +138,12 @@ const ProfileComponent = () => {
           <ul className='profile-page-menulist'>
 
             <li>
-              <button className='btn btn-primary' onClick={() => { setTab(false); console.log(tab); }}>Informations du profil</button>
+              <button className='btn btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
             </li>
 
 
             <li>
-              <button className='btn btn-primary' onClick={() => { setTab(true); console.log(tab); }}>
+              <button className='btn btn-primary' onClick={() => {setTab(false); setTab2(true);  console.log(tab); }}>
 
                 Articles et commentaires
               </button>
@@ -159,32 +160,32 @@ const ProfileComponent = () => {
 
         <div className='profile-page-display'>
 
-          {tab == false && <div>
+          {tab  && <div>
 
             <form method='POST' action='https://localhost:7226/api/User/Update'>
 
               <div className='form-group'>
 
                 <label >Nom</label>
-                <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)}  />
+                <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)} />
               </div>
 
               <div className='form-group'>
 
                 <label>Prénom</label>
-                <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)}  />
+                <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)} />
               </div>
 
               <div className='form-group'>
 
                 <label>Email</label>
-                <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)}  />
+                <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
               </div>
 
               <div className='form-group'>
 
                 <label>Mot de passe</label>
-                <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)}  />
+                <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)} />
               </div>
 
               <div className='form-group'>
@@ -206,12 +207,6 @@ const ProfileComponent = () => {
             </form>
 
 
-            <div>Mes articles et commentaires
-
-              {userArticles && userArticles.map((article) => <div key={article.id}> {article.title} </div>)}
-
-
-            </div>
 
 
 
@@ -219,6 +214,13 @@ const ProfileComponent = () => {
 
           </div>}
 
+
+          {tab2 === true && <div>Mes articles et commentaires
+
+            {userArticles && userArticles.map((article) => <div key={article.id}> {article.title} </div>)}
+
+
+          </div>}
 
 
 

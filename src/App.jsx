@@ -15,6 +15,11 @@ import CityComponent from './compenents/CityComponent'
 import SingleCityPage from './pages/SingleCityPage'
 import {DecodeUser, IsUserLoggedIn} from  './compenents/LoginComponent';
 import jwtDecode from 'jwt-decode'
+import AdminComponent from './compenents/AdminComponent'
+import AdminPage from './pages/Admin/AdminPage'
+import ArticleAdminPage from './pages/Admin/ArticleAdminPage'
+import UserAdminPage from './pages/Admin/UserAdminPage'
+import ImagesAdminPage from './pages/Admin/ImagesAdminPage'
 
 
 function App() {
@@ -120,6 +125,10 @@ function App() {
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
           <Route path='/city/:id' element={<SingleCityPage></SingleCityPage>}></Route>
           <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route> 
+          <Route path='/admin' element={<AdminPage></AdminPage>}> </Route>
+          <Route path='/admin/articles' element={<ArticleAdminPage></ArticleAdminPage>}> </Route>
+          <Route path='/admin/user' element={<UserAdminPage></UserAdminPage>}> </Route>
+          <Route path='/admin/images' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
        </Routes>
 
 
