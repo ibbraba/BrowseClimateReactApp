@@ -1,4 +1,5 @@
 import React from 'react'
+import DiscoverComponent from '../compenents/DiscoverComponent'
 
 const DiscoverPage = () => {
   return (
@@ -8,6 +9,8 @@ const DiscoverPage = () => {
 
 
         <button>Start Discover</button>
+
+        <DiscoverComponent></DiscoverComponent>
 
         <div className='discover-facts'></div>
 

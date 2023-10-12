@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { GetToken } from '../../compenents/LoginComponent';
 
 const ArticleAdminPage = () => {
     
@@ -27,6 +28,22 @@ const ArticleAdminPage = () => {
         }
     }
     
+
+    async function DeleteArticle(articleId){
+
+        try {
+            const token = GetToken()
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const response = await axios.post("https://localhost:7226/api/Article/Delete", {id: articleId})
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+
     return (
     <div>
 
@@ -41,7 +58,7 @@ const ArticleAdminPage = () => {
             <div>{article.content}</div>
             <button ><Link to={"/article/" + article.id }> Lire </Link>  </button>
             <button > Editer </button>
-            <button > Supprimer </button>
+            <button onClick={DeleteArticle(article.id)}> Supprimer </button>
 
         </div>
 
@@ -49,7 +66,7 @@ const ArticleAdminPage = () => {
 
     ) 
 
-    
+
         )}
     </div>
     )

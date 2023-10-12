@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 
 const AdminPage = () => {
   
-
-
- 
-    
-    return (
+  return (
 
         <div>
      

@@ -119,7 +119,7 @@ function App() {
           <Route path='/' element={<Index></Index>}></Route>
           <Route path='/article' element={<ArticlePage></ArticlePage>}></Route>
           <Route path='/city' element={<CityPage></CityPage>}></Route>
-          <Route path='/discover' element={<DiscoverPage></DiscoverPage>}></Route>
+          <Route path='/discover/:id' element={<DiscoverPage></DiscoverPage>}></Route>
           <Route path='/profile' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
