@@ -36,6 +36,8 @@ const ArticleAdminPage = () => {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const response = await axios.post("https://localhost:7226/api/Article/Delete", {id: articleId})
+
+            
             console.log(response);
         } catch (error) {
             console.log(error);

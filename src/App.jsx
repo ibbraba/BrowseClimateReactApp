@@ -20,6 +20,8 @@ import AdminPage from './pages/Admin/AdminPage'
 import ArticleAdminPage from './pages/Admin/ArticleAdminPage'
 import UserAdminPage from './pages/Admin/UserAdminPage'
 import ImagesAdminPage from './pages/Admin/ImagesAdminPage'
+import CityAdminPage from './pages/Admin/CityAdminPage'
+import SingleCityAdminPage from './pages/Admin/SingleCityAdminPage'
 
 
 function App() {
@@ -128,6 +130,8 @@ function App() {
           <Route path='/admin/articles' element={<ArticleAdminPage></ArticleAdminPage>}> </Route>
           <Route path='/admin/user' element={<UserAdminPage></UserAdminPage>}> </Route>
           <Route path='/admin/images' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
+          <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
+          <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
        </Routes>
 
 

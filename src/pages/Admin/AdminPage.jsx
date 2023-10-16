@@ -16,8 +16,10 @@ const AdminPage = () => {
 
             <ul>
                 <li><Link to="/admin/articles"> Articles</Link></li>
+                <li><Link to="/admin/city">Villes</Link></li>
                 <li><Link to="/admin/user"> Utilisateurs </Link> </li>
                 <li><Link to="/admin/images">Images</Link></li>
+                
             </ul>
 
 
