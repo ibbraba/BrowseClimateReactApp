@@ -15,13 +15,13 @@ const CityComponent = () => {
     console.log(cities);
   }, [])
 
-  async function GetAllCities() {
+   async function GetAllCities() {
     try {
 
       console.log("call cities");
       const response = await axios.get("https://localhost:7226/api/City/GetAll")
       setCities(response.data)
-
+   
       console.log("End call cities");
     } catch (error) {
 

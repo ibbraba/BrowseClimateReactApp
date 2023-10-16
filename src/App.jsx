@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
-import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import Index from './pages/indexPage'
 import ArticlePage from './pages/ArticlePage'
 import CityPage from './pages/CityPage'
@@ -37,6 +37,8 @@ function App() {
   }, [location.pathname])
   
   const navigate = useNavigate()
+
+
 
 
   const client = axios.create({
@@ -100,14 +102,11 @@ function App() {
               <Link to={"/city"}> Villes </Link>
               </li>
             <li><Link to={"/article"}>Articles</Link></li>
-            <li><Link to={"/discover"}>Discover</Link></li>
+            {user && <li> <Link to={"/discover/" + user.UserId}>Discover</Link></li>}
+            {!user && <li><Link to={"/discover"}>Discover</Link></li> }
+            
             {user &&  <li><Link to={"/profile/" + user.UserId}>Profil</Link></li>}
-            {!user &&
-            
-            <li><Link to={"/login"}>Connectez-vous</Link></li>
-            
-            
-            }
+            {!user && <li><Link to={"/login"}>Connectez-vous</Link></li> }
            
           </ul>
         </nav>

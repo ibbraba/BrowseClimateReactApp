@@ -61,10 +61,6 @@ const ProfileComponent = () => {
 
     //Updating informations
 
-
-
-
-
     try {
       console.log("Updating User ... ");
       const token = GetToken()
@@ -221,16 +217,6 @@ const ProfileComponent = () => {
 
 
           </div>}
-
-
-
-
-
-
-
-
-
-
 
         </div>
 

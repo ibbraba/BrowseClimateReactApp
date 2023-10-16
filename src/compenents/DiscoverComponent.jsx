@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { GetToken } from './LoginComponent'
+import { useCallback } from 'react'
 
 const DiscoverComponent = () => {
 
     const [articles, setArticles] = useState(null)
-    const [images, setImages] = useState(null)
-    const [city, cityes] = useState(null)
+    const [images, setImages] = useState([])
+    const [cities, setCites] = useState([])
 
 
     // Fetch Articles from favorite cities 
@@ -19,25 +20,19 @@ const DiscoverComponent = () => {
     const params = useParams()
     const { id } = params
 
+     async function getDiscoverArticles () {
 
-    useEffect(() => {
-        console.log("Loading discover");
-        getDiscoverArticles()
-        console.log(articles);
-    }, [])
-
-    async function getDiscoverArticles() {
-
-        console.log("id: " +id );
+        
         if (id != null) {
 
             try {
                 const token = GetToken()
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const articles = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
-          
-                setArticles(articles)
+                const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
+                setArticles(res.data)
+                
+
             } catch (error) {
                 console.log(error);
             }
@@ -46,15 +41,30 @@ const DiscoverComponent = () => {
 
 
     }
+/* 
+    const fetchData = useCallback(async() => {
+        const data = await 
+
+    }) */
+
+    useEffect(() => {
+     getDiscoverArticles()
+     FetchCities() 
+    }, [])
 
 
-    async function FetchCities(){
-        
+        //Fetch cities 
+
+    async function FetchCities() {
+
+        const token = GetToken()
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+     
+        setCites(cities.data)
     }
 
-    async function fetchTopImages(){
-
-    }
 
 
 
@@ -62,8 +72,8 @@ const DiscoverComponent = () => {
     //Fetch favorite city images 
     //Fetch liked images 
     //Fetch top likes 
+    //Display image every 5 elements
 
-    //Fetch cities 
 
     //Fetch Data? 
     //Fetch favorite city data 
@@ -73,12 +83,42 @@ const DiscoverComponent = () => {
 
     //Sort all data by date to create thread 
 
+
+
+
     return (
-        <div>
+        <>
+        <div> 
+            {cities && cities.map(city => (
+
+                <div key={city.id}>
+
+                    <h4>{city.name}</h4>
+
+
+                </div>
+            ))}
+
 
         </div>
 
+        <div className='articles-list'>
+        { articles && articles.map(article => (
+            <div key={article.id} >
+                <h4 className='article-title'> {article.title}</h4>                
+                <div className='article-description'>{article.description}</div>
+                <div>{article.content}</div>
+                <button ><Link to={"/article/" + article.id }> Lire </Link>  </button>
 
+            </div>
+
+            
+        ) 
+            )}
+
+        </div>
+
+    </>    
 
     )
 }

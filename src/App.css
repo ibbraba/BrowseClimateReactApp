@@ -279,3 +279,16 @@ PROFILE PAGE */
   height: 70%;
   padding: 15% 0;
 }
+
+
+
+
+
+
+/* ADMIN */
+
+.admin-city-select{
+  height: 40px;
+  width: 200px;
+  color: white;
+}
