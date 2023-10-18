@@ -35,7 +35,7 @@ export async function IsUserLoggedIn() {
 
 
 
-export async function DecodeUser() {
+export  function DecodeUser() {
 
   const token = localStorage.getItem('bc-token')
   if (token) {

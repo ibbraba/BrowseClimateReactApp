@@ -4,7 +4,9 @@ import axios from 'axios'
 
 import React, { useEffect, useState } from 'react'
 import { DecodeUser, GetToken } from './LoginComponent'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { ref, uploadBytes } from 'firebase/storage'
+import { storage } from '../firebase'
 
 const WriteArticleComponent = () => {
 
@@ -17,12 +19,15 @@ const WriteArticleComponent = () => {
     const [imageUpload, setImageUpload] = useState(null)
     const [incompleteArticleMessage, setIncompleteArticleMessage] = useState(false)
     const [user, setUser] = useState(null)
+    const [successMessage, setSuccesMessage] = useState(null)
 
 
     useEffect(() => {
         GetAllCities()
         const user = DecodeUser()
+        console.log(user);
         setUser(user)
+
 
     }, [])
 
@@ -43,6 +48,7 @@ const WriteArticleComponent = () => {
 
     async function sendArticle() {
 
+        let articleid = null
         //VALIDATION 
         if (title != "" && description != "" && data != "") {
 
@@ -53,19 +59,20 @@ const WriteArticleComponent = () => {
                 const token = GetToken()
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
+                console.log(user);
                 const res = await axios.post("https://localhost:7226/api/Article/Create", {
 
                     "title": title,
                     "description": description,
                     "content": data,
-
-                    "createdBy": 3,
+                
+                    "createdBy": user.UserId,
                     "ImageURL": "null"
 
                 })
 
                 console.log(res);
+                articleid = res.data.id
 
             } catch (error) {
                 console.log(error);
@@ -79,10 +86,21 @@ const WriteArticleComponent = () => {
 
 
         // SEND IMAGE TO FIREBASE 
-
-
-        //SUCCESS MESSAGE
-        console.log(data);
+        if (imageUpload != null || articleid != null) {
+        
+            try {
+                console.log("Uploading image ...");
+                const imageRef = ref(storage, `/articles/${articleid}/${articleid}`);
+                uploadBytes(imageRef, imageUpload)
+               
+            } catch (error) {
+                console.log(error);
+      
+            }
+        }
+        
+        console.log("End add article");
+        setSuccesMessage("Article ajouté !")
 
     }
 
@@ -101,6 +119,10 @@ const WriteArticleComponent = () => {
 
     return (
         <div className='write-article-container'>
+
+            {successMessage && <div className='alert alert-success'>
+                    {successMessage}
+                </div>}
 
             <select className='admin-city-select' onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">Séléctionnez une ville
                 <option value="all" > Choisir une ville </option>
