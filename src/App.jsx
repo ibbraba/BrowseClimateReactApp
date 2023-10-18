@@ -22,6 +22,7 @@ import UserAdminPage from './pages/Admin/UserAdminPage'
 import ImagesAdminPage from './pages/Admin/ImagesAdminPage'
 import CityAdminPage from './pages/Admin/CityAdminPage'
 import SingleCityAdminPage from './pages/Admin/SingleCityAdminPage'
+import WriteArticlePage from './pages/WriteArticlePage'
 
 
 function App() {
@@ -132,6 +133,7 @@ function App() {
           <Route path='/admin/images' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
           <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
           <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
+          <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route> 
        </Routes>
 
 

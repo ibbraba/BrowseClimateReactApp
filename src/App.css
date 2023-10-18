@@ -321,3 +321,13 @@ PROFILE PAGE */
   display : flex;
   flex-direction: column;
 }
+
+
+/* ARTICLE PAGE */ 
+
+.write-article-container {
+  DISPLAY: FLEX;
+  min-height: 600px;
+  flex-direction: column;
+  justify-content: space-around;
+}

@@ -46,6 +46,7 @@ export async function DecodeUser() {
 
   } else {
     console.error("No token stored")
+    return null
   }
 
 }

@@ -29,8 +29,8 @@ const ArticlePage = () => {
         <h3> Inspiré ? A vous de jouer. </h3>
 
         <div> 
-          <WriteArticleComponent></WriteArticleComponent>
-          <button className='btn btn-primary'>Ecrire un article</button>
+
+          <Link to="/write" className='btn btn-primary'>Ecrire un article</Link>
 
 
 
