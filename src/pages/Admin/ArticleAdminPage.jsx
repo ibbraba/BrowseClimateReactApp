@@ -54,11 +54,11 @@ const ArticleAdminPage = () => {
     <h1>Tous les articles</h1>    
 
     { articles && articles.map(article => (
-        <div key={article.id} >
+        <div className='article-container' key={article.id} >
             <h4 className='article-title'> {article.title}</h4>                
             <div className='article-description'>{article.description}</div>
             <div>{article.content}</div>
-            <button ><Link to={"/article/" + article.id }> Lire </Link>  </button>
+            <button ><Link to={"/article/" + article.id }> Lire </Link>   </button>
             <button > Editer </button>
             <button onClick={DeleteArticle(article.id)}> Supprimer </button>
 

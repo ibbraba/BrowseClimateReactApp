@@ -104,7 +104,7 @@ const DiscoverComponent = () => {
 
         <div className='articles-list'>
         { articles && articles.map(article => (
-            <div key={article.id} >
+            <div className='article-container' key={article.id} >
                 <h4 className='article-title'> {article.title}</h4>                
                 <div className='article-description'>{article.description}</div>
                 <div>{article.content}</div>

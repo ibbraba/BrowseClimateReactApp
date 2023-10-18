@@ -131,8 +131,9 @@ const ImagesAdminPage = () => {
 
       <h1>Gallerie</h1>
 
-      <div className="app">
+      <div className="admin-gallerie">
 
+        <h3>Uploader une image</h3>
         <select className='admin-city-select' onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">
 
           <option value="all" > Choisir une ville </option>
@@ -143,23 +144,28 @@ const ImagesAdminPage = () => {
 
         </select>
         <input type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
-        <button onClick={uploadImage}>Upload image</button>
+        <button className='upload-button btn btn-primary' onClick={uploadImage}>Upload image</button>
+
       </div>
+
+
 
       {imagesUrls && imagesUrls.map(url => (
 
 
-        <>
+        <div className='admin-image' key={url}>
 
-          <p>{url}</p>
+        
           <img src={url}></img>
+
+
 
           <button className='btn btn-danger' onClick={(e) => {
             setSelectedImageURL(url)
             DeleteImage(url)
 
           }}>Supprimer</button>
-        </>
+        </div>
       ))
 
       }

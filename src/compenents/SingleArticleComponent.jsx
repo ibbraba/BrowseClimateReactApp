@@ -28,7 +28,7 @@ const SingleArticleComponent = () => {
     return null
     
     return (
-         < div  className='single-article-display'>
+         < div  className='article-container single-article-display'>
         <h1>{article.title}</h1>
         <p>{article.description}</p>
         <p>{article.content}</p>

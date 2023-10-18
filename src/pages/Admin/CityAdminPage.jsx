@@ -31,6 +31,12 @@ const CityAdminPage = () => {
   
   
     return (
+      <>
+      
+      <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+      
+
+      
       <div className='cities-list'>
         {cities && cities.map(city =>
           
@@ -46,7 +52,7 @@ const CityAdminPage = () => {
           </div>
         )}
       </div>
-  
+      </>
     )
 
 

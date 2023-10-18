@@ -1,6 +1,7 @@
 import React from 'react'
 import ArticleComponent from '../compenents/ArticleComponent'
 import { Link } from 'react-router-dom'
+import WriteArticleComponent from '../compenents/WriteArticleComponent'
 
 const ArticlePage = () => {
   return (
@@ -28,7 +29,7 @@ const ArticlePage = () => {
         <h3> Inspiré ? A vous de jouer. </h3>
 
         <div> 
-          
+          <WriteArticleComponent></WriteArticleComponent>
           <button className='btn btn-primary'>Ecrire un article</button>
 
 
