@@ -106,7 +106,7 @@ function App() {
               </li>
             <li><Link to={"/article"}>Articles</Link></li>
             {user && <li> <Link to={"/discover/" + user.UserId}>Discover</Link></li>}
-            {!user && <li><Link to={"/discover"}>Discover</Link></li> }
+            {!user && <li><Link to={"/discover/0"}>Discover</Link></li> }
             
             {user &&  <li><Link to={"/profile/" + user.UserId}>Profil</Link></li>}
             {!user && <li><Link to={"/login"}>Connectez-vous</Link></li> }

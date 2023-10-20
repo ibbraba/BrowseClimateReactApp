@@ -174,9 +174,9 @@ CITIES PAGE
 
 .city-card {
   border: 1px solid;
-    min-height: 400px;
-    width: 100%;
-    margin-top: 50PX;
+  min-height: 800PX;
+  width: 100%;
+  margin-top: 50PX;
 }
 
 
@@ -238,13 +238,17 @@ CITIES PAGE
   font-size: 2em;
 }
 
-.article-container{
+.article-container {
   background-color: lightgray;
   padding: 6%;
-  margin :  60px;
+  margin: 60px;
 
 }
 
+.article-image{
+  height: auto;
+  width: 900px;
+}
 
 
 /* 
@@ -294,13 +298,13 @@ PROFILE PAGE */
 
 /* ADMIN */
 
-.admin-city-select{
+.admin-city-select {
   height: 40px;
   width: 200px;
   color: white;
 }
 
-.admin-gallerie{
+.admin-gallerie {
   margin-top: 100px;
   display: flex;
   flex-direction: column;
@@ -308,22 +312,22 @@ PROFILE PAGE */
   height: 300px;
 }
 
-.upload-button{
+.upload-button {
   width: 200px;
   margin: 0 auto;
 }
 
-.admin-city-select{
+.admin-city-select {
   margin: 0 auto;
 }
 
-.admin-imag{
-  display : flex;
+.admin-imag {
+  display: flex;
   flex-direction: column;
 }
 
 
-/* ARTICLE PAGE */ 
+/* ARTICLE PAGE */
 
 .write-article-container {
   DISPLAY: FLEX;

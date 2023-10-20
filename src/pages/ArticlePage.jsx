@@ -32,35 +32,6 @@ const ArticlePage = () => {
 
           <Link to="/write" className='btn btn-primary'>Ecrire un article</Link>
 
-
-
-
-    {/*       <form method='POST' >
-            <div>
-            <label>Titre</label>
-            <input type='text' name="title" />
-            </div>
-
-            <div> 
-            <label htmlFor="description">Description</label>
-            <input type='text' name='description' />
-            </div>
-
-            <div>
-            <label htmlFor='content'>Contenu</label>
-            <input type='text' name="content" />
-            </div>
-
-
-            <button type='submit'> Envoyer </button>
-
-          </form>
- */}
-
-
-
-
-
         </div>
 
       </div>

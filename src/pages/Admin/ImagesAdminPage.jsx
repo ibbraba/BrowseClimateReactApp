@@ -67,8 +67,6 @@ const ImagesAdminPage = () => {
 
     let imageListRef = ""
 
-
-
     if (selectedCity != null && selectedCity != "all") {
 
       imageListRef = ref(storage, `/city/${selectedCity.trim()}`)
@@ -76,8 +74,7 @@ const ImagesAdminPage = () => {
       imageListRef = ref(storage, `/city`)
     }
     const res = await listAll(imageListRef)
-    console.log(res);
-    return res.items
+     return res.items
   }
 
   const getImagesUrls = async () => {
@@ -92,22 +89,13 @@ const ImagesAdminPage = () => {
 
           const url = await getDownloadURL(item)
           urls.push(url)
-          console.log(urls);
-
-
-        }
-
-        setImageUrls(urls)
+ 
+       }
+            setImageUrls(urls)
       }
-
-
-
     } catch (error) {
-
       console.log(error);
-
     }
-
   }
 
   async function DeleteImage(url) {

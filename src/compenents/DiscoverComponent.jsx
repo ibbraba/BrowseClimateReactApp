@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { GetToken } from './LoginComponent'
+import { DecodeUser, GetToken, IsUserLoggedIn } from './LoginComponent'
 import { useCallback } from 'react'
 
 const DiscoverComponent = () => {
@@ -9,6 +9,7 @@ const DiscoverComponent = () => {
     const [articles, setArticles] = useState(null)
     const [images, setImages] = useState([])
     const [cities, setCites] = useState([])
+    const [user, setUser] = useState(null)
 
 
     // Fetch Articles from favorite cities 
@@ -20,9 +21,9 @@ const DiscoverComponent = () => {
     const params = useParams()
     const { id } = params
 
-     async function getDiscoverArticles () {
+    async function getDiscoverArticles() {
 
-        
+
         if (id != null) {
 
             try {
@@ -31,7 +32,7 @@ const DiscoverComponent = () => {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
                 setArticles(res.data)
-                
+
 
             } catch (error) {
                 console.log(error);
@@ -41,19 +42,39 @@ const DiscoverComponent = () => {
 
 
     }
-/* 
-    const fetchData = useCallback(async() => {
-        const data = await 
 
-    }) */
+    const CheckUserLogged = async () => {
+
+        console.log("Calling CheckUserLogged from main");
+
+        try {
+            const user = await IsUserLoggedIn()
+
+            if (user) {
+                const decoded = await DecodeUser()
+                setUser(decoded)
+            }
+
+        } catch (err) {
+
+            console.log(err);
+        }
+
+    }
+    /* 
+        const fetchData = useCallback(async() => {
+            const data = await 
+    
+        }) */
 
     useEffect(() => {
-     getDiscoverArticles()
-     FetchCities() 
+        CheckUserLogged()
+        getDiscoverArticles()
+        FetchCities()
     }, [])
 
 
-        //Fetch cities 
+    //Fetch cities 
 
     async function FetchCities() {
 
@@ -61,7 +82,7 @@ const DiscoverComponent = () => {
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const cities = await axios.get("https://localhost:7226/api/City/GetAll")
-     
+
         setCites(cities.data)
     }
 
@@ -84,41 +105,59 @@ const DiscoverComponent = () => {
     //Sort all data by date to create thread 
 
 
+    if (user == null) {
+        return (
+            <>
+                <h1> Veuillez vous connecter avant d'explorer</h1>
 
+                <Link to="/login"> Se connecter  </Link>
+            </>
+        )
+
+
+    }
 
     return (
         <>
-        <div> 
-            {cities && cities.map(city => (
+            <h3>Explorez, découvrez, ressentez </h3>
 
-                <div key={city.id}>
-
-                    <h4>{city.name}</h4>
+            <p>Votre fil d'actualité est prêt, bon voyage</p>
 
 
-                </div>
-            ))}
+            <button>Start Discover</button>
 
 
-        </div>
+            <div>
+                {cities && cities.map(city => (
 
-        <div className='articles-list'>
-        { articles && articles.map(article => (
-            <div className='article-container' key={article.id} >
-                <h4 className='article-title'> {article.title}</h4>                
-                <div className='article-description'>{article.description}</div>
-                <div>{article.content}</div>
-                <button ><Link to={"/article/" + article.id }> Lire </Link>  </button>
+                    <div key={city.id}>
+
+                        <h4>{city.name}</h4>
+
+
+                    </div>
+                ))}
+
 
             </div>
 
-            
-        ) 
-            )}
+            <div className='articles-list'>
+                {articles && articles.map(article => (
+                    <div className='article-container' key={article.id} >
+                        <h4 className='article-title'> {article.title}</h4>
+                        <div className='article-description'>{article.description}</div>
+                        <div>{article.content}</div>
+                        <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
 
-        </div>
+                    </div>
 
-    </>    
+
+                )
+                )}
+
+            </div>
+
+        </>
 
     )
 }

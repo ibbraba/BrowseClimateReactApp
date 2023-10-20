@@ -5,12 +5,7 @@ const DiscoverPage = () => {
   return (
     <div>
 
-        <h3>Explorez, découvrez, ressentez </h3>
-
-        <p>Votre fil d'actualité est prêt, bon voyage</p>
-
-
-        <button>Start Discover</button>
+    
 
         <DiscoverComponent></DiscoverComponent>
 
