@@ -59,13 +59,10 @@ const ArticleAdminPage = () => {
             <div className='article-description'>{article.description}</div>
             <div>{article.content}</div>
             <button ><Link to={"/article/" + article.id }> Lire </Link>   </button>
-            <button > Editer </button>
+            <button> <Link to={"/article/edit/" + article.id}></Link> Editer </button>
             <button onClick={DeleteArticle(article.id)}> Supprimer </button>
 
         </div>
-
-                
-
     ) 
 
 

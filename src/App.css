@@ -197,6 +197,16 @@ CITIES PAGE
   BORDER: 1px solid;
 }
 
+.city-image-infos{
+  visibility: hidden;
+}
+
+
+
+.city-card:hover .city-image-infos{
+  visibility: visible;
+}
+
 .city-overview {
   width: 75%;
   min-height: 400px;

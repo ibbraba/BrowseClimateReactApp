@@ -23,6 +23,7 @@ import ImagesAdminPage from './pages/Admin/ImagesAdminPage'
 import CityAdminPage from './pages/Admin/CityAdminPage'
 import SingleCityAdminPage from './pages/Admin/SingleCityAdminPage'
 import WriteArticlePage from './pages/WriteArticlePage'
+import EditArticlePage from './pages/Admin/EditArticlePage'
 
 
 function App() {
@@ -118,6 +119,9 @@ function App() {
 
       <div className='page-container'>
       <Routes>
+          
+          {/* APP */}
+          
           <Route path='/' element={<Index></Index>}></Route>
           <Route path='/article' element={<ArticlePage></ArticlePage>}></Route>
           <Route path='/city' element={<CityPage></CityPage>}></Route>
@@ -126,11 +130,16 @@ function App() {
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
           <Route path='/city/:id' element={<SingleCityPage></SingleCityPage>}></Route>
-          <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route> 
+          <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route>
+
+
+          {/* ADMIN */}
+
           <Route path='/admin' element={<AdminPage></AdminPage>}> </Route>
-          <Route path='/admin/articles' element={<ArticleAdminPage></ArticleAdminPage>}> </Route>
+          <Route path='/admin/article' element={<ArticleAdminPage></ArticleAdminPage>}> </Route>
+          <Route path='/admin/article/edit/:id' element={<EditArticlePage></EditArticlePage>}></Route>
           <Route path='/admin/user' element={<UserAdminPage></UserAdminPage>}> </Route>
-          <Route path='/admin/images' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
+          <Route path='/admin/image' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
           <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
           <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
           <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route> 

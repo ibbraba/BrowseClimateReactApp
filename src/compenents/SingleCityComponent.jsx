@@ -26,7 +26,7 @@ const SingleCityComponent = () => {
       console.log("call single city");
       const response = await axios.get("https://localhost:7226/api/City/Get?id=" + id)
       setCity(response.data)
-
+      console.log(response.data);
       console.log("End call city");
     } catch (error) {
 
@@ -35,6 +35,7 @@ const SingleCityComponent = () => {
   }
 
 
+  
 
 
   return (

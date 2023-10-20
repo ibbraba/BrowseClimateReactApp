@@ -9,18 +9,23 @@ import bg from '../assets/images/city/bangkok.jpg'
 const CityComponent = () => {
 
   const [cities, setCities] = useState([])
-  const [] = useState()
+
   const [imagesUrls, setImageUrls] = useState([])
   const [callOk, setCallOK] = useState(false)
   
 
 
   useEffect(() => {
+    
+    async function getCities(){
+      const cities = await GetAllCities()
+      setCities(cities)
+      console.log(cities);
+    }
 
-    GetAllCities().then(() => getImagesUrls())
-   
-    console.log("Update effect:")
-    console.log(cities);
+    getCities()
+
+
   }, [])
 
   useEffect(() => {
@@ -30,15 +35,14 @@ const CityComponent = () => {
   async function GetAllCities() {
     try {
       const response = await axios.get("https://localhost:7226/api/City/GetAll")
-      setCities(response.data)
-      cities.forEach(city => {
-        GetImage(city)
-      });
-      console.log(cities);
-      } catch (error) {
+      return response.data
+    
+    } catch (error) {
 
       console.log(error);
     }
+
+
   }
 
 
@@ -46,7 +50,7 @@ const CityComponent = () => {
   
   async function getimagesItems() {
 
-    console.log(cities);
+
     console.log("Get Images");
 
     let imageListRef = ref(storage, `/presentation`)
@@ -57,7 +61,7 @@ const CityComponent = () => {
 
 }
 
-const getImagesUrls = async () => {
+  async function getImagesUrls(cities) {
   try {
 
     const items = await getimagesItems()
@@ -129,7 +133,7 @@ return (
 
       <div style={{ "backgroundImage": `url(../src/assets/images/city/${city.name.trim()}.jpg)` }} className="card city-card" key={city.id} >
 
-        <div className="card-body"  >
+        <div className="card-body city-image-infos"  >
           <h5 className="card-title">{city.name}</h5>
           <p className="card-text">{city.imageURL}</p>
           <p></p>

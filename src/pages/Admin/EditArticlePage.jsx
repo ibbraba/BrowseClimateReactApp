@@ -1,17 +1,21 @@
-import axios, { Axios } from 'axios'
 import React, { useEffect, useState } from 'react'
+import WriteArticleComponent from '../../compenents/WriteArticleComponent'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-const SingleArticleComponent = () => {
+const EditArticlePage = () => {
+
     const [article, setArticle] = useState(null)
 
+
+  
     const params = useParams()
     const { id } = params
 
 
     useEffect(() => {
         GetArticle()
-        console.log("Update:" + article)
+        
     }, [])
 
     async function GetArticle() {
@@ -26,19 +30,15 @@ const SingleArticleComponent = () => {
 
     if (!article)
         return null
-
+  
     return (
-        < div className='article-container single-article-display'>
-            <h1>{article.title}</h1>
-            {article.imageURL && <img className='article-image' src={article.imageURL} />}
-            {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
+        <div>
+            <h1>Editer l'article</h1>
 
-            <p>{article.description}</p>
-            <p>{article.content}</p>
-
+            <WriteArticleComponent ></WriteArticleComponent>
 
         </div>
     )
 }
 
-export default SingleArticleComponent
+export default EditArticlePage

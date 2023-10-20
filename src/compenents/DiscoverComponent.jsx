@@ -10,7 +10,7 @@ const DiscoverComponent = () => {
     const [images, setImages] = useState([])
     const [cities, setCites] = useState([])
     const [user, setUser] = useState(null)
-
+    const [facts, setFacts] = useState([])
 
     // Fetch Articles from favorite cities 
     // Fecth liked articles from user 
@@ -69,8 +69,17 @@ const DiscoverComponent = () => {
 
     useEffect(() => {
         CheckUserLogged()
-        getDiscoverArticles()
-        FetchCities()
+
+        async function LoadDiscoverElements(){
+            
+            const articles = await getDiscoverArticles()
+            const cities = await FetchCities()
+            const facts = await FetchFacts()
+
+        }
+
+        LoadDiscoverElements()
+
     }, [])
 
 
@@ -88,7 +97,17 @@ const DiscoverComponent = () => {
 
 
 
+    async function FetchFacts(){
 
+        
+        const token = GetToken()
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const facts = await axios.get("https://localhost:7226/api/Fact/GetAll")
+        setFacts(facts)
+        console.log(facts);
+
+    }
 
     //Fetch favorite city images 
     //Fetch liked images 
@@ -143,13 +162,18 @@ const DiscoverComponent = () => {
 
             <div className='articles-list'>
                 {articles && articles.map(article => (
-                    <div className='article-container' key={article.id} >
-                        <h4 className='article-title'> {article.title}</h4>
-                        <div className='article-description'>{article.description}</div>
-                        <div>{article.content}</div>
-                        <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+                   <div className='article-container' key={article.id} >
+                   <h4 className='article-title'> {article.title}</h4>
+             
+                   
+                   {article.imageURL && <img className='article-image' src={article.imageURL}/>} 
+                   {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg"/>} 
 
-                    </div>
+                   <div className='article-description'>{article.description}</div>
+                   <div>{article.content}</div>
+                   <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+
+               </div>
 
 
                 )
@@ -158,6 +182,7 @@ const DiscoverComponent = () => {
             </div>
 
         </>
+        
 
     )
 }
