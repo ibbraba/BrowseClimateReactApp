@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { GetToken } from './LoginComponent';
 
 
@@ -139,9 +139,9 @@ const ProfileComponent = () => {
 
 
             <li>
-              <button className='btn btn-primary' onClick={() => {setTab(false); setTab2(true);  console.log(tab); }}>
+              <button className='btn btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
 
-                Articles et commentaires
+                Mes articles
               </button>
             </li>
 
@@ -156,9 +156,9 @@ const ProfileComponent = () => {
 
         <div className='profile-page-display'>
 
-          {tab  && <div>
+          {tab && <div>
 
-            <form method='POST' action='https://localhost:7226/api/User/Update'>
+            <form className='profile-page-form' method='POST' action='https://localhost:7226/api/User/Update'>
 
               <div className='form-group'>
 
@@ -213,7 +213,20 @@ const ProfileComponent = () => {
 
           {tab2 === true && <div>Mes articles et commentaires
 
-            {userArticles && userArticles.map((article) => <div key={article.id}> {article.title} </div>)}
+            {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
+
+
+              {article.title}
+              <div>
+                <Link> Lire </Link>
+                <Link>Editer </Link>
+                <Link>Supprimer </Link>
+              </div>
+
+
+            </div>)}
+
+
 
 
           </div>}

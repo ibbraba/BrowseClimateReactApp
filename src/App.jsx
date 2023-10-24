@@ -13,7 +13,7 @@ import LoginPage from './pages/LoginPage'
 import SingleArticlePage from './pages/SingleArticlePage'
 import CityComponent from './compenents/CityComponent'
 import SingleCityPage from './pages/SingleCityPage'
-import {DecodeUser, IsUserLoggedIn} from  './compenents/LoginComponent';
+import { DecodeUser, IsUserLoggedIn } from './compenents/LoginComponent';
 import jwtDecode from 'jwt-decode'
 import AdminComponent from './compenents/AdminComponent'
 import AdminPage from './pages/Admin/AdminPage'
@@ -24,68 +24,76 @@ import CityAdminPage from './pages/Admin/CityAdminPage'
 import SingleCityAdminPage from './pages/Admin/SingleCityAdminPage'
 import WriteArticlePage from './pages/WriteArticlePage'
 import EditArticlePage from './pages/Admin/EditArticlePage'
+import HamburgerComponent from './compenents/app/HamburgerComponent'
 
 
 function App() {
   const [response, setResponse] = useState(null)
   const [userLogged, setUserLogged] = useState(null)
   const [user, setUser] = useState(null)
-
+  const [hamburgerOpen, setHamburgerOpen] = useState(false)
 
 
   useEffect(() => {
 
-    CheckUserLogged()     
+    CheckUserLogged()
     console.log(user);
 
   }, [location.pathname])
-  
+
   const navigate = useNavigate()
 
 
 
 
   const client = axios.create({
-      baseURL : "https://localhost:7226/api/"
-    })  
+    baseURL: "https://localhost:7226/api/"
+  })
 
 
 
-    const CheckUserLogged = async () =>   {
+  const CheckUserLogged = async () => {
 
-      console.log("Calling CheckUserLogged from main");
+    console.log("Calling CheckUserLogged from main");
 
-      try{
-        const user = await IsUserLoggedIn()
+    try {
+      const user = await IsUserLoggedIn()
 
-        if(user){
-          const decoded = await DecodeUser()
-          setUser(decoded)
-        }
-      
-      }catch(err){
-       
-        console.log(err);
+      if (user) {
+        const decoded = await DecodeUser()
+        setUser(decoded)
       }
-     
+
+    } catch (err) {
+
+      console.log(err);
     }
-/*
+
+  }
+
+  const toogleHamburger = () => {
+    setHamburgerOpen(!hamburgerOpen)
+    console.log("toogle");
+  }
+
+
+  /*
 
 
 
-    useEffect(() => {
-      
-      console.log("calling getData");
-      //getData()
-      console.log("endCall");
-    })
+  useEffect(() => {
+    
+    console.log("calling getData");
+    //getData()
+    console.log("endCall");
+  })
 
 */
-    async function getData() {
-      const response = await client.get("App/Index");
-      setResponse(response.data);
-      console.log(response);
-    }
+  async function getData() {
+    const response = await client.get("App/Index");
+    setResponse(response.data);
+    console.log(response);
+  }
 
   return (
     <>
@@ -93,35 +101,50 @@ function App() {
 
       <header>
 
-      <h3 className='bc-top'>Browse Climate</h3>
-      <p className='bc-speech'>Explore your world</p>
+        <h3 className='bc-top'>Browse Climate</h3>
+        <p className='bc-speech'>Explore your world</p>
 
 
         <nav>
-          <ul className='header-ul'>
+
+          <div  onClick={toogleHamburger}>
+
+            <HamburgerComponent ></HamburgerComponent>
+
+          </div>
+
+
+          <ul className='header-ul' style={{ display: hamburgerOpen ? 'inline' : 'none' }}>
             <li>
               <Link to={"/"}> Acceuil</Link>
             </li>
             <li>
               <Link to={"/city"}> Villes </Link>
-              </li>
+            </li>
             <li><Link to={"/article"}>Articles</Link></li>
             {user && <li> <Link to={"/discover/" + user.UserId}>Discover</Link></li>}
-            {!user && <li><Link to={"/discover/0"}>Discover</Link></li> }
-            
-            {user &&  <li><Link to={"/profile/" + user.UserId}>Profil</Link></li>}
-            {!user && <li><Link to={"/login"}>Connectez-vous</Link></li> }
-           
+            {!user && <li><Link to={"/discover/0"}>Discover</Link></li>}
+
+            {user && <li><Link to={"/profile/" + user.UserId}>Profil</Link></li>}
+            {!user && <li><Link to={"/login"}>Connectez-vous</Link></li>}
+
           </ul>
+
+
         </nav>
-       
+
       </header>
 
+
+
+
+
+
       <div className='page-container'>
-      <Routes>
-          
+        <Routes>
+
           {/* APP */}
-          
+
           <Route path='/' element={<Index></Index>}></Route>
           <Route path='/article' element={<ArticlePage></ArticlePage>}></Route>
           <Route path='/city' element={<CityPage></CityPage>}></Route>
@@ -142,14 +165,14 @@ function App() {
           <Route path='/admin/image' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
           <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
           <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
-          <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route> 
-       </Routes>
+          <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
+        </Routes>
 
 
-      </div> 
+      </div>
 
-   
-    
+
+
 
       <footer>
 
@@ -157,8 +180,12 @@ function App() {
         <h4 className='footer-quote'>Explore your world</h4>
 
 
+
+        <div>
         <p>Mentions légales</p>
         <p>Politique de confidentilité</p>
+
+        </div>
 
 
       </footer>

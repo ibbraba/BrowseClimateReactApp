@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { all } from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { DecodeUser, GetToken, IsUserLoggedIn } from './LoginComponent'
@@ -11,6 +11,7 @@ const DiscoverComponent = () => {
     const [cities, setCites] = useState([])
     const [user, setUser] = useState(null)
     const [facts, setFacts] = useState([])
+    const [allObjects, setAllObjects] = useState(null)
 
     // Fetch Articles from favorite cities 
     // Fecth liked articles from user 
@@ -32,6 +33,7 @@ const DiscoverComponent = () => {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
                 setArticles(res.data)
+                console.log(res.data);
 
 
             } catch (error) {
@@ -70,18 +72,71 @@ const DiscoverComponent = () => {
     useEffect(() => {
         CheckUserLogged()
 
-        async function LoadDiscoverElements(){
-            
+        const allObjects = []
+        async function LoadDiscoverElements() {
+
+            console.log("Loading discover elements");
             const articles = await getDiscoverArticles()
             const cities = await FetchCities()
             const facts = await FetchFacts()
 
+
+
+
+
         }
 
         LoadDiscoverElements()
+        console.log("End Loading discover elements");
+
 
     }, [])
 
+
+    useEffect(() => {
+        console.log("Change state : sortin arrayg ");
+
+
+        if (cities && facts && articles) {
+
+
+            cities.forEach((city) => {
+                city.type = "city"
+            })
+
+
+            facts.forEach((fact) => {
+                fact.type = "fact"
+            })
+
+
+            articles.forEach((article) => {
+                article.type = "article"
+            })
+
+
+
+
+            const allObjects = [...cities, ...articles, ...facts]
+            allObjects.forEach((object) => {
+                object.objKey = allObjects.indexOf(object)
+            })
+
+
+
+            allObjects.sort(function (x, y) {
+                return x.timestamp - y.timestamp;
+            })
+            setAllObjects(allObjects)
+
+        }
+    }, [articles, facts, cities])
+
+
+    useEffect(() => {
+        console.log("All Objects update");
+        console.log(allObjects);
+    }, [allObjects])
 
     //Fetch cities 
 
@@ -93,21 +148,24 @@ const DiscoverComponent = () => {
         const cities = await axios.get("https://localhost:7226/api/City/GetAll")
 
         setCites(cities.data)
+
     }
 
 
 
-    async function FetchFacts(){
+    async function FetchFacts() {
 
-        
+
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const facts = await axios.get("https://localhost:7226/api/Fact/GetAll")
-        setFacts(facts)
-        console.log(facts);
+
+
+        setFacts(facts.data)
 
     }
+
 
     //Fetch favorite city images 
     //Fetch liked images 
@@ -146,8 +204,8 @@ const DiscoverComponent = () => {
             <button>Start Discover</button>
 
 
-            <div>
-                {cities && cities.map(city => (
+            {/*   <div>
+                {allObjects && allObjects.map(city => (
 
                     <div key={city.id}>
 
@@ -158,31 +216,66 @@ const DiscoverComponent = () => {
                 ))}
 
 
-            </div>
+            </div> */}
+            {allObjects && allObjects.map((object) =>
 
-            <div className='articles-list'>
-                {articles && articles.map(article => (
-                   <div className='article-container' key={article.id} >
-                   <h4 className='article-title'> {article.title}</h4>
+                <div key={object.objKey}>
+                <p>{object.id}</p>
              
-                   
-                   {article.imageURL && <img className='article-image' src={article.imageURL}/>} 
-                   {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg"/>} 
+                
+                    {object.type === "article" &&
+                        <div className='article-container' key={object.objKey} >
+                            <h4 className='article-title'> {object.title}</h4>
+                            {object.imageURL && <img className='article-image' src={object.imageURL} />}
+                            {!object.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                   <div className='article-description'>{article.description}</div>
-                   <div>{article.content}</div>
-                   <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+                            <div className='article-description'>{object.description}</div>
+                            <div>{object.content}</div>
+                            <button ><Link to={"/article/" + object.id}> Lire </Link>  </button>
+                        </div>
+                    }
 
-               </div>
+
+                    {object.type === 'fact' && 
+                    
+                        <div>
+                            <h3>Fact</h3>
+
+                            <p>{object.description}</p>
+
+                        </div>
+                    
+                    }
+
+                </div>    
+            )}
+
+
+
+
+            {/*  <div className='articles-list'>
+                {articles && articles.map(article => (
+                    <div className='article-container' key={article.id} >
+                        <h4 className='article-title'> {article.title}</h4>
+
+
+                        {article.imageURL && <img className='article-image' src={article.imageURL} />}
+                        {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
+
+                        <div className='article-description'>{article.description}</div>
+                        <div>{article.content}</div>
+                        <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+
+                    </div>
 
 
                 )
                 )}
 
-            </div>
+            </div> */}
 
         </>
-        
+
 
     )
 }

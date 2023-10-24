@@ -131,8 +131,8 @@ const ImagesAdminPage = () => {
 
 
         </select>
-        <input type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
-        <button className='upload-button btn btn-primary' onClick={uploadImage}>Upload image</button>
+        <input className='gallerie-input' type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
+        <button className='upload-button btn btn-primary' onClick={uploadImage}>Envoyer l'image</button>
 
       </div>
 
