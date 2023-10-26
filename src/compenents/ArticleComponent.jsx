@@ -15,6 +15,7 @@ const ArticleComponent = () => {
             const articles = await AllArticles()
             const articleswithImages = await GetArticleImage(articles)
             setArticles(articles)
+       
         }
             
         getArticles()
@@ -65,8 +66,10 @@ const ArticleComponent = () => {
                
                 <div className='article-container' key={article.id} >
                     <h4 className='article-title'> {article.title}</h4>
-              
-                    
+                    <p></p>
+
+
+                    <p>  { article.likes}  &hearts; </p>
                     {article.imageURL && <img className='article-image' src={article.imageURL}/>} 
                     {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg"/>} 
 

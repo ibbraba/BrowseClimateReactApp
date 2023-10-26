@@ -80,10 +80,6 @@ const DiscoverComponent = () => {
             const cities = await FetchCities()
             const facts = await FetchFacts()
 
-
-
-
-
         }
 
         LoadDiscoverElements()

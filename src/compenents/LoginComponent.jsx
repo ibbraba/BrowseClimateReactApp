@@ -10,6 +10,27 @@ export function GetToken(){
 }
 
 
+export const GetUserLogged = async () => {
+
+  console.log("Calling CheckUserLogged from main");
+
+  try {
+      const user = await IsUserLoggedIn()
+
+      if (user) {
+          const decoded = await DecodeUser()
+          return decoded
+      }
+      else return null
+
+  } catch (err) {
+
+      console.log(err);
+      return null
+  }
+
+}
+
 export async function IsUserLoggedIn() {
   const token = localStorage.getItem('bc-token')
 
