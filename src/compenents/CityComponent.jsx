@@ -21,6 +21,10 @@ const CityComponent = () => {
       const cities = await GetAllCities()
       setCities(cities)
       console.log(cities);
+   /*    cities.forEach(city => {
+        city.name  = city.name.replace(" ", "")
+        console.log(city.name.trim());
+      }); */
     }
 
     getCities()
@@ -129,9 +133,11 @@ const CityComponent = () => {
 
 return (
   <div className='cities-list'>
+
     { cities && cities.map(city =>
 
-      <div style={{ "backgroundImage": `url(../src/assets/images/city/${city.name.trim()}.jpg)` }} className="card city-card" key={city.id} >
+
+      <div style={{ "backgroundImage": `url(../src/assets/images/city/${city.name.replace(" ", "").trim()}.jpg)` }} className="card city-card" key={city.id} >
 
         <div className="card-body city-image-infos"  >
           <h5 className="card-title">{city.name}</h5>
@@ -140,10 +146,14 @@ return (
           <button ><Link to={"/city/" + city.id}> Visiter </Link>  </button>
         </div>
       </div>
+
+    
+      
     )}
   </div>
-
 )
+
+    
 }
 
 export default CityComponent

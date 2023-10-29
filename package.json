@@ -12,6 +12,9 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.0.0",
     "@ckeditor/ckeditor5-react": "^6.1.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.15",
     "@react-navigation/native": "github:react-navigation/native",
     "axios": "^1.5.0",
     "firebase": "^10.5.0",

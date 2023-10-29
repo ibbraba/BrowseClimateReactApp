@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GetToken, GetUserLogged } from './LoginComponent'
 
+
 const SingleArticleComponent = () => {
     const [article, setArticle] = useState(null)
     const [user, setUser] = useState(null)
@@ -100,6 +101,8 @@ const SingleArticleComponent = () => {
 
     return (
         <div className='article-container single-article-display'>
+            
+      
               <div className='articles-likes-section'>
 
                 {user && articleLiked && <button onClick={() => RemoveLike()}>  &#128148; </button> }
