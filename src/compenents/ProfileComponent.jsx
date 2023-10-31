@@ -16,9 +16,9 @@ const ProfileComponent = () => {
   const [inputFirstName, setFirstname] = useState("")
   const [inputEmail, setEmail] = useState("")
   const [inputPassword, setPassword] = useState("")
-  const [inputavoriteCity, setFavoriteCity] = useState(null)
-
-
+  const [inputavoriteCity, setInputFavoriteCity] = useState(null)
+  const [cities, setCities] = useState(null)
+  const [favoriteCity, setFavoriteCity] = useState(null)
 
 
 
@@ -32,9 +32,41 @@ const ProfileComponent = () => {
   useEffect(() => {
     GetProfile()
     FetchUserArticles()
+    FetchCities()
     console.log(userArticles);
 
   }, [tab])
+
+  useEffect(() => {
+
+    if (cities && user) {
+
+
+      cities.forEach(city => {
+
+        if (city.id == user.favoriteCity) {
+          setFavoriteCity(city)
+
+        }
+
+      });
+
+    }
+
+
+
+  }, [cities, user])
+
+
+  useEffect(() => {
+    console.log("Init favortire city: ");
+    console.log(favoriteCity);
+  }, [favoriteCity])
+
+
+  useEffect(() => {
+
+  }, [userArticles])
 
   async function GetProfile() {
 
@@ -57,6 +89,18 @@ const ProfileComponent = () => {
 
   }
 
+  async function FetchCities() {
+
+    const token = GetToken()
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+
+    setCities(cities.data)
+
+  }
+
+
   async function UpdateUser() {
 
     //Updating informations
@@ -77,7 +121,7 @@ const ProfileComponent = () => {
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.post("https://localhost:7226/api/User/Get?id=" + id, {
+      const res = await axios.put("https://localhost:7226/api/User/Update", {
 
         "id": user.id,
         "name": user.name,
@@ -87,11 +131,12 @@ const ProfileComponent = () => {
         "password": user.password,
         "role": user.role,
         "createdAt": "2023-10-06T12:31:43.456Z",
-        "favoriteCity": 0
+        "favoriteCity": user.favoriteCity
 
       })
 
       setUser(res.data)
+
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +145,7 @@ const ProfileComponent = () => {
 
 
   }
+
 
 
   async function FetchUserArticles() {
@@ -118,6 +164,30 @@ const ProfileComponent = () => {
     }
 
   }
+
+  async function DeleteArticle(articleId) {
+
+    try {
+      const token = GetToken()
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      const res = await axios.delete("https://localhost:7226/api/Article/Delete?id=" + articleId)
+      console.log(res);
+      if(res.status === 200){
+        let index = userArticles.findIndex(item => item.id === articleId)
+        console.log(index);
+        const newArticlesArray = [ ... userArticles] 
+         newArticlesArray.splice(index, 1)
+         setUserArticles(newArticlesArray)
+
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
 
   if (user == null)
     return null
@@ -184,10 +254,23 @@ const ProfileComponent = () => {
                 <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)} />
               </div>
 
-              <div className='form-group'>
+              <div className='form-group profile-select-city'>
 
-                <label>Ville préférée </label>
-                <input className="form-control" type='text' defaultValue={user.favoriteCity} value={user.favoriteCity} />
+                <label>Ville préférée : {favoriteCity.name} </label>
+                {favoriteCity &&
+
+                  <select className='admin-city-select' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
+                    <option value="all">Selectionnez une ville </option>
+
+                    {cities && cities.map((city) => (
+
+                      <option key={city.id} value={city.id}> {city.name} </option>
+
+                    ))}
+
+
+                  </select>
+                }
               </div>
 
 
@@ -218,9 +301,9 @@ const ProfileComponent = () => {
 
               {article.title}
               <div>
-                <Link> Lire </Link>
+                <Link to={"/article/" + article.id}> Lire </Link>
                 <Link>Editer </Link>
-                <Link>Supprimer </Link>
+                <Link onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
               </div>
 
 

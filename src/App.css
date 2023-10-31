@@ -32,11 +32,12 @@ ul {
 
 
 header {
-  background-image: url(/src/assets/images/app/home/vacation.jpg);
+  background-image: url(/src/assets/images/app/home/wptest.jpg);
   background-origin: padding-box;
   background-repeat: no-repeat;
   height: 430px;
   background-size: cover;
+  background-position: 5%;
   padding-top: 20px;
 }
 
@@ -55,10 +56,12 @@ header nav {
 
 .header-ul a {
   font-weight: 500;
-  color: cornsilk;
+  color: black;
+  opacity: 0.65;
   font-size: 29px;
   text-decoration: inherit;
 }
+
 
 
 .home {
@@ -76,14 +79,14 @@ footer {
   position: absolute;
   bottom: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
   flex-direction: column;
-  background-image: url(/src/assets/images/app/WORLD-removebg-preview.png);
+  background-image: url(/src/assets/images/app/home/footertest.jpg);
   background-repeat: no-repeat;
   opacity: 0.7;
   background-color: #1a1a1a;
-  color: whitesmoke;
+  color: black;
   background-position: center;
   min-height: 450px;
 }
@@ -188,19 +191,28 @@ CITIES PAGE
 
 .city-container {
   margin: 200px 0;
-  padding-bottom: 200px;
+  padding-bottom: 300px;
 }
 
 .city-display {
   DISPLAY: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5%;
 }
 
 .city-informartions {
   width: 20%;
   height: 400px;
   BORDER: 1px solid;
+}
+
+.city-facts{
+  margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 5%;
 }
 
 .city-image-infos{
@@ -222,6 +234,11 @@ CITIES PAGE
 
 
 /* SINGLE CITY PAGE */
+
+
+.page-container:has(.single-city){
+  margin: 0;
+}
 
 .single-city-image{
   max-width: 100%;
@@ -322,6 +339,12 @@ PROFILE PAGE */
 
 .profile-page-form{
   padding: 5%;
+}
+
+
+.profile-select-city{
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-article{

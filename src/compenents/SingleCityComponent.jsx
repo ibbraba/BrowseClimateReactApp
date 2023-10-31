@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { storage } from '../firebase'
-import { Typography, Rating } from '@mui/material'
+import { Typography, Rating, Slider } from '@mui/material'
 import { GetUserLogged } from './LoginComponent'
-
+import { Carousel } from 'react-responsive-carousel'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const SingleCityComponent = () => {
 
@@ -15,6 +16,7 @@ const SingleCityComponent = () => {
   const [note, setNote] = useState(null)
   const [user, setUser] = useState(null)
   const [articles, setArticles] = useState(null)
+  const [facts, setFacts] = useState(null)
 
 
 
@@ -33,6 +35,7 @@ const SingleCityComponent = () => {
     GetUser()
     GetCity()
     GetArticles()
+    GetFacts()
   }, [])
 
 
@@ -58,6 +61,11 @@ const SingleCityComponent = () => {
 
   useEffect(() => {
 
+  }, [facts])
+
+
+  useEffect(() => {
+
   }, [articles])
 
   async function getimagesItems() {
@@ -67,6 +75,15 @@ const SingleCityComponent = () => {
     const res = await listAll(imageListRef)
 
     return res.items
+
+  }
+
+
+  async function GetFacts() {
+
+    const res = await axios.get("https://localhost:7226/api/Fact/GetCityFacts?cityId=" + id)
+    setFacts(res.data)
+    console.log(res.data);
 
   }
 
@@ -109,11 +126,10 @@ const SingleCityComponent = () => {
     }
   }
 
-  async function GetArticles(){
+  async function GetArticles() {
     const response = await axios.get("https://localhost:7226/api/Article/GetCityArticle?cityId=" + id)
-    
+
     setArticles(response.data)
-    console.log(response);
 
   }
 
@@ -162,24 +178,27 @@ const SingleCityComponent = () => {
 
 
   return (
-    <div className='city-container'>.
+    <div className='city-container single-city'>.
 
-      {user && <div>
-        <Typography component="legend">Controlled</Typography>
-        <Rating
-          name="simple-controlled"
-          value={note}
-          onChange={(event, newValue) => {
-            setNote(newValue)
+      {imagesUrls &&
 
-            UpdateNote(newValue)
-          }}
-        />
-      </div>}
+        <img className='single-city-image' src={imagesUrls[0]}></img>
+      }
 
       {city && <div>
 
+        {user && <div>
+          <Typography component="legend">Controlled</Typography>
+          <Rating
+            name="simple-controlled"
+            value={note}
+            onChange={(event, newValue) => {
+              setNote(newValue)
 
+              UpdateNote(newValue)
+            }}
+          />
+        </div>}
 
         <h3>{city.name}</h3>
 
@@ -190,6 +209,7 @@ const SingleCityComponent = () => {
           <div className='city-informations'>
             <div> Pays : {city.country} </div>
             <div> Nombre d'habitants : {city.numberResidents} </div>
+            <div>Note moyenne : {city.note} </div>
             <div> Classement BC : {city.country} </div>
             <div> Fans: {city.country} </div>
 
@@ -208,27 +228,60 @@ const SingleCityComponent = () => {
         </div>
 
 
-        <div className='single-city-gallery'>
+        <div>
 
-
-          {imagesUrls && imagesUrls.map((url) => (
-            <img className='single-city-image' key={url} src={url}></img>
+          {facts && facts.map((fact) => (
+            <div className='city-facts' key={fact.id}>
+              {fact.description}
+            </div>
           ))}
 
 
         </div>
 
 
+        <div className='single-city-gallery'>
+
+          <Carousel>
+
+            {imagesUrls && imagesUrls.map(url => (
+              <div className='slide' key={url}>
+                <img className='single-city-image' key={url} src={url}></img>
+
+              </div>
+            ))}
+
+          </Carousel>
+
+        </div>
+
+
         <div className="single-city-articles">
-         
-         {articles && articles.map((article) => (
-         
-         <div key={article.id}>
+
+
+
+          {articles &&  <h3>Articles en lien avec {city.name}</h3> }
+          {articles && articles.map((article) => (
             
-            <h3>{article.title}</h3>
+            <div key={article.id}>
+
+              <div className='article-container' key={article.id} >
+                    <h4 className='article-title'> {article.title}</h4>
+                    <p></p>
 
 
-         </div>))}
+                    <p>  { article.likes}  &hearts; </p>
+                    {article.imageURL && <img className='article-image' src={article.imageURL}/>} 
+                    {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg"/>} 
+
+                    <div className='article-description'>{article.description}</div>
+                    <div>{article.content}</div>
+                    <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+
+                </div>
+
+
+            </div>))}
         </div>
 
       </div>}

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { DecodeUser, GetToken, IsUserLoggedIn } from './LoginComponent'
 import { useCallback } from 'react'
+import { getDownloadURL, listAll, ref } from 'firebase/storage'
+import { storage } from '../firebase'
 
 const DiscoverComponent = () => {
 
@@ -22,53 +24,7 @@ const DiscoverComponent = () => {
     const params = useParams()
     const { id } = params
 
-    async function getDiscoverArticles() {
-
-
-        if (id != null) {
-
-            try {
-                const token = GetToken()
-
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
-                setArticles(res.data)
-                console.log(res.data);
-
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-
-
-    }
-
-    const CheckUserLogged = async () => {
-
-        console.log("Calling CheckUserLogged from main");
-
-        try {
-            const user = await IsUserLoggedIn()
-
-            if (user) {
-                const decoded = await DecodeUser()
-                setUser(decoded)
-            }
-
-        } catch (err) {
-
-            console.log(err);
-        }
-
-    }
-    /* 
-        const fetchData = useCallback(async() => {
-            const data = await 
     
-        }) */
-
     useEffect(() => {
         CheckUserLogged()
 
@@ -79,6 +35,9 @@ const DiscoverComponent = () => {
             const articles = await getDiscoverArticles()
             const cities = await FetchCities()
             const facts = await FetchFacts()
+            const articleswithImages = await GetArticleImage(articles)
+            
+            setArticles(articles)
 
         }
 
@@ -127,6 +86,89 @@ const DiscoverComponent = () => {
 
         }
     }, [articles, facts, cities])
+
+
+    useEffect(() => {
+
+        console.log(articles);
+
+    }, [articles])
+
+    async function getDiscoverArticles() {
+
+
+        if (id != null) {
+
+            try {
+                const token = GetToken()
+
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
+                setArticles(res.data)
+                console.log(res.data);
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+    
+    }
+
+
+    async function GetArticleImage(articles){
+
+        console.log(articles);
+
+        for(const article of articles ) {
+            let imageListRef = ref(storage, `/articles/${article.id}`)
+
+            const res = await listAll(imageListRef)
+    
+            if(res.items.length > 0){
+                console.log(res);
+                console.log("Image on article " + article.id);
+                const url = await getDownloadURL(res.items[0])
+                article.imageURL = url;
+                console.log(article);
+            
+            }
+        }
+
+        console.log(articles);
+        return articles
+    }    
+
+    const CheckUserLogged = async () => {
+
+        console.log("Calling CheckUserLogged from main");
+
+        try {
+            const user = await IsUserLoggedIn()
+
+            if (user) {
+                const decoded = await DecodeUser()
+                setUser(decoded)
+            }
+
+        } catch (err) {
+
+            console.log(err);
+        }
+
+    }
+    /* 
+        const fetchData = useCallback(async() => {
+            const data = await 
+    
+        }) */
+
+
+
+   
 
 
     useEffect(() => {
