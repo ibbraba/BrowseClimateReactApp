@@ -105,6 +105,14 @@ footer {
 }
 
 
+input{
+  color: white;
+}
+
+select{
+  color: white;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -242,6 +250,11 @@ CITIES PAGE
 
 .single-city-image{
   max-width: 100%;
+}
+
+.single-city-description{
+  padding: 5%;
+
 }
 
 /* ARTICLES PAGE */

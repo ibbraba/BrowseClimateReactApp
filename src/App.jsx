@@ -25,6 +25,8 @@ import SingleCityAdminPage from './pages/Admin/SingleCityAdminPage'
 import WriteArticlePage from './pages/WriteArticlePage'
 import EditArticlePage from './pages/Admin/EditArticlePage'
 import HamburgerComponent from './compenents/app/HamburgerComponent'
+import RegisterPage from './pages/registerPage'
+import InfoPage from './pages/InfoPage'
 
 
 function App() {
@@ -154,7 +156,8 @@ function App() {
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
           <Route path='/city/:id' element={<SingleCityPage></SingleCityPage>}></Route>
           <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route>
-
+          <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
+          <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
 
           {/* ADMIN */}
 
