@@ -14,6 +14,7 @@ const DiscoverComponent = () => {
     const [user, setUser] = useState(null)
     const [facts, setFacts] = useState([])
     const [allObjects, setAllObjects] = useState(null)
+    const [showDiscover, setShowDiscover] = useState(false)
 
     // Fetch Articles from favorite cities 
     // Fecth liked articles from user 
@@ -80,7 +81,7 @@ const DiscoverComponent = () => {
 
 
             allObjects.sort(function (x, y) {
-                return x.timestamp - y.timestamp;
+                return y.timestamp - x.timestamp;
             })
             setAllObjects(allObjects)
 
@@ -90,7 +91,11 @@ const DiscoverComponent = () => {
 
     useEffect(() => {
 
-        console.log(articles);
+       if(articles){
+        GetArticleImage()
+       
+        
+       }
 
     }, [articles])
 
@@ -104,6 +109,13 @@ const DiscoverComponent = () => {
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
+
+                for (const article of res.data) {
+                    console.log(article.timestamp * 1000);
+                    const s = new Date(article.timestamp * 1000).toLocaleDateString()
+                    console.log(s);
+                    article.date = s
+                }
                 setArticles(res.data)
                 console.log(res.data);
 
@@ -119,9 +131,9 @@ const DiscoverComponent = () => {
     }
 
 
-    async function GetArticleImage(articles){
+    async function GetArticleImage(){
 
-        console.log(articles);
+        
 
         for(const article of articles ) {
             let imageListRef = ref(storage, `/articles/${article.id}`)
@@ -165,12 +177,6 @@ const DiscoverComponent = () => {
             const data = await 
     
         }) */
-
-
-
-   
-
-
     useEffect(() => {
         console.log("All Objects update");
         console.log(allObjects);
@@ -239,30 +245,18 @@ const DiscoverComponent = () => {
             <p>Votre fil d'actualité est prêt, bon voyage</p>
 
 
-            <button>Start Discover</button>
+            { !showDiscover && <button onClick={(e) => {setShowDiscover(true)}}>  Start Discover</button>}
 
 
-            {/*   <div>
-                {allObjects && allObjects.map(city => (
-
-                    <div key={city.id}>
-
-                        <h4>{city.name}</h4>
-
-
-                    </div>
-                ))}
-
-
-            </div> */}
-            {allObjects && allObjects.map((object) =>
+            {allObjects && showDiscover && allObjects.map((object) =>
 
                 <div key={object.objKey}>
                 <p>{object.id}</p>
              
                 
-                    {object.type === "article" &&
+                    {object.type == "article" &&
                         <div className='article-container' key={object.objKey} >
+                            <p>{object.date }</p>
                             <h4 className='article-title'> {object.title}</h4>
                             {object.imageURL && <img className='article-image' src={object.imageURL} />}
                             {!object.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
@@ -289,28 +283,6 @@ const DiscoverComponent = () => {
             )}
 
 
-
-
-            {/*  <div className='articles-list'>
-                {articles && articles.map(article => (
-                    <div className='article-container' key={article.id} >
-                        <h4 className='article-title'> {article.title}</h4>
-
-
-                        {article.imageURL && <img className='article-image' src={article.imageURL} />}
-                        {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
-
-                        <div className='article-description'>{article.description}</div>
-                        <div>{article.content}</div>
-                        <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
-
-                    </div>
-
-
-                )
-                )}
-
-            </div> */}
 
         </>
 

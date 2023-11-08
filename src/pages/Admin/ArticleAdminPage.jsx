@@ -2,42 +2,57 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { GetToken } from '../../compenents/LoginComponent';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
+import { storage } from '../../firebase';
 
 const ArticleAdminPage = () => {
-    
-    const [articles, setArticles ] = useState(null)
+
+    const [articles, setArticles] = useState([])
 
 
     useEffect(() => {
-        AllArticles(), 
-        console.log("Update" + articles)
+
+        async function getArticles() {
+
+            const articles = await AllArticles()
+            const images = await GetArticleImage()
+            console.log("Update" + articles)
+                   setArticles(articles)
+        }
+
+        getArticles()
+
     }, [])
 
-    async function AllArticles(){
-        try{
+    useEffect(() => {
+
+     
+
+    }, [articles])
+
+    async function AllArticles() {
+        try {
             console.log("Call all Articles");
             const response = await axios.get("https://localhost:7226/api/Article/GetAll")
-            console.log(response.data);                 
-            setArticles(response.data)
-            console.log("End call articles");
+     
+            return response.data
 
-    
 
-       }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
-    
 
-    async function DeleteArticle(articleId){
+
+    async function DeleteArticle(articleId) {
 
         try {
             const token = GetToken()
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const response = await axios.post("https://localhost:7226/api/Article/Delete", {id: articleId})
+            const response = await axios.post("https://localhost:7226/api/Article/Delete", { id: articleId })
 
-            
+
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -46,28 +61,56 @@ const ArticleAdminPage = () => {
     }
 
 
+    async function GetArticleImage() {
+
+
+        for (const article of articles) {
+            let imageListRef = ref(storage, `/articles/${article.id}`)
+
+            const res = await listAll(imageListRef)
+
+            if (res.items.length > 0) {
+                console.log(res);
+                console.log("Image on article " + article.id);
+                const url = await getDownloadURL(res.items[0])
+                article.imageURL = url;
+                console.log(article);
+
+            }
+        }
+
+        console.log(articles);
+        return articles
+
+
+
+    }
+
+
     return (
-    <div>
+        <div>
 
-    <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+            <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
 
-    <h1>Tous les articles</h1>    
+            <h1>Tous les articles</h1>
 
-    { articles && articles.map(article => (
-        <div className='article-container' key={article.id} >
-            <h4 className='article-title'> {article.title}</h4>                
-            <div className='article-description'>{article.description}</div>
-            <div>{article.content}</div>
-            <button ><Link to={"/article/" + article.id }> Lire </Link>   </button>
-            <button> <Link to={"/article/edit/" + article.id}></Link> Editer </button>
-            <button onClick={DeleteArticle(article.id)}> Supprimer </button>
+            {articles && articles.map(article => (
+                <div className='article-container' key={article.id} >
+                    <h4 className='article-title'> {article.title}</h4>
+                    {article.imageURL && <img className='article-image' src={article.imageURL} />}
+                    {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
+                    <div className='article-description'>{article.description}</div>
+                    <div>{article.content}</div>
+                    <button ><Link to={"/article/" + article.id}> Lire </Link>   </button>
+                    <button><Link to={"/article/edit/" + article.id}> Editer  </Link></button>
+                    <button onClick={DeleteArticle(article.id)}> Supprimer </button>
 
+                </div>
+            )
+
+
+            )}
         </div>
-    ) 
-
-
-        )}
-    </div>
     )
 }
 

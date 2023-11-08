@@ -7,6 +7,7 @@
   background-color: white;
 }
 
+button{ color: white;}
 
 .bc-top {
   font-size: 3em;
@@ -306,8 +307,7 @@ CITIES PAGE
 }
 
 
-/* 
-PROFILE PAGE */
+/* PROFILE PAGE */
 
 
 
@@ -415,6 +415,11 @@ PROFILE PAGE */
   justify-content: space-around;
 }
 
+
+
+.choose-file-input{
+  margin: 0 auto;
+}
 
 
 

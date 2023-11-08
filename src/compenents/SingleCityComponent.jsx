@@ -188,7 +188,7 @@ const SingleCityComponent = () => {
       {city && <div>
 
         {user && <div>
-          <Typography component="legend">Controlled</Typography>
+          <h3>Notez {city.name}</h3>
           <Rating
             name="simple-controlled"
             value={note}
@@ -200,7 +200,6 @@ const SingleCityComponent = () => {
           />
         </div>}
 
-        <h3>{city.name}</h3>
 
         <div className='city-display'>
 

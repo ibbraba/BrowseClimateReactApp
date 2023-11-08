@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GetToken } from './LoginComponent';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
+
 
 
 
@@ -19,12 +23,19 @@ const ProfileComponent = () => {
   const [inputavoriteCity, setInputFavoriteCity] = useState(null)
   const [cities, setCities] = useState(null)
   const [favoriteCity, setFavoriteCity] = useState(null)
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
 
 
 
 
   const params = useParams()
   const { id } = params
+  const navigate = useNavigate();
 
 
   console.log("Init component");
@@ -67,6 +78,12 @@ const ProfileComponent = () => {
   useEffect(() => {
 
   }, [userArticles])
+
+  useEffect(() => {
+
+  }, [show])
+
+
 
   async function GetProfile() {
 
@@ -140,10 +157,6 @@ const ProfileComponent = () => {
     } catch (err) {
       console.log(err);
     }
-
-
-
-
   }
 
 
@@ -173,12 +186,12 @@ const ProfileComponent = () => {
 
       const res = await axios.delete("https://localhost:7226/api/Article/Delete?id=" + articleId)
       console.log(res);
-      if(res.status === 200){
+      if (res.status === 200) {
         let index = userArticles.findIndex(item => item.id === articleId)
         console.log(index);
-        const newArticlesArray = [ ... userArticles] 
-         newArticlesArray.splice(index, 1)
-         setUserArticles(newArticlesArray)
+        const newArticlesArray = [...userArticles]
+        newArticlesArray.splice(index, 1)
+        setUserArticles(newArticlesArray)
 
       }
 
@@ -188,9 +201,31 @@ const ProfileComponent = () => {
 
   }
 
+  function Logout() {
+    const token = localStorage.getItem('bc-token')
+    if (token) {
+      localStorage.removeItem("bc-token")
+    }
+    console.log("User logout ...");
+    setUser(null)
+    navigate('/')
+  }
 
-  if (user == null)
-    return null
+
+
+
+
+  if (user == null) {
+    return (
+      <>
+        <h1> Veuillez vous connecter avant d'explorer</h1>
+
+        <Link to="/login"> Se connecter  </Link>
+      </>
+    )
+
+
+  }
 
   return (
     <>
@@ -216,10 +251,11 @@ const ProfileComponent = () => {
             </li>
 
             <li>
-              <button className='btn btn-danger' onClick={() => { setTab(3); console.log(tab); }}>
+              <button className='btn btn-danger' onClick={() => Logout()}>
                 Se deconnecter
               </button>
             </li>
+
 
           </ul>
         </div>
@@ -302,7 +338,7 @@ const ProfileComponent = () => {
               {article.title}
               <div>
                 <Link to={"/article/" + article.id}> Lire </Link>
-                <Link>Editer </Link>
+                <Link to={'/article/edit/' + article.id}>Editer </Link>
                 <Link onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
               </div>
 

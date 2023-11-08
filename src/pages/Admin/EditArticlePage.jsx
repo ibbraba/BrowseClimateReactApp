@@ -24,6 +24,7 @@ const EditArticlePage = () => {
         const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
         console.log(res.data);
         setArticle(res.data)
+        
 
     }
 
@@ -35,7 +36,7 @@ const EditArticlePage = () => {
         <div>
             <h1>Editer l'article</h1>
 
-            <WriteArticleComponent ></WriteArticleComponent>
+            <WriteArticleComponent id={id}></WriteArticleComponent>
 
         </div>
     )

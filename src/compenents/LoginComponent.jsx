@@ -1,7 +1,7 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 export function GetToken(){
@@ -71,8 +71,6 @@ export  function DecodeUser() {
   }
 
 }
-
-
 
 
 

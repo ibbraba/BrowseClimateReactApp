@@ -154,7 +154,9 @@ function App() {
           <Route path='/profile' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
           <Route path='/article/:id' element={<SingleArticlePage></SingleArticlePage>}></Route>
+          <Route path='/article/edit/:id' element={<EditArticlePage></EditArticlePage>}></Route>
           <Route path='/city/:id' element={<SingleCityPage></SingleCityPage>}></Route>
+
           <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
           <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
