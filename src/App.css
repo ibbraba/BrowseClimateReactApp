@@ -30,7 +30,7 @@ ul {
 }
 
 
-
+/* HOME PAGE */
 
 header {
   background-image: url(/src/assets/images/app/home/wptest.jpg);
@@ -68,12 +68,17 @@ header nav {
 .home {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 40px;
 }
 
 .home img {
   max-height: 450px;
   width: 500px;
   max-width: 100%;
+}
+
+.home-rubrique-container{
+  margin-bottom: 200px;
 }
 
 footer {

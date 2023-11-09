@@ -13,14 +13,7 @@ const ArticlePage = () => {
 
 
 
-        <div className='articles-sort'>
 
-          <p>Trier par : </p> 
-          <button> Date </button>
-         
-          <button> Popularité </button>
-
-        </div>
      
         <ArticleComponent></ArticleComponent>
 

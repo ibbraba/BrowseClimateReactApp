@@ -1,23 +1,59 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { GetToken } from '../../compenents/LoginComponent';
+import { DecodeUser, GetToken } from '../../compenents/LoginComponent';
 import { getDownloadURL, listAll, ref } from 'firebase/storage';
 import { storage } from '../../firebase';
 
 const ArticleAdminPage = () => {
 
     const [articles, setArticles] = useState([])
+    const [user, setuser] = useState(null)
+    const [permission, setpermission] = useState(false)
+
+
+    useState(() => {
+
+    }, [permission])
+
+
+    async function verifyAdminPermission() {
+        const token = GetToken()
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const res = await axios.get("https://localhost:7226/api/User/validate")
+            if (res.status != 200) {
+                setpermission(false)
+                console.log("Permission Denied");
+            }
+
+            const user = DecodeUser()
+            console.log(user);
+
+            if (user.role == "Admin") {
+
+                setpermission(true)
+                console.log("Permission OK");
+                return
+
+            }
+
+            console.log("Permission Denied");
+            setpermission(false)
+        }
+    }
 
 
     useEffect(() => {
 
+        
+        verifyAdminPermission()
         async function getArticles() {
 
             const articles = await AllArticles()
             const images = await GetArticleImage()
             console.log("Update" + articles)
-                   setArticles(articles)
+            setArticles(articles)
         }
 
         getArticles()
@@ -26,7 +62,7 @@ const ArticleAdminPage = () => {
 
     useEffect(() => {
 
-     
+
 
     }, [articles])
 
@@ -34,7 +70,7 @@ const ArticleAdminPage = () => {
         try {
             console.log("Call all Articles");
             const response = await axios.get("https://localhost:7226/api/Article/GetAll")
-     
+
             return response.data
 
 
@@ -88,7 +124,14 @@ const ArticleAdminPage = () => {
 
 
     return (
+
         <div>
+
+            {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
+                <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+
+            </div>}
+            {permission && <>
 
             <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
 
@@ -110,6 +153,8 @@ const ArticleAdminPage = () => {
 
 
             )}
+
+            </>}
         </div>
     )
 }

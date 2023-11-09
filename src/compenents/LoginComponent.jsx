@@ -10,6 +10,7 @@ export function GetToken(){
 }
 
 
+
 export const GetUserLogged = async () => {
 
   console.log("Calling CheckUserLogged from main");

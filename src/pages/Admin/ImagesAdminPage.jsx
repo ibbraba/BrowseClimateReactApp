@@ -4,6 +4,7 @@ import { storage } from '../../firebase';
 import { useState, useEffect } from 'react';
 import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 import axios from 'axios';
+import { DecodeUser, GetToken } from '../../compenents/LoginComponent';
 
 const ImagesAdminPage = () => {
 
@@ -12,6 +13,44 @@ const ImagesAdminPage = () => {
   const [selectedImageURL, setSelectedImageURL] = useState(null)
   const [cities, setCities] = useState(null)
   const [selectedCity, setSelectedCIty] = useState("all")
+  const [permission, setpermission] = useState(false)
+
+  useState(() => {
+
+    verifyAdminPermission()
+
+  }, [])
+
+  useState(() => {
+
+  }, [permission])
+
+
+  async function verifyAdminPermission() {
+    const token = GetToken()
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const res = await axios.get("https://localhost:7226/api/User/validate")
+      if (res.status != 200) {
+        setpermission(false)
+        console.log("Permission Denied");
+      }
+
+      const user = DecodeUser()
+      console.log(user);
+
+      if (user.role == "Admin") {
+
+        setpermission(true)
+        console.log("Permission OK");
+        return
+
+      }
+
+      console.log("Permission Denied");
+      setpermission(false)
+    }
+  }
 
 
   //IMAGE UPLOAD
@@ -74,7 +113,7 @@ const ImagesAdminPage = () => {
       imageListRef = ref(storage, `/city`)
     }
     const res = await listAll(imageListRef)
-     return res.items
+    return res.items
   }
 
   const getImagesUrls = async () => {
@@ -89,9 +128,9 @@ const ImagesAdminPage = () => {
 
           const url = await getDownloadURL(item)
           urls.push(url)
- 
-       }
-            setImageUrls(urls)
+
+        }
+        setImageUrls(urls)
       }
     } catch (error) {
       console.log(error);
@@ -114,6 +153,13 @@ const ImagesAdminPage = () => {
 
 
     <div>
+
+      {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
+        <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+
+      </div>}
+
+      {permission && <>
 
       <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
 
@@ -143,7 +189,7 @@ const ImagesAdminPage = () => {
 
         <div className='admin-image' key={url}>
 
-        
+
           <img src={url}></img>
 
 
@@ -158,6 +204,7 @@ const ImagesAdminPage = () => {
 
       }
 
+    </>}
     </div>
   )
 }

@@ -208,23 +208,16 @@ const SingleCityComponent = () => {
           <div className='city-informations'>
             <div> Pays : {city.country} </div>
             <div> Nombre d'habitants : {city.numberResidents} </div>
-            <div>Note moyenne : {city.note} </div>
-            <div> Classement BC : {city.country} </div>
-            <div> Fans: {city.country} </div>
+            <div>Note moyenne : {city.note}/5 </div>
+            <div> Classement BC : {city.numberFans} </div>
+            <div> Fans: {city.numberFans} </div>
 
           </div>
           <div className='city-overview'>
 
             <div className='single-city-description'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi recusandae tempore quibusdam assumenda dolores quis dolore culpa labore non nulla maiores, beatae placeat repudiandae eaque rem, obcaecati, tempora rerum illum. Ipsa rem qui reprehenderit iste sint voluptas ad. Quae inventore placeat facere consectetur obcaecati eaque, perspiciatis ipsam! Deserunt quo at commodi, nobis, accusamus sapiente quam possimus voluptatum, eligendi neque ducimus doloremque qui est. Ea error, doloribus consequatur in consequuntur nisi commodi quasi, inventore explicabo, deleniti molestias animi. Officiis voluptatem voluptatum saepe voluptates in? Voluptatibus sit dignissimos maxime maiores neque commodi error libero omnis, quod quasi in inventore consequatur sint adipisci quis, pariatur repellendus possimus voluptate cupiditate fuga doloremque enim! Alias sunt tenetur ipsum, commodi, nemo ab aut soluta quos esse laborum fugit quaerat repellendus officiis. Numquam, odio odit tempora, in perspiciatis debitis ducimus cupiditate totam eius quae harum aut doloremque, repellat suscipit asperiores incidunt facere eaque eum? Mollitia placeat error alias tenetur repudiandae veritatis asperiores nobis earum cum labore exercitationem est maiores quae odit, eligendi aliquid debitis facilis totam dolorum blanditiis, illum neque tempora suscipit? Molestiae, quos? Repudiandae quas quidem et ipsum, praesentium illo porro tenetur placeat dolorem tempore assumenda molestias cupiditate veniam dolorum consequatur. Commodi iure et quia ad vel animi vero maxime itaque nostrum consequuntur repellat, est tempore quibusdam quam saepe sit, distinctio iusto, quos eaque. Cum maxime impedit omnis saepe amet, voluptatibus quas corrupti veritatis iure praesentium consectetur dolorem atque possimus nobis natus non optio dolor doloremque, animi nisi officia consequuntur soluta autem. Sint cupiditate cumque, ab minus quae cum quaerat nam asperiores magnam nisi obcaecati, iusto, molestiae temporibus tempora ex similique neque necessitatibus ipsam fugiat! Atque inventore, laborum excepturi, labore nihil minus est dolorem modi saepe minima eligendi sequi. Ducimus sapiente facilis possimus autem eligendi, voluptatibus commodi reiciendis quisquam vel nihil doloremque itaque quaerat reprehenderit! Accusamus.</div>
-
-
-
-          </div>
-
-
-
-
-        </div>
+           </div>
+       </div>
 
 
         <div>

@@ -160,6 +160,7 @@ function App() {
           <Route path='/profile/:id' element={<ProfilePage></ProfilePage>}></Route>
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
           <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
+          <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
 
           {/* ADMIN */}
 
@@ -170,7 +171,7 @@ function App() {
           <Route path='/admin/image' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
           <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
           <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
-          <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
+  
         </Routes>
 
 

@@ -12,8 +12,13 @@ const firebaseConfig = {
   projectId: "browseclimate",
   storageBucket: "browseclimate.appspot.com",
   messagingSenderId: "145552178268",
-  appId: "1:145552178268:web:150a388b24f06b18a4fa99"
+  appId: "1:145552178268:web:150a388b24f06b18a4fa99",
+  storage : {
+    "rules": "storage.rules"
+  },
 };
+
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
