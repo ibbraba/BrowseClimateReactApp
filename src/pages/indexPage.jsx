@@ -92,7 +92,7 @@ const IndexPage = () => {
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, enim ut saepe provident maxime eius cumque tempore voluptates iste, dignissimos quia temporibus laboriosam. Est voluptates assumenda dignissimos nam temporibus, cupiditate autem sint vitae dolorum, doloribus ut? Vel perferendis quas, laborum, pariatur nisi praesentium animi quae distinctio delectus quis, nihil repudiandae amet fugit repellat aperiam! Error, dolorum quisquam! Neque facere voluptatibus necessitatibus quod? Dolorem, error dolores. Ducimus adipisci voluptatem reprehenderit, ullam beatae amet facilis natus sint ratione consequatur incidunt porro! Corporis neque blanditiis ex dicta? Delectus.</p>
 
         </div>
-        {user && <Link className='btn btn-primary' to={"/profile/" + user.UserId}> Accédez à votre profil  </Link>}
+        {user && <Link className='btn btn-primary' to={"/profile"}> Accédez à votre profil  </Link>}
         {!user && <Link className='btn btn-primary' to="/login"> Connectez-vous et découvrez toutes les fonctionalités  </Link>}
       </div>
 

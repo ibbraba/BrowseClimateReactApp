@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
+
 export function GetToken(){
   const token = localStorage.getItem('bc-token')
   return token
@@ -80,6 +81,7 @@ const LoginComponent = () => {
 
   const [pseudo, setPseudo] = useState("")
   const [password, setPassword] = useState("")
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const navigate = useNavigate();
 
@@ -88,17 +90,24 @@ const LoginComponent = () => {
     navigate("/profile")
   }
 
+  useState(() => {
+
+  }, [errorMessage])
+
   async function Login() {
     try {
       console.log("Call login");
       const response = await axios.post(`https://localhost:7226/api/User/login?pseudo=${pseudo}&password=${password}`)
-      console.log(response.data);
+
+
       localStorage.setItem("bc-token", response.data)
-      DecodeUser(response.data)
+
       navigate("/")
 
     } catch (err) {
       console.log(err);
+      console.log("Login error");
+      setErrorMessage(err.response.data)
     }
 
     console.log("End call login")
@@ -118,6 +127,9 @@ const LoginComponent = () => {
 
   return (
     <div>
+
+      {errorMessage && <div className='alert alert-danger'> {errorMessage} </div>}
+
       <h3> Connectez-vous </h3>
 
       <div>

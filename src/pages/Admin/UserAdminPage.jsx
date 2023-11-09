@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { GetToken } from '../../compenents/LoginComponent';
+import { DecodeUser, GetToken } from '../../compenents/LoginComponent';
 import { Link } from 'react-router-dom';
 const UserAdminPage = () => {
 

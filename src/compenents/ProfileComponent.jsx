@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { GetToken } from './LoginComponent';
+import { GetToken, GetUserLogged } from './LoginComponent';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -29,12 +29,6 @@ const ProfileComponent = () => {
   const handleShow = () => setShow(true);
 
 
-
-
-
-
-  const params = useParams()
-  const { id } = params
   const navigate = useNavigate();
 
 
@@ -42,11 +36,19 @@ const ProfileComponent = () => {
 
   useEffect(() => {
     GetProfile()
-    FetchUserArticles()
-    FetchCities()
-    console.log(userArticles);
 
-  }, [tab])
+
+  }, [])
+
+
+  useEffect(() => {
+    if (user) {
+      FetchUserArticles()
+      FetchCities()
+      console.log(userArticles);
+
+    }
+  }, [user, tab])
 
   useEffect(() => {
 
@@ -89,17 +91,23 @@ const ProfileComponent = () => {
 
     try {
       console.log("Fetching User ... ");
+      const userLogged = await GetUserLogged()
       const token = GetToken()
+      console.log(userLogged);
+      if (userLogged) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
 
-      const res = await axios.get("https://localhost:7226/api/User/Get?id=" + id)
+        console.log(res);
 
-      setUser(res.data)
-      setName(user.name)
-      setFirstname(user.firstName)
-      setEmail(user.email)
-      setFavoriteCity(user.favoriteCity)
+        setUser(res.data)
+        setName(user.name)
+        setFirstname(user.firstName)
+        setEmail(user.email)
+        setFavoriteCity(user.favoriteCity)
+      }
+
     } catch (err) {
       console.log(err);
     }
@@ -169,7 +177,7 @@ const ProfileComponent = () => {
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + id)
+      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + user.userId)
       setUserArticles(res.data)
 
     } catch (error) {
@@ -215,144 +223,141 @@ const ProfileComponent = () => {
 
 
 
-  if (user == null) {
-    return (
-      <>
-        <h1> Veuillez vous connecter avant d'explorer</h1>
 
-        <Link to="/login"> Se connecter  </Link>
-      </>
-    )
-
-
-  }
 
   return (
     <>
+      {!user && <>
+        <h1> Veuillez vous connecter avant d'explorer</h1>
 
-      <h1>Profil de {user.name} {user.firstName}</h1>
-
-
-      <div className='profile-page'>
-
-        <div className='profile-page-menu'>
-          <ul className='profile-page-menulist'>
-
-            <li>
-              <button className='btn btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
-            </li>
+        <Link to="/login"> Se connecter  </Link>
+      </>}
 
 
-            <li>
-              <button className='btn btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
-
-                Mes articles
-              </button>
-            </li>
-
-            <li>
-              <button className='btn btn-danger' onClick={() => Logout()}>
-                Se deconnecter
-              </button>
-            </li>
+      {user && <>
+        <h1>Profil de {user.name} {user.firstName}</h1>
 
 
-          </ul>
+        <div className='profile-page'>
+
+          <div className='profile-page-menu'>
+            <ul className='profile-page-menulist'>
+
+              <li>
+                <button className='btn btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
+              </li>
+
+
+              <li>
+                <button className='btn btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
+
+                  Mes articles
+                </button>
+              </li>
+
+              <li>
+                <button className='btn btn-danger' onClick={() => Logout()}>
+                  Se deconnecter
+                </button>
+              </li>
+
+
+            </ul>
+          </div>
+
+          <div className='profile-page-display'>
+
+            {tab && <div>
+
+              <form className='profile-page-form' method='POST' action='https://localhost:7226/api/User/Update'>
+
+                <div className='form-group'>
+
+                  <label >Nom</label>
+                  <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)} />
+                </div>
+
+                <div className='form-group'>
+
+                  <label>Prénom</label>
+                  <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)} />
+                </div>
+
+                <div className='form-group'>
+
+                  <label>Email</label>
+                  <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+
+                <div className='form-group'>
+
+                  <label>Mot de passe</label>
+                  <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+
+                <div className='form-group profile-select-city'>
+
+                  <label>Ville préférée : {favoriteCity.name} </label>
+                  {favoriteCity &&
+
+                    <select className='admin-city-select' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
+                      <option value="all">Selectionnez une ville </option>
+
+                      {cities && cities.map((city) => (
+
+                        <option key={city.id} value={city.id}> {city.name} </option>
+
+                      ))}
+
+
+                    </select>
+                  }
+                </div>
+
+
+
+
+                <button className='btn btn-primary' type='submit' onClick={(e) => {
+                  e.preventDefault()
+                  UpdateUser()
+
+                }}> Mettre à jour les Informations </button>
+
+
+              </form>
+
+
+
+
+
+
+
+            </div>}
+
+
+            {tab2 === true && <div>Mes articles et commentaires
+
+              {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
+
+
+                {article.title}
+                <div>
+                  <Link to={"/article/" + article.id}> Lire </Link>
+                  <Link to={'/article/edit/' + article.id}>Editer </Link>
+                  <Link onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
+                </div>
+
+
+              </div>)}
+
+
+
+
+            </div>}
+
+          </div>
         </div>
-
-        <div className='profile-page-display'>
-
-          {tab && <div>
-
-            <form className='profile-page-form' method='POST' action='https://localhost:7226/api/User/Update'>
-
-              <div className='form-group'>
-
-                <label >Nom</label>
-                <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)} />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Prénom</label>
-                <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)} />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Email</label>
-                <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Mot de passe</label>
-                <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)} />
-              </div>
-
-              <div className='form-group profile-select-city'>
-
-                <label>Ville préférée : {favoriteCity.name} </label>
-                {favoriteCity &&
-
-                  <select className='admin-city-select' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
-                    <option value="all">Selectionnez une ville </option>
-
-                    {cities && cities.map((city) => (
-
-                      <option key={city.id} value={city.id}> {city.name} </option>
-
-                    ))}
-
-
-                  </select>
-                }
-              </div>
-
-
-
-
-              <button className='btn btn-primary' type='submit' onClick={(e) => {
-                e.preventDefault()
-                UpdateUser()
-
-              }}> Mettre à jour les Informations </button>
-
-
-            </form>
-
-
-
-
-
-
-
-          </div>}
-
-
-          {tab2 === true && <div>Mes articles et commentaires
-
-            {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
-
-
-              {article.title}
-              <div>
-                <Link to={"/article/" + article.id}> Lire </Link>
-                <Link to={'/article/edit/' + article.id}>Editer </Link>
-                <Link onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
-              </div>
-
-
-            </div>)}
-
-
-
-
-          </div>}
-
-        </div>
-
-      </div>
+      </>}
     </>
   )
 }
