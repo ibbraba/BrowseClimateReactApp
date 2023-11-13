@@ -289,11 +289,7 @@ const ProfileComponent = () => {
                   <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
-                <div className='form-group'>
 
-                  <label>Mot de passe</label>
-                  <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)} />
-                </div>
 
                 <div className='form-group profile-select-city'>
 
@@ -325,13 +321,6 @@ const ProfileComponent = () => {
 
 
               </form>
-
-
-
-
-
-
-
             </div>}
 
 
@@ -349,10 +338,6 @@ const ProfileComponent = () => {
 
 
               </div>)}
-
-
-
-
             </div>}
 
           </div>

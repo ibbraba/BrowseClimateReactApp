@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import jwt_decode from "jwt-decode";
 import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
@@ -9,14 +9,14 @@ const IndexPage = () => {
   const [user, setUser] = useState(null)
 
 
-  useState(() => {
+  useEffect(() => {
 
       CheckUserLogged()
 
   },[])
 
 
-  useState(() => {
+  useEffect(() => {
 
   }, [user])
 

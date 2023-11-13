@@ -27,6 +27,7 @@ import EditArticlePage from './pages/Admin/EditArticlePage'
 import HamburgerComponent from './compenents/app/HamburgerComponent'
 import RegisterPage from './pages/registerPage'
 import InfoPage from './pages/InfoPage'
+import FactsAdminPage from './pages/Admin/FactsAdminPage'
 
 
 function App() {
@@ -162,6 +163,7 @@ function App() {
           <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
           <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
 
+
           {/* ADMIN */}
 
           <Route path='/admin' element={<AdminPage></AdminPage>}> </Route>
@@ -171,7 +173,9 @@ function App() {
           <Route path='/admin/image' element={<ImagesAdminPage></ImagesAdminPage>}> </Route>
           <Route path='/admin/city' element={<CityAdminPage></CityAdminPage>}></Route>
           <Route path='/admin/city/:id' element={<SingleCityAdminPage></SingleCityAdminPage>}></Route>
-  
+          <Route path='/admin/facts' element={<FactsAdminPage></FactsAdminPage>}></Route>
+
+
         </Routes>
 
 

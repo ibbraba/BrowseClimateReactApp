@@ -255,7 +255,11 @@ const DiscoverComponent = () => {
              
                 
                     {object.type == "article" &&
+
+                        <div>
+                              <p className='article-header'>Article</p>
                         <div className='article-container' key={object.objKey} >
+                          
                             <p>{object.date }</p>
                             <h4 className='article-title'> {object.title}</h4>
                             {object.imageURL && <img className='article-image' src={object.imageURL} />}
@@ -264,6 +268,7 @@ const DiscoverComponent = () => {
                             <div className='article-description'>{object.description}</div>
                             <div>{object.content}</div>
                             <button ><Link to={"/article/" + object.id}> Lire </Link>  </button>
+                        </div>
                         </div>
                     }
 

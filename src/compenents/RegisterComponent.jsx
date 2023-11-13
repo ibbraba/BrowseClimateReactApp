@@ -140,7 +140,7 @@ const RegisterComponent = () => {
 
                 <div className="form-group">
                     <label htmlFor="">Mot de passe</label>
-                    <input type='text' onChange={(e) => setPassword(e.target.value)}></input>
+                    <input type='password' onChange={(e) => setPassword(e.target.value)}></input>
                 </div>
 
 
@@ -148,7 +148,7 @@ const RegisterComponent = () => {
 
                 <div className="form-group">
                     <label htmlFor="">Confirmez votre mot de passe</label>
-                    <input type='text' onChange={(e) => setConfirmPassword(e.target.value)} ></input>
+                    <input type='password' onChange={(e) => setConfirmPassword(e.target.value)} ></input>
                 </div>
 
                 <div className="form-group">

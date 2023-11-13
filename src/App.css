@@ -7,7 +7,9 @@
   background-color: white;
 }
 
-button{ color: white;}
+button {
+  color: white;
+}
 
 .bc-top {
   font-size: 3em;
@@ -77,7 +79,7 @@ header nav {
   max-width: 100%;
 }
 
-.home-rubrique-container{
+.home-rubrique-container {
   margin-bottom: 200px;
 }
 
@@ -111,11 +113,11 @@ footer {
 }
 
 
-input{
+input {
   color: white;
 }
 
-select{
+select {
   color: white;
 }
 
@@ -223,19 +225,19 @@ CITIES PAGE
   BORDER: 1px solid;
 }
 
-.city-facts{
+.city-facts {
   margin-left: 10%;
-    margin-right: 10%;
-    margin-bottom: 5%;
+  margin-right: 10%;
+  margin-bottom: 5%;
 }
 
-.city-image-infos{
+.city-image-infos {
   visibility: hidden;
 }
 
 
 
-.city-card:hover .city-image-infos{
+.city-card:hover .city-image-infos {
   visibility: visible;
 }
 
@@ -250,15 +252,15 @@ CITIES PAGE
 /* SINGLE CITY PAGE */
 
 
-.page-container:has(.single-city){
+.page-container:has(.single-city) {
   margin: 0;
 }
 
-.single-city-image{
+.single-city-image {
   max-width: 100%;
 }
 
-.single-city-description{
+.single-city-description {
   padding: 5%;
 
 }
@@ -301,15 +303,22 @@ CITIES PAGE
 .article-container {
   background-color: lightgray;
   padding: 6%;
-  margin: 60px;
-
+  margin-bottom: 120px;
 }
 
-.article-image{
+.article-image {
   height: auto;
   width: 900px;
   max-width: 100%;
 }
+
+.article-header {
+  background-color: #081c37;
+  color: white;
+  font-size: 23px;
+  margin-bottom: 0;
+}
+
 
 
 /* PROFILE PAGE */
@@ -355,17 +364,17 @@ CITIES PAGE
   margin-bottom: 10%;
 }
 
-.profile-page-form{
+.profile-page-form {
   padding: 5%;
 }
 
 
-.profile-select-city{
+.profile-select-city {
   display: flex;
   flex-direction: column;
 }
 
-.profile-article{
+.profile-article {
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -406,7 +415,7 @@ CITIES PAGE
   flex-direction: column;
 }
 
-.gallerie-input{
+.gallerie-input {
   margin: 0 auto;
 }
 
@@ -422,7 +431,7 @@ CITIES PAGE
 
 
 
-.choose-file-input{
+.choose-file-input {
   margin: 0 auto;
 }
 
@@ -443,61 +452,62 @@ CITIES PAGE
 }
 
 
-.burger{
+.burger {
   width: 2rem;
   height: 0.25rem;
-  border-radius: 10px; 
+  border-radius: 10px;
   background-color: black;
   transform-origin: 1px;
   transition: all 0.3s linear;
 }
 
-@media (max-width: 767px){
+@media (max-width: 767px) {
 
-    .hamburger{
-      display: grid; 
-      padding-top: 10px;
-      margin-left: 10px;
-      z-index: 10;
-    }
+  .hamburger {
+    display: grid;
+    padding-top: 10px;
+    margin-left: 10px;
+    z-index: 10;
+  }
 
-    .home{
-      display: flex;
-      flex-direction: column;
-    }
+  .home {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .article-container{
-      margin: 0;
-      margin-top: 50px;
-    }
+  .article-container {
+    margin: 0;
+    margin-top: 50px;
+  }
 
 
-    .profile-page{
-      flex-direction: column;
-    }
+  .profile-page {
+    flex-direction: column;
+  }
 
-    .profile-page-menu{
-      width: 100%;
-    }
+  .profile-page-menu {
+    width: 100%;
+  }
 
-    .profile-page-display{
-      width: 100%;
-      padding: 5%;
-    }
+  .profile-page-display {
+    width: 100%;
+    padding: 5%;
+  }
 
-    footer{
-      background-position: center;
+  footer {
+    background-position: center;
 
-    }
+  }
 
-    
+
 
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
 
-  .header-ul{
+  .header-ul {
     display: flex !important;
   }
 
 }
+
