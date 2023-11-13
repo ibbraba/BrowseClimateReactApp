@@ -1,6 +1,8 @@
+import { CardHeader } from '@mui/material'
 import axios from 'axios'
 
 import React, { useEffect, useState } from 'react'
+import { Card } from 'react-bootstrap'
 
 const FactsAdminPage = () => {
 
@@ -51,7 +53,7 @@ const FactsAdminPage = () => {
 
             if (intitule != "" && description != "" && city != null) {
 
-                console.log("city:" + city );
+                console.log("city:" + city);
 
                 const res = await axios.post("https://localhost:7226/api/Fact/Create", {
 
@@ -73,14 +75,14 @@ const FactsAdminPage = () => {
                 }
 
 
-            }else{
+            } else {
                 setErrorMessage("Veuillez renseigner la ville, l'intitulé et le fact.")
                 setsuccessMessage(null)
             }
 
 
         } catch (error) {
-           
+
             setErrorMessage(error.response.data)
             console.log(error);
             setsuccessMessage(null)
@@ -90,13 +92,13 @@ const FactsAdminPage = () => {
     }
 
 
-    async function DeleteFact(id){
+    async function DeleteFact(id) {
 
         try {
             console.log("Deleting fact");
-            const res = await axios.post("https://localhost:7226/api/Fact/Delete?factId=" +id  )
-         
-            if(res.status==200){
+            const res = await axios.post("https://localhost:7226/api/Fact/Delete?factId=" + id)
+
+            if (res.status == 200) {
                 setsuccessMessage("Supprimé !")
                 setErrorMessage(null)
                 LoadFacts()
@@ -106,7 +108,7 @@ const FactsAdminPage = () => {
             console.log(error);
             setErrorMessage(error.response.data)
             setsuccessMessage(null)
-          
+
         }
 
     }
@@ -114,7 +116,7 @@ const FactsAdminPage = () => {
     return (
         <div>
 
-            {successMessage && <div className='alert alert-success'> {successMessage} </div> }
+            {successMessage && <div className='alert alert-success'> {successMessage} </div>}
             {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
 
             <h1> Facts </h1>
@@ -147,7 +149,7 @@ const FactsAdminPage = () => {
                     <div className="form-group">
 
                         <label htmlFor=""> Intitulé </label>
-                        <input type='text' onChange={(e) => setIntitule(e.target.value)}/>
+                        <input type='text' onChange={(e) => setIntitule(e.target.value)} />
 
                     </div>
 
@@ -158,7 +160,7 @@ const FactsAdminPage = () => {
 
                     </div>
 
-                    <button className='btn btn-primary' onClick={(e) => {e.preventDefault(); SendFact() }}> Envoyer </button>
+                    <button className='btn btn-primary' onClick={(e) => { e.preventDefault(); SendFact() }}> Envoyer </button>
 
                 </form>
 
@@ -171,31 +173,34 @@ const FactsAdminPage = () => {
 
                 {facts && facts.map((fact) => <div key={fact.id}>
 
-                    <div className="card">
-                        <div className="card-header">
+                    <Card>
+                        <CardHeader>
                             {fact.title}
-                        </div>
-                        <div className="card-body">
+                        </CardHeader>
+                        <Card.Body>
                             <blockquote className="blockquote mb-0">
                                 <p>{fact.description}</p>
 
                             </blockquote>
-                        </div>
-                        <div className="card-footer">
+                        </Card.Body>
+
+                        <Card.Footer>
                             <button className='btn btn-danger' onClick={(e) => DeleteFact(fact.id)}> Supprimer </button>
-                        </div>
+                        </Card.Footer>
+
+                    </Card>
+                        
+
                     </div>
+                )}
 
-
-                </div>)}
-
-            </div>
+                </div>
 
 
 
 
         </div>
-    )
+            )
 }
 
-export default FactsAdminPage
+            export default FactsAdminPage

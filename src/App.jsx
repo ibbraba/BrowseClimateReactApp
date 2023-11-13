@@ -28,6 +28,7 @@ import HamburgerComponent from './compenents/app/HamburgerComponent'
 import RegisterPage from './pages/registerPage'
 import InfoPage from './pages/InfoPage'
 import FactsAdminPage from './pages/Admin/FactsAdminPage'
+import MentionsLegalesPage from './pages/infos/MentionsLegalesPage'
 
 
 function App() {
@@ -162,6 +163,7 @@ function App() {
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
           <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
           <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
+          <Route path='/mentions' element={<MentionsLegalesPage></MentionsLegalesPage>}></Route> 
 
 
           {/* ADMIN */}
@@ -192,7 +194,7 @@ function App() {
 
 
         <div>
-        <p>Mentions légales</p>
+        <Link to='/mentions'>Mentions légales</Link>
         <p>Politique de confidentilité</p>
 
         </div>

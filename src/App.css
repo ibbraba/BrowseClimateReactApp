@@ -265,6 +265,10 @@ CITIES PAGE
 
 }
 
+.carousel-slider{
+  max-height: 850px;
+}
+
 /* ARTICLES PAGE */
 
 .articles-sort {
@@ -319,6 +323,15 @@ CITIES PAGE
   margin-bottom: 0;
 }
 
+
+/* DISCOVER */ 
+
+
+.discover-favoritecity{
+  background-color: lightgray;
+    padding: 5%;
+    border-radius: 19px;
+}
 
 
 /* PROFILE PAGE */

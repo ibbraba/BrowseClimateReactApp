@@ -293,9 +293,9 @@ const ProfileComponent = () => {
 
                 <div className='form-group profile-select-city'>
 
-                  <label>Ville préférée : {favoriteCity.name} </label>
-                  {favoriteCity &&
-
+                  
+                  {favoriteCity && <>
+                    <label>Ville préférée : {favoriteCity.name} </label>
                     <select className='admin-city-select' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
                       <option value="all">Selectionnez une ville </option>
 
@@ -307,6 +307,7 @@ const ProfileComponent = () => {
 
 
                     </select>
+                    </>
                   }
                 </div>
 
@@ -324,7 +325,7 @@ const ProfileComponent = () => {
             </div>}
 
 
-            {tab2 === true && <div>Mes articles et commentaires
+            {tab2 === true && <div>Mes articles 
 
               {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
 
