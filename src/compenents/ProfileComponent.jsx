@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GetToken, GetUserLogged } from './LoginComponent';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Alert from 'react-bootstrap/Alert';
 
 
 
@@ -25,6 +26,9 @@ const ProfileComponent = () => {
   const [favoriteCity, setFavoriteCity] = useState(null)
   const [show, setShow] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccesMessage] = useState(null)
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -43,9 +47,10 @@ const ProfileComponent = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       FetchUserArticles()
       FetchCities()
-      console.log(userArticles);
+
 
     }
   }, [user, tab])
@@ -72,8 +77,7 @@ const ProfileComponent = () => {
 
 
   useEffect(() => {
-    console.log("Init favortire city: ");
-    console.log(favoriteCity);
+
   }, [favoriteCity])
 
 
@@ -83,7 +87,7 @@ const ProfileComponent = () => {
 
   useEffect(() => {
 
-  }, [show])
+  }, [show, successMessage, errorMessage])
 
 
 
@@ -98,14 +102,15 @@ const ProfileComponent = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
-
         console.log(res);
+        console.log("End RES");
+
 
         setUser(res.data)
-        setName(user.name)
-        setFirstname(user.firstName)
-        setEmail(user.email)
-        setFavoriteCity(user.favoriteCity)
+        setName(res.data.name)
+        setFirstname(res.data.firstName)
+        setEmail(res.data.email)
+        setFavoriteCity(res.data.favoriteCity)
       }
 
     } catch (err) {
@@ -134,16 +139,19 @@ const ProfileComponent = () => {
       console.log("Updating User ... ");
       const token = GetToken()
 
-      user.name = inputName
+      user.name = inputName 
       user.firstName = inputFirstName
       user.email = inputEmail
       user.password = inputPassword
       user.favoriteCity = inputavoriteCity
 
+      if(inputName == "" || inputFirstName == "" || inputEmail == "" || inputavoriteCity == "test"){
 
-      console.log(user)
-
-
+        setErrorMessage("Veuillez renseigner les champs")
+        setSuccesMessage(false)
+        return
+      }else{
+        
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       const res = await axios.put("https://localhost:7226/api/User/Update", {
@@ -160,10 +168,21 @@ const ProfileComponent = () => {
 
       })
 
-      setUser(res.data)
+      if(res.status == 200){
+        setUser(res.data)
+        setErrorMessage(null)
+        setSuccesMessage("Profil mis à jour")
+        
+
+      }}
+      
+
+
 
     } catch (err) {
       console.log(err);
+      setErrorMessage("Une erreur est survenue. Merci de réessayer")
+      setSuccesMessage(null)
     }
   }
 
@@ -177,7 +196,8 @@ const ProfileComponent = () => {
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + user.userId)
+      console.log(user);
+      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + user.id)
       setUserArticles(res.data)
 
     } catch (error) {
@@ -234,6 +254,10 @@ const ProfileComponent = () => {
       </>}
 
 
+      {errorMessage && <Alert variant='danger'> {errorMessage} </Alert>}
+      {successMessage && <Alert variant='success'> {successMessage} </Alert>}  
+
+
       {user && <>
         <h1>Profil de {user.name} {user.firstName}</h1>
 
@@ -286,7 +310,7 @@ const ProfileComponent = () => {
                 <div className='form-group'>
 
                   <label>Email</label>
-                  <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
+                  <input className="form-control" type='mail' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
 

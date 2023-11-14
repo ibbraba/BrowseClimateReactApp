@@ -1,7 +1,9 @@
+
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert' ;
 
 
 
@@ -107,7 +109,12 @@ const LoginComponent = () => {
     } catch (err) {
       console.log(err);
       console.log("Login error");
-      setErrorMessage(err.response.data)
+      if(err.response.data.title){
+        setErrorMessage(err.response.data.title)
+      }else{
+
+        setErrorMessage(err.response.data)
+      }
     }
 
     console.log("End call login")
@@ -128,7 +135,7 @@ const LoginComponent = () => {
   return (
     <div>
 
-      {errorMessage && <div className='alert alert-danger'> {errorMessage} </div>}
+      {errorMessage && <Alert variant='danger' > {errorMessage} </Alert>}
 
       <h3> Connectez-vous </h3>
 

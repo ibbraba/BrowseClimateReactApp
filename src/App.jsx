@@ -29,6 +29,7 @@ import RegisterPage from './pages/registerPage'
 import InfoPage from './pages/InfoPage'
 import FactsAdminPage from './pages/Admin/FactsAdminPage'
 import MentionsLegalesPage from './pages/infos/MentionsLegalesPage'
+import ConfidentialitePage from './pages/infos/ConfidentialitePage'
 
 
 function App() {
@@ -111,7 +112,7 @@ function App() {
 
         <nav>
 
-          <div  onClick={toogleHamburger}>
+          <div onClick={toogleHamburger}>
 
             <HamburgerComponent ></HamburgerComponent>
 
@@ -163,7 +164,8 @@ function App() {
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
           <Route path='/infopage' element={<InfoPage></InfoPage>}></Route>
           <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
-          <Route path='/mentions' element={<MentionsLegalesPage></MentionsLegalesPage>}></Route> 
+          <Route path='/mentions' element={<MentionsLegalesPage></MentionsLegalesPage>}></Route>
+          <Route path='/confidentialite' element={<ConfidentialitePage></ConfidentialitePage>}></Route>
 
 
           {/* ADMIN */}
@@ -194,8 +196,8 @@ function App() {
 
 
         <div>
-        <Link to='/mentions'>Mentions légales</Link>
-        <p>Politique de confidentilité</p>
+          <Link to='/mentions'>Mentions légales</Link>
+          <Link to='/confidentialite'> Politique de confidentilité</Link>
 
         </div>
 

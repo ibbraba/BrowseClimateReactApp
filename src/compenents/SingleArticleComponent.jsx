@@ -5,7 +5,6 @@ import { GetToken, GetUserLogged } from './LoginComponent'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../firebase'
 
-
 const SingleArticleComponent = () => {
     const [article, setArticle] = useState(null)
     const [user, setUser] = useState(null)
@@ -67,6 +66,7 @@ const SingleArticleComponent = () => {
         if(article){
             console.log("Loading image ...");
             GetArticleImage();
+ 
         }
     }, [article])
 
@@ -148,7 +148,7 @@ return (
         {!articleImageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
 
         <p>{article.description}</p>
-        <p>{article.content}</p>
+       <div dangerouslySetInnerHTML={{ __html:article.content}} ></div>  
 
     </div>
 )

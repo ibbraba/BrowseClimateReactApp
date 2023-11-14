@@ -150,8 +150,8 @@ const WriteArticleComponent = () => {
         if (imageUpload != null || articleid != null) {
 
             try {
-                console.log("Uploading image ...");
-                const imageRef = ref(storage, `/articles/${id}/${id}`);
+                console.log("Uploading image ... for article with id :" + articleid);
+                const imageRef = ref(storage, `/articles/${articleid}/${articleid}`);
 
                 const res = await listAll(imageRef)
                 console.log(res);
@@ -248,7 +248,8 @@ const WriteArticleComponent = () => {
 
             {successMessage && <div className='alert alert-success'>
                 {successMessage}
-                <Link to="/admin/article"> Retour à la liste des articles </Link>
+
+                <Link to="/article"> Retour à la liste des articles </Link>
             </div>}
 
             {!successMessage && <>

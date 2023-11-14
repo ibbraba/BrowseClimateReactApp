@@ -512,6 +512,10 @@ CITIES PAGE
 
   }
 
+  .city-display {
+    DISPLAY: flex;
+    flex-direction: column;
+  }  
 
 
 }
