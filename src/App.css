@@ -333,6 +333,11 @@ CITIES PAGE
     border-radius: 19px;
 }
 
+.single-fact{
+  background-color: lightgray;
+  padding: 5%;
+}
+
 
 /* PROFILE PAGE */
 

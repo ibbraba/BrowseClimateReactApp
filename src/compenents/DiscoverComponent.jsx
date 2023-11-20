@@ -16,7 +16,7 @@ const DiscoverComponent = () => {
     const [allObjects, setAllObjects] = useState(null)
     const [showDiscover, setShowDiscover] = useState(false)
     const [favoriteCity, setFavoriteCity] =  useState(null)
-
+    const [userFactLikes, setUserFactLikes] = useState(null)
     // Fetch Articles from favorite cities 
     // Fecth liked articles from user 
     // Fetch Top articles 
@@ -33,28 +33,32 @@ const DiscoverComponent = () => {
         const allObjects = []
         async function LoadDiscoverElements() {
 
-            console.log("Loading discover elements");
+
             
             
             const articles = await getDiscoverArticles()
             const cities = await FetchCities()
             const facts = await FetchFacts()
-
+          
             const articleswithImages = await GetArticleImage(articles)
             
             setArticles(articles)
 
         }
 
+        
         LoadDiscoverElements()
-        console.log("End Loading discover elements");
 
 
     }, [])
 
+    useEffect(() => {
+ 
+
+    }, [user])
+
 
     useEffect(() => {
-        console.log("Change state : sortin arrayg ");
 
 
         if (cities && facts && articles) {
@@ -107,12 +111,12 @@ const DiscoverComponent = () => {
     useEffect(() => {
 
         if(cities && user){
-            console.log(user);
+           
             cities.forEach(city => {
                
             if(city.id == user.favoriteCity){
                 setFavoriteCity(city)
-                console.log(city);
+           
             }
 
             });
@@ -121,19 +125,58 @@ const DiscoverComponent = () => {
     }, [cities])
 
 
+
+    useEffect(() => {
+
+        if(facts && !userFactLikes){
+            console.log("Loading userFactLikes");
+            GetFactsLikedByUser()
+        }
+
+    }, [facts])
+
+
+    useEffect(() => {
+
+
+        if(userFactLikes){
+
+            console.log("Adding like property to facts ...")
+            console.log(facts);
+            const newFacts = [...facts]
+            newFacts.forEach(fact => {
+                
+                if(userFactLikes.includes(fact.id)){
+                    fact.isLiked = true
+                }else{
+                    fact.isLiked = false
+                }
+
+                
+            });
+
+           
+            setFacts(newFacts)
+            console.log(newFacts);
+            console.log(userFactLikes);
+            
+        }
+
+    }, [userFactLikes])
+
     async function GetProfile() {
 
         try {
-          console.log("Fetching User ... ");
+          
           const userLogged = await GetUserLogged()
           const token = GetToken()
-          console.log(userLogged);
+        
           if (userLogged) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     
             const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
     
-            console.log(res);
+   
     
             setUser(res.data)
            
@@ -159,13 +202,13 @@ const DiscoverComponent = () => {
                 const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
 
                 for (const article of res.data) {
-                    console.log(article.timestamp * 1000);
+                  
                     const s = new Date(article.timestamp * 1000).toLocaleDateString()
-                    console.log(s);
+                 
                     article.date = s
                 }
                 setArticles(res.data)
-                console.log(res.data);
+            
 
 
             } catch (error) {
@@ -193,12 +236,11 @@ const DiscoverComponent = () => {
                 console.log("Image on article " + article.id);
                 const url = await getDownloadURL(res.items[0])
                 article.imageURL = url;
-                console.log(article);
+
             
             }
         }
 
-        console.log(articles);
         return articles
     }    
 
@@ -226,8 +268,7 @@ const DiscoverComponent = () => {
     
         }) */
     useEffect(() => {
-        console.log("All Objects update");
-        console.log(allObjects);
+  
     }, [allObjects])
 
     //Fetch cities 
@@ -258,7 +299,44 @@ const DiscoverComponent = () => {
 
     }
 
+    async function GetFactsLikedByUser(){
 
+        
+        if(user) {
+            console.log("Loading Facts Likes ...");
+            const res = await axios.get("https://localhost:7226/api/Fact/UserLikes?userId=" + user.id)
+            console.log(res);       
+
+            if(res.status==200){
+                
+                setUserFactLikes(res.data)
+            }
+        }
+
+    }
+
+
+    async function AddLikeToFact(id){
+        
+        const res = await axios.post("https://localhost:7226/api/Fact/AddLikeToFact?factId=" +id + "&userId=" + user.id)
+        if(res.status == 200){
+            console.log("Like ajouté");
+        }else{
+            console.log(res);
+        }
+        GetFactsLikedByUser()
+    }
+
+
+    async function DeleteFactLike(id){
+        const res = await axios.post("https://localhost:7226/api/Fact/DeleteLike?factId=" + id  + "&userId=" + user.id)
+        if(res.status == 200){
+            console.log("Like supprimé ");
+        }else{
+            console.log(res);
+        }
+        GetFactsLikedByUser()
+    }
     //Fetch favorite city images 
     //Fetch liked images 
     //Fetch top likes 
@@ -340,10 +418,13 @@ const DiscoverComponent = () => {
 
                     {object.type === 'fact' && 
                     
-                        <div>
+                        <div className='single-fact'>
                             <h3>Fact</h3>
 
                             <p>{object.description}</p>
+                            {object.isLiked &&   <button onClick={() => DeleteFactLike(object.id)}>  &#128148;  </button> }
+                            {!object.isLiked  &&  <button onClick={() => AddLikeToFact(object.id)}> &hearts;  </button>}
+                            
 
                         </div>
                     

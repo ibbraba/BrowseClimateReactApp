@@ -148,7 +148,7 @@ const ProfileComponent = () => {
       if(inputName == "" || inputFirstName == "" || inputEmail == "" || inputavoriteCity == "test"){
 
         setErrorMessage("Veuillez renseigner les champs")
-        setSuccesMessage(false)
+        setSuccesMessage(falses)
         return
       }else{
         
@@ -315,12 +315,12 @@ const ProfileComponent = () => {
 
 
 
-                <div className='form-group profile-select-city'>
+                <div className='form-group my-3 profile-select-city'>
 
                   
                   {favoriteCity && <>
                     <label>Ville préférée : {favoriteCity.name} </label>
-                    <select className='admin-city-select' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
+                    <select className='admin-city-select my-2' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
                       <option value="all">Selectionnez une ville </option>
 
                       {cities && cities.map((city) => (
