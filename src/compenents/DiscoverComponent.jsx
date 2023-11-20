@@ -323,6 +323,7 @@ const DiscoverComponent = () => {
             console.log("Like ajouté");
         }else{
             console.log(res);
+            
         }
         GetFactsLikedByUser()
     }

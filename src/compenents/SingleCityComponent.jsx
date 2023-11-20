@@ -17,7 +17,7 @@ const SingleCityComponent = () => {
   const [user, setUser] = useState(null)
   const [articles, setArticles] = useState(null)
   const [facts, setFacts] = useState(null)
-
+  const [userFactLikes, setUserFactLikes] = useState(null)
 
 
   const params = useParams()
@@ -43,6 +43,9 @@ const SingleCityComponent = () => {
     console.log(user);
   }, [user])
 
+
+
+
   useEffect(() => {
     if (city) {
       getImagesUrls()
@@ -61,7 +64,43 @@ const SingleCityComponent = () => {
 
   useEffect(() => {
 
+    
+
+    if (facts && !userFactLikes) {
+      GetFactsLikedByUser()
+    }else{
+      const newLikes = [...userFactLikes]
+      setUserFactLikes(newLikes)
+    }
   }, [facts])
+
+  useEffect(() => {
+
+
+    if (userFactLikes) {
+
+      console.log("Adding like property to facts ...")
+      console.log(facts);
+      const newFacts = [...facts]
+      newFacts.forEach(fact => {
+
+        if (userFactLikes.includes(fact.id)) {
+          fact.isLiked = true
+        } else {
+          fact.isLiked = false
+        }
+
+
+      });
+
+
+      setFacts(newFacts)
+      console.log(newFacts);
+      console.log(userFactLikes);
+
+    }
+
+  }, [userFactLikes])
 
 
   useEffect(() => {
@@ -84,6 +123,23 @@ const SingleCityComponent = () => {
     const res = await axios.get("https://localhost:7226/api/Fact/GetCityFacts?cityId=" + id)
     setFacts(res.data)
     console.log(res.data);
+
+  }
+
+
+  async function GetFactsLikedByUser() {
+
+
+    if (user) {
+      console.log("Loading Facts Likes ...");
+      const res = await axios.get("https://localhost:7226/api/Fact/UserLikes?userId=" + user.UserId)
+      console.log(res);
+
+      if (res.status == 200) {
+
+        setUserFactLikes(res.data)
+      }
+    }
 
   }
 
@@ -150,6 +206,28 @@ const SingleCityComponent = () => {
 
   }
 
+  async function AddLikeToFact(id) {
+
+    const res = await axios.post("https://localhost:7226/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.UserId)
+    if (res.status == 200) {
+      console.log("Like ajouté");
+    } else {
+      console.log(res);
+    }
+    GetFactsLikedByUser()
+  }
+
+
+  async function DeleteFactLike(id) {
+    const res = await axios.post("https://localhost:7226/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.UserId)
+    if (res.status == 200) {
+      console.log("Like supprimé ");
+    } else {
+
+      console.log(res);
+    }
+    GetFactsLikedByUser()
+  }
 
 
 
@@ -216,15 +294,22 @@ const SingleCityComponent = () => {
           <div className='city-overview'>
 
             <div className='single-city-description'>Lorem ipsm, dolor sit amet consectetur adipisicing elit. Sequi recusandae tempore quibusdam assumenda dolores quis dolore culpa labore non nulla maiores, beatae placeat repudiandae eaque rem, obcaecati, tempora rerum illum. Ipsa rem qui reprehenderit iste sint voluptas ad. Quae inventore placeat facere consectetur obcaecati eaque, perspiciatis ipsam! Deserunt quo at commodi, nobis, accusamus sapiente quam possimus voluptatum, eligendi neque ducimus doloremque qui est. Ea error, doloribus consequatur in consequuntur nisi commodi quasi, inventore explicabo, deleniti molestias animi. Officiis voluptatem voluptatum saepe voluptates in? Voluptatibus sit dignissimos maxime maiores neque commodi error libero omnis, quod quasi in inventore consequatur sint adipisci quis, pariatur repellendus possimus voluptate cupiditate fuga doloremque enim! Alias sunt tenetur ipsum, commodi, nemo ab aut soluta quos esse laborum fugit quaerat repellendus officiis. Numquam, odio odit tempora, in perspiciatis debitis ducimus cupiditate totam eius quae harum aut doloremque, repellat suscipit asperiores incidunt facere eaque eum? Mollitia placeat error alias tenetur repudiandae veritatis asperiores nobis earum cum labore exercitationem est maiores quae odit, eligendi aliquid debitis facilis totam dolorum blanditiis, illum neque tempora suscipit? Molestiae, quos? Repudiandae quas quidem et ipsum, praesentium illo porro tenetur placeat dolorem tempore assumenda molestias cupiditate veniam dolorum consequatur. Commodi iure et quia ad vel animi vero maxime itaque nostrum consequuntur repellat, est tempore quibusdam quam saepe sit, distinctio iusto, quos eaque. Cum maxime impedit omnis saepe amet, voluptatibus quas corrupti veritatis iure praesentium consectetur dolorem atque possimus nobis natus non optio dolor doloremque, animi nisi officia consequuntur soluta autem. Sint cupiditate cumque, ab minus quae cum quaerat nam asperiores magnam nisi obcaecati, iusto, molestiae temporibus tempora ex similique neque necessitatibus ipsam fugiat! Atque inventore, laborum excepturi, labore nihil minus est dolorem modi saepe minima eligendi sequi. Ducimus sapiente facilis possimus autem eligendi, voluptatibus commodi reiciendis quisquam vel nihil doloremque itaque quaerat reprehenderit! Accusamus.</div>
-           </div>
-       </div>
+          </div>
+        </div>
 
 
         <div>
 
           {facts && facts.map((fact) => (
-            <div className='city-facts' key={fact.id}>
-              {fact.description}
+
+            <div key={fact.id} className='single-fact'>
+              <h3>Fact</h3>
+
+              <p>{fact.description}</p>
+              {fact.isLiked && <button onClick={() => DeleteFactLike(fact.id)}>  &#128148;  </button>}
+              {!fact.isLiked && <button onClick={() => AddLikeToFact(fact.id)}> &hearts;  </button>}
+
+
             </div>
           ))}
 
@@ -252,25 +337,25 @@ const SingleCityComponent = () => {
 
 
 
-          {articles &&  <h3>Articles en lien avec {city.name}</h3> }
+          {articles && <h3>Articles en lien avec {city.name}</h3>}
           {articles && articles.map((article) => (
-            
+
             <div key={article.id}>
 
               <div className='article-container' key={article.id} >
-                    <h4 className='article-title'> {article.title}</h4>
-                    <p></p>
+                <h4 className='article-title'> {article.title}</h4>
+                <p></p>
 
 
-                    <p>  { article.likes}  &hearts; </p>
-                    {article.imageURL && <img className='article-image' src={article.imageURL}/>} 
-                    {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg"/>} 
+                <p>  {article.likes}  &hearts; </p>
+                {article.imageURL && <img className='article-image' src={article.imageURL} />}
+                {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                    <div className='article-description'>{article.description}</div>
-                    <div>{article.content}</div>
-                    <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+                <div className='article-description'>{article.description}</div>
+                <div>{article.content}</div>
+                <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
 
-                </div>
+              </div>
 
 
             </div>))}
