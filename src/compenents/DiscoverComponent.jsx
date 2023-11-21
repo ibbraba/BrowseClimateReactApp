@@ -174,7 +174,7 @@ const DiscoverComponent = () => {
           if (userLogged) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     
-            const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
     
    
     
@@ -199,7 +199,7 @@ const DiscoverComponent = () => {
                 const token = GetToken()
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
+                const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetDiscoverArticles?userId=" + id)
 
                 for (const article of res.data) {
                   
@@ -278,7 +278,7 @@ const DiscoverComponent = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+        const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
 
         setCites(cities.data)
 
@@ -292,7 +292,7 @@ const DiscoverComponent = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const facts = await axios.get("https://localhost:7226/api/Fact/GetAll")
+        const facts = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetAll")
 
 
         setFacts(facts.data)
@@ -304,7 +304,7 @@ const DiscoverComponent = () => {
         
         if(user) {
             console.log("Loading Facts Likes ...");
-            const res = await axios.get("https://localhost:7226/api/Fact/UserLikes?userId=" + user.id)
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/UserLikes?userId=" + user.id)
             console.log(res);       
 
             if(res.status==200){
@@ -318,19 +318,19 @@ const DiscoverComponent = () => {
 
     async function AddLikeToFact(id){
         
-        const res = await axios.post("https://localhost:7226/api/Fact/AddLikeToFact?factId=" +id + "&userId=" + user.id)
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" +id + "&userId=" + user.id)
         if(res.status == 200){
             console.log("Like ajouté");
         }else{
             console.log(res);
-            
+
         }
         GetFactsLikedByUser()
     }
 
 
     async function DeleteFactLike(id){
-        const res = await axios.post("https://localhost:7226/api/Fact/DeleteLike?factId=" + id  + "&userId=" + user.id)
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id  + "&userId=" + user.id)
         if(res.status == 200){
             console.log("Like supprimé ");
         }else{

@@ -27,7 +27,7 @@ const FactsAdminPage = () => {
 
     async function LoadFacts() {
 
-        const res = await axios.get("https://localhost:7226/api/Fact/GetAll")
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetAll")
         if (res.status == 200) {
             console.log(res.data);
             setfacts(res.data)
@@ -40,7 +40,7 @@ const FactsAdminPage = () => {
     async function FetchCities() {
 
 
-        const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+        const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
 
         setCities(cities.data)
 
@@ -55,7 +55,7 @@ const FactsAdminPage = () => {
 
                 console.log("city:" + city);
 
-                const res = await axios.post("https://localhost:7226/api/Fact/Create", {
+                const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/Create", {
 
                     "id": 0,
                     "title": intitule,
@@ -96,7 +96,7 @@ const FactsAdminPage = () => {
 
         try {
             console.log("Deleting fact");
-            const res = await axios.post("https://localhost:7226/api/Fact/Delete?factId=" + id)
+            const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/Delete?factId=" + id)
 
             if (res.status == 200) {
                 setsuccessMessage("Supprimé !")

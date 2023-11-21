@@ -28,7 +28,7 @@ const SingleCityAdminPage = () => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://localhost:7226/api/User/validate")
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
             if (res.status != 200) {
                 setpermission(false)
                 console.log("Permission Denied");
@@ -85,7 +85,7 @@ const SingleCityAdminPage = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.post("https://localhost:7226/api/City/Delete?id=" + id)
+        const response = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/City/Delete?id=" + id)
         console.log(response);
 
       } catch (error) {
@@ -137,7 +137,7 @@ const SingleCityAdminPage = () => {
     try {
 
       console.log("call single city");
-      const response = await axios.get("https://localhost:7226/api/City/Get?id=" + id)
+      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/Get?id=" + id)
       setCity(response.data)
       console.log(response.data);
       console.log("End call city");

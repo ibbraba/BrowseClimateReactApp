@@ -24,7 +24,7 @@ const UserAdminPage = () => {
     const token = GetToken()
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const res = await axios.get("https://localhost:7226/api/User/validate")
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
       if (res.status != 200) {
         setpermission(false)
         console.log("Permission Denied");
@@ -72,7 +72,7 @@ const UserAdminPage = () => {
       const token = GetToken()
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axios.get("https://localhost:7226/api/User/GetAll");
+      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/GetAll");
       setUsers(response.data)
 
     } catch (err) {
@@ -85,7 +85,7 @@ const UserAdminPage = () => {
     const token = GetToken()
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get("https://localhost:7226/api/User/Delete?id=" + id);
+    const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Delete?id=" + id);
 
   }
 

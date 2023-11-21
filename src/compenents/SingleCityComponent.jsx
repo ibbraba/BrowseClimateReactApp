@@ -64,14 +64,16 @@ const SingleCityComponent = () => {
 
   useEffect(() => {
 
-    
+    console.log(userFactLikes);
 
-    if (facts && !userFactLikes) {
-      GetFactsLikedByUser()
-    }else{
-      const newLikes = [...userFactLikes]
-      setUserFactLikes(newLikes)
+    if(facts){
+
+      if (!userFactLikes) {
+        GetFactsLikedByUser()
+      }
     }
+    
+   
   }, [facts])
 
   useEffect(() => {
@@ -120,7 +122,7 @@ const SingleCityComponent = () => {
 
   async function GetFacts() {
 
-    const res = await axios.get("https://localhost:7226/api/Fact/GetCityFacts?cityId=" + id)
+    const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetCityFacts?cityId=" + id)
     setFacts(res.data)
     console.log(res.data);
 
@@ -132,7 +134,7 @@ const SingleCityComponent = () => {
 
     if (user) {
       console.log("Loading Facts Likes ...");
-      const res = await axios.get("https://localhost:7226/api/Fact/UserLikes?userId=" + user.UserId)
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/UserLikes?userId=" + user.UserId)
       console.log(res);
 
       if (res.status == 200) {
@@ -172,7 +174,7 @@ const SingleCityComponent = () => {
     try {
 
 
-      const response = await axios.get("https://localhost:7226/api/City/Get?id=" + id)
+      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/Get?id=" + id)
       setCity(response.data)
 
       return response.data
@@ -183,7 +185,7 @@ const SingleCityComponent = () => {
   }
 
   async function GetArticles() {
-    const response = await axios.get("https://localhost:7226/api/Article/GetCityArticle?cityId=" + id)
+    const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetCityArticle?cityId=" + id)
 
     setArticles(response.data)
 
@@ -192,7 +194,7 @@ const SingleCityComponent = () => {
   async function GetUserNote() {
 
     try {
-      const res = await axios.post(`https://localhost:7226/api/City/GetUserNote?cityId=${city.id}&userId=${user.UserId}`)
+      const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/City/GetUserNote?cityId=${city.id}&userId=${user.UserId}`)
       if (res.data == 0) {
         setNote(null)
       } else {
@@ -208,7 +210,7 @@ const SingleCityComponent = () => {
 
   async function AddLikeToFact(id) {
 
-    const res = await axios.post("https://localhost:7226/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.UserId)
+    const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.UserId)
     if (res.status == 200) {
       console.log("Like ajouté");
     } else {
@@ -219,7 +221,7 @@ const SingleCityComponent = () => {
 
 
   async function DeleteFactLike(id) {
-    const res = await axios.post("https://localhost:7226/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.UserId)
+    const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.UserId)
     if (res.status == 200) {
       console.log("Like supprimé ");
     } else {
@@ -237,12 +239,12 @@ const SingleCityComponent = () => {
 
       if (note) {
         console.log("Update note");
-        const res = await axios.post(`https://localhost:7226/api/City/UpdateNote?cityId=${city.id}&userId=${user.UserId}&note=${value}`)
+        const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/City/UpdateNote?cityId=${city.id}&userId=${user.UserId}&note=${value}`)
         console.log(res);
       } else {
         console.log("new note");
 
-        const res = await axios.post(`https://localhost:7226/api/City/AddNote?cityId=${city.id}&userId=${user.UserId}&note=${value}`)
+        const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/City/AddNote?cityId=${city.id}&userId=${user.UserId}&note=${value}`)
         console.log(res);
 
       }
