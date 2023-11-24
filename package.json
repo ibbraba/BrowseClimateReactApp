@@ -10,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview", 
     "predeploy": "npm run build", 
-    "deploy" : "gh-pages -d build"
+    "deploy" : "gh-pages -d dist"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.0.0",

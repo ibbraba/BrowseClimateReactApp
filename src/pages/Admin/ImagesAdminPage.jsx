@@ -2,9 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { storage } from '../../firebase';
 import { useState, useEffect } from 'react';
-import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 import axios from 'axios';
 import { DecodeUser, GetToken } from '../../compenents/LoginComponent';
+import Form from 'react-bootstrap/Form';
+import { Checkbox } from '@mui/material';
 
 const ImagesAdminPage = () => {
 
@@ -14,6 +16,7 @@ const ImagesAdminPage = () => {
   const [cities, setCities] = useState(null)
   const [selectedCity, setSelectedCIty] = useState("all")
   const [permission, setpermission] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
 
   useState(() => {
 
@@ -56,19 +59,55 @@ const ImagesAdminPage = () => {
   //IMAGE UPLOAD
 
 
-  const uploadImage = () => {
-    if (imageUpload == null) {
-      return;
+  const uploadImage = async () => {
+
+    console.log(isChecked);
+
+
+    if (imageUpload != null) {
+      console.log("Uploading image ...");
+      if (isChecked) {
+
+        const folderRef = ref(storage, `/city/${selectedCity.trim()}/presentation`);
+
+        const res = await listAll(folderRef)
+        console.log(res);
+
+
+
+
+
+
+        if (res.items[0] && imageUpload) {
+
+          deleteObject(ref(storage, `/city/${selectedCity.trim()}/presentation/main`))
+
+
+        }
+
+        const imageRef = ref(storage, `/city/${selectedCity.trim()}/presentation/main`);
+        uploadBytes(imageRef, imageUpload).then((image) => {
+          getDownloadURL(image.ref).then((url) => {
+            setImageUrls((prev) => [...prev, url])
+          })
+
+        })
+
+
+      } else {
+        const imageRef = ref(storage, `/city/${selectedCity.trim()}/${imageUpload.name}`);
+        uploadBytes(imageRef, imageUpload).then((image) => {
+          getDownloadURL(image.ref).then((url) => {
+            setImageUrls((prev) => [...prev, url])
+          })
+
+        })
+      }
+
 
     }
-    console.log("Uploading image ...");
-    const imageRef = ref(storage, `/city/${selectedCity.trim()}/${imageUpload.name}`);
-    uploadBytes(imageRef, imageUpload).then((image) => {
-      getDownloadURL(image.ref).then((url) => {
-        setImageUrls((prev) => [...prev, url])
-      })
 
-    })
+
   };
 
   useEffect(() => {
@@ -121,6 +160,14 @@ const ImagesAdminPage = () => {
 
       const items = await getimagesItems()
 
+      const mainRef = ref(storage, `/city/${selectedCity.trim()}/presentation`);
+      const res = await listAll(mainRef)
+      console.log(res);
+      if(res.items[0]){
+        items.push(res.items[0])
+      }
+
+
       if (items != null) {
         const urls = []
 
@@ -143,6 +190,7 @@ const ImagesAdminPage = () => {
 
   }
 
+  
 
 
 
@@ -161,50 +209,60 @@ const ImagesAdminPage = () => {
 
       {permission && <>
 
-      <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+        <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
 
-      <h1>Gallerie</h1>
+        <h1>Gallerie</h1>
 
-      <div className="admin-gallerie">
+        <div className="admin-gallerie">
 
-        <h3>Uploader une image</h3>
-        <select className='admin-city-select' onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">
+          <h3>Uploader une image</h3>
+          <select className='admin-city-select' onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">
 
-          <option value="all" > Choisir une ville </option>
-          {cities && cities.map(city => (
-            <option value={city.name} key={city.id}> {city.name}</option>
-          ))}
-
-
-        </select>
-        <input className='gallerie-input' type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
-        <button className='upload-button btn btn-primary' onClick={uploadImage}>Envoyer l'image</button>
-
-      </div>
+            <option value="all" > Choisir une ville </option>
+            {cities && cities.map(city => (
+              <option value={city.name} key={city.id}> {city.name}</option>
+            ))}
 
 
+          </select>
 
-      {imagesUrls && imagesUrls.map(url => (
+          <input className='gallerie-input' type='file' onChange={e => { setImageUpload(e.target.files[0]) }}></input>
+          {imageUpload && <p> {imageUpload.name} </p>}
+
+          <div className='form-group my-2'>
+            <label className='btn-primary' htmlFor=""> Choisir comme image principale </label>
+            <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+          </div>
+
+          <button className='upload-button btn btn-primary' onClick={uploadImage}>Envoyer l'image</button>
 
 
-        <div className='admin-image' key={url}>
-
-
-          <img src={url}></img>
-
-
-
-          <button className='btn btn-danger' onClick={(e) => {
-            setSelectedImageURL(url)
-            DeleteImage(url)
-
-          }}>Supprimer</button>
         </div>
-      ))
+        {imagesUrls && imagesUrls.map(url => (
 
-      }
 
-    </>}
+          <div className='admin-image' key={url}>
+
+
+            <img src={url}></img>
+
+
+            <div>
+              <button className='btn btn-danger' onClick={(e) => {
+                setSelectedImageURL(url)
+                DeleteImage(url)
+
+              }}>Supprimer</button>
+
+
+            </div>
+
+          </div>
+        ))
+
+        }
+
+      </>}
     </div>
   )
 }
