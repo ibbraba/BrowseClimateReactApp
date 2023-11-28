@@ -367,12 +367,18 @@ const DiscoverComponent = () => {
 
     return (
         <>
+
+            <h1>Discover</h1>
+
+
+            <div className='articles-intro'> 
             <h3>Explorez, découvrez, ressentez </h3>
+            <p> Discover vous fera découvrir votre environnement selon les préferences de votre profil. Vous retrouverez différents articles, faits et informations sur votre ville favorite. </p> 
+            <p> Votre fil d'actualité est prêt, bon voyage </p>
+            </div>            
 
-            <p>Votre fil d'actualité est prêt, bon voyage</p>
 
-
-            { !showDiscover && <button onClick={(e) => {setShowDiscover(true)}}>  Start Discover</button>}
+            { !showDiscover && <button className='btn lbutton darkbg' onClick={(e) => {setShowDiscover(true)}}>  Start Discover</button>}
 
 
 
@@ -395,13 +401,12 @@ const DiscoverComponent = () => {
 
 
                 <div key={object.objKey}>
-                <p>{object.id}</p>
+          
              
                 
                     {object.type == "article" &&
 
-                        <div>
-                              <p className='article-header'>Article</p>
+                           
                         <div className='article-container' key={object.objKey} >
                           
                             <p>{object.date }</p>
@@ -411,9 +416,9 @@ const DiscoverComponent = () => {
 
                             <div className='article-description'>{object.description}</div>
                             <div>{object.content}</div>
-                            <button ><Link to={"/article/" + object.id}> Lire </Link>  </button>
+                            <button className='btn lbutton darkbg'><Link to={"/article/" + object.id}> Lire </Link>  </button>
                         </div>
-                        </div>
+                 
                     }
 
 

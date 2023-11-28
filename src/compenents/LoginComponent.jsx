@@ -133,7 +133,7 @@ const LoginComponent = () => {
 
 
   return (
-    <div>
+    <div >
 
       {errorMessage && <Alert variant='danger' > {errorMessage} </Alert>}
 
@@ -142,12 +142,12 @@ const LoginComponent = () => {
       <div>
         <form>
           <label> Pseudo </label>
-          <input type='text' onChange={(event) => setPseudo(event.target.value)} name='pseudo' />
+          <input className='login-input' type='text' onChange={(event) => setPseudo(event.target.value)} name='pseudo' />
 
           <label> Mot se passe </label>
-          <input type='password' onChange={(event) => setPassword(event.target.value)} name='password' />
+          <input className='login-input' type='password' onChange={(event) => setPassword(event.target.value)} name='password' />
 
-          <button type='submit' onClick={(event) => {
+          <button type='submit' className='btn lbutton darkbg' onClick={(event) => {
             event.preventDefault()
             Login()
           }}> Se connecter </button>

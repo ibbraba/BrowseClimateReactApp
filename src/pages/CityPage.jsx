@@ -3,9 +3,9 @@ import CityComponent from '../compenents/CityComponent'
 
 const CityPage = () => {
   return (
-    <div>
+    <div className='city-page'>
         
-        
+        <h1 className='page-title'>Villes</h1>
         <div className="intro">
         <h3>Les plus belles villes à découvrir </h3>
         <CityComponent>  </CityComponent>

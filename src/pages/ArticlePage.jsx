@@ -9,6 +9,8 @@ const ArticlePage = () => {
         
         <div className="best-articles">
         <h3> Articles </h3>
+
+        <p className='articles-intro'>Nos villes regorgent de lieux, d'événements et d'histoires qui ne demandent qu'a être partagées. A travers le temps et les différents endroits du monde, vous decouvrirez un riche ensemble d'histoires pleines d'émotions. Nous espérons que vous apprécierez nos récits et que si le coeur vous en dit, vous partagerez avec nous les vôtres. Bonne lecture.  </p>
         </div>
 
 
@@ -23,7 +25,7 @@ const ArticlePage = () => {
 
         <div> 
 
-          <Link to="/write" className='btn btn-primary'>Ecrire un article</Link>
+          <Link to="/write" className='lbutton btn darkbg'>Ecrire un article</Link>
 
         </div>
 

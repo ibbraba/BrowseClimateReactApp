@@ -268,19 +268,19 @@ const ProfileComponent = () => {
             <ul className='profile-page-menulist'>
 
               <li>
-                <button className='btn btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
+                <button className='btn lbutton btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
               </li>
 
 
               <li>
-                <button className='btn btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
+                <button className='btn lbutton btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
 
                   Mes articles
                 </button>
               </li>
 
               <li>
-                <button className='btn btn-danger' onClick={() => Logout()}>
+                <button className='btn lbutton btn-danger' onClick={() => Logout()}>
                   Se deconnecter
                 </button>
               </li>
@@ -338,7 +338,7 @@ const ProfileComponent = () => {
 
 
 
-                <button className='btn btn-primary' type='submit' onClick={(e) => {
+                <button className='btn lbutton darkbg' type='submit' onClick={(e) => {
                   e.preventDefault()
                   UpdateUser()
 
@@ -356,9 +356,9 @@ const ProfileComponent = () => {
 
                 {article.title}
                 <div>
-                  <Link to={"/article/" + article.id}> Lire </Link>
-                  <Link to={'/article/edit/' + article.id}>Editer </Link>
-                  <Link onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
+                  <Link  to={"/article/" + article.id}> Lire </Link>
+                  <Link className='btn lbutton darkbg' to={'/article/edit/' + article.id}>Editer </Link>
+                  <Link className='btn lbutton darkbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
                 </div>
 
 

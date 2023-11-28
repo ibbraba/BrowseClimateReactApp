@@ -7,6 +7,44 @@
   background-color: white;
 }
 
+
+
+
+body {
+  font-size: 12px;
+}
+
+/* VAR */
+
+.darkbg {
+  background-color: #d07c7c;
+  border: 1px solid white;
+  color: white;
+}
+
+.darkbg:hover {
+  background-color: #d07c7c;
+}
+
+
+/* BUTTONS */
+
+.lbutton {
+  padding: 1% 8%;
+}
+
+.lbutton a {
+  color: white;
+}
+
+.lbutton a:hover{
+  color: white;
+}
+
+.mbutton {
+  padding: 1% 4%;
+}
+
 button {
   color: white;
 }
@@ -32,10 +70,36 @@ ul {
 }
 
 
+/* LOGIN */
+.login-container {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 5px;
+  padding: 5%;
+  border: 3px solid #feb5b5;
+}
+
+.login-input{
+  background-color: white;
+    color: white;
+    border: 1px solid #d07c7c;
+    margin: 13px 0;
+}
+
+.login-container form {
+  display: flex;
+  padding: 5%;
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
 /* HOME PAGE */
 
 header {
-  background-image: url(/src/assets/images/app/home/wptest.jpg);
+  background-image: url(/src/assets/images/app/home/evening.jpg);
   background-origin: padding-box;
   background-repeat: no-repeat;
   height: 430px;
@@ -48,7 +112,7 @@ header {
 header nav {
   width: 80%;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 200px;
 }
 
 
@@ -59,8 +123,8 @@ header nav {
 
 .header-ul a {
   font-weight: 500;
-  color: black;
-  opacity: 0.65;
+  color: white;
+
   font-size: 29px;
   text-decoration: inherit;
 }
@@ -79,8 +143,14 @@ header nav {
   max-width: 100%;
 }
 
+.home p {
+  padding: 5%;
+  TEXT-ALIGN: justify;
+}
+
+
 .home-rubrique-container {
-  margin-bottom: 200px;
+  margin-bottom: 300px;
 }
 
 footer {
@@ -90,13 +160,29 @@ footer {
   justify-content: space-evenly;
   width: 100%;
   flex-direction: column;
-  background-image: url(/src/assets/images/app/home/footertest.jpg);
+  background-image: url(/src/assets/images/app/home/even.jpg);
   background-repeat: no-repeat;
-  opacity: 0.7;
+
   background-color: #1a1a1a;
   color: black;
   background-position: center;
   min-height: 450px;
+}
+
+footer a {
+  margin: 0 30px;
+  color: white !important;
+}
+
+footer h4 {
+  color: ghostwhite;
+}
+
+.mentions {
+  display: flex;
+  height: 73px;
+  justify-content: space-evenly;
+  flex-direction: column;
 }
 
 
@@ -190,6 +276,12 @@ CITIES PAGE
 
 */
 
+.page-container:has(.city-page) {
+  margin: 2%;
+  margin-bottom: 500px;
+
+}
+
 .cities-list {
   display: flex;
   flex-wrap: wrap;
@@ -198,15 +290,17 @@ CITIES PAGE
 
 .city-card {
   border: 1px solid;
-  min-height: 800PX;
+  min-height: 1200px;
   width: 100%;
-  margin-top: 50PX;
+  margin-top: 20PX;
+
   background-size: cover;
 }
 
 
 .city-container {
-  margin: 200px 0;
+
+  margin-bottom: 200px;
   padding-bottom: 300px;
 }
 
@@ -220,9 +314,10 @@ CITIES PAGE
 }
 
 .city-informartions {
-  width: 20%;
-  height: 400px;
-  BORDER: 1px solid;
+  text-align: justify;
+  border: 3px solid #df9191;
+  padding: 2%;
+  padding-top: 5%;
 }
 
 .city-facts {
@@ -258,6 +353,7 @@ CITIES PAGE
 
 .single-city-image {
   max-width: 100%;
+  margin-bottom: 10%;
 }
 
 .single-city-description {
@@ -265,8 +361,23 @@ CITIES PAGE
 
 }
 
-.carousel-slider{
+.carousel-slider {
   max-height: 850px;
+}
+
+.user-rate{
+  margin-bottom: 5%;
+}
+
+.single-city-facts, .single-city-articles{
+  margin: 0 10%;
+}
+
+
+.single-city-title{
+  font-family: 'Great Vibes', cursive;
+  margin: 60px;
+  font-size: 87px;
 }
 
 /* ARTICLES PAGE */
@@ -274,13 +385,30 @@ CITIES PAGE
 .articles-sort {
   display: flex;
   flex-direction: row;
-  margin-bottom: 200px;
+  margin: 100px 0px;
 }
+
+.articles-sort p {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
 
 .articles-list {
 
   margin: 0 auto;
 }
+
+.articles-intro {
+  text-align: justify;
+  padding: 5%;
+  border: 3px solid #feb5b5;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  
+}
+
+
 
 .articles-list>div {
   margin-bottom: 200px;
@@ -305,10 +433,16 @@ CITIES PAGE
 }
 
 .article-container {
-  background-color: lightgray;
+
   padding: 6%;
   margin-bottom: 120px;
+
+  background-color: WHITE;
+    BORDER: 3PX SOLID #feb5b5;
+  color: black;
+
 }
+
 
 .article-image {
   height: auto;
@@ -324,18 +458,19 @@ CITIES PAGE
 }
 
 
-/* DISCOVER */ 
+/* DISCOVER */
 
 
-.discover-favoritecity{
-  background-color: lightgray;
-    padding: 5%;
-    border-radius: 19px;
+.discover-favoritecity {
+  padding: 5%;
+  margin-top: 50px;
 }
 
-.single-fact{
-  background-color: lightgray;
+.single-fact {
+  
+  border: 3px solid #eeeeee;
   padding: 5%;
+  margin: 40px 0;
 }
 
 
@@ -442,15 +577,20 @@ CITIES PAGE
 
 .write-article-container {
   DISPLAY: FLEX;
-  min-height: 600px;
+  min-height: 1800px;
   flex-direction: column;
   justify-content: space-around;
 }
 
 
 
+
 .choose-file-input {
   margin: 0 auto;
+}
+
+.ck-content {
+  min-height: 800px;
 }
 
 
@@ -477,6 +617,14 @@ CITIES PAGE
   background-color: black;
   transform-origin: 1px;
   transition: all 0.3s linear;
+}
+
+.articles-into {
+  border: 1px solid;
+  padding: 10%;
+  border-radius: 7px;
+  margin-top: 80px;
+  text-align: justify;
 }
 
 @media (max-width: 767px) {
@@ -520,7 +668,7 @@ CITIES PAGE
   .city-display {
     DISPLAY: flex;
     flex-direction: column;
-  }  
+  }
 
 
 }
@@ -532,4 +680,3 @@ CITIES PAGE
   }
 
 }
-

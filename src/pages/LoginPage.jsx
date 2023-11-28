@@ -31,7 +31,7 @@ const LoginPage = () => {
   return (
     <>
       {!userLogged &&
-        <div>LoginPage
+        <div className='login-container'>
 
           <LoginComponent></LoginComponent>
 
@@ -39,7 +39,7 @@ const LoginPage = () => {
           <div>
 
             <h3>Vous n'avez pas de compte ? </h3>
-            <Link to="/register"> S'inscrire</Link>
+            <Link className='btn lbutton darkbg' to="/register"> S'inscrire</Link>
           </div>
 
 

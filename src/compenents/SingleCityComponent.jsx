@@ -260,6 +260,9 @@ const SingleCityComponent = () => {
   return (
     <div className='city-container single-city'>.
 
+      <h1 className='single-city-title'> {city.name} </h1>
+
+
       {imagesUrls &&
 
         <img className='single-city-image' src={imagesUrls[0]}></img>
@@ -267,7 +270,7 @@ const SingleCityComponent = () => {
 
       {city && <div>
 
-        {user && <div>
+        {user && <div className='user-rate'>
           <h3>Notez {city.name}</h3>
           <Rating
             name="simple-controlled"
@@ -300,7 +303,7 @@ const SingleCityComponent = () => {
         </div>
 
 
-        <div>
+        <div className='single-city-facts'>
 
           {facts && facts.map((fact) => (
 
@@ -339,7 +342,7 @@ const SingleCityComponent = () => {
 
 
 
-          {articles && <h3>Articles en lien avec {city.name}</h3>}
+          {articles && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
           {articles && articles.map((article) => (
 
             <div key={article.id}>

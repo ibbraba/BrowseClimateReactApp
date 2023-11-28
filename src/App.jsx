@@ -112,7 +112,7 @@ function App() {
 
         <nav>
 
-          <div onClick={toogleHamburger}>
+          <div onClick={toogleHamburger} >
 
             <HamburgerComponent ></HamburgerComponent>
 
@@ -195,7 +195,7 @@ function App() {
 
 
 
-        <div>
+        <div className='mentions'>
           <Link to='/mentions'>Mentions légales</Link>
           <Link to='/confidentialite'> Politique de confidentilité</Link>
 

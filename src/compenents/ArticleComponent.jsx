@@ -100,9 +100,6 @@ const ArticleComponent = () => {
 
         console.log(articles);
         return articles
-
-
-
     }
 
     return (
@@ -111,9 +108,9 @@ const ArticleComponent = () => {
             <div className='articles-sort'>
 
                 <p>Trier par : </p>
-                <button onClick={() => { sortByDate() }}> Date </button>
+                <button className='mbutton btn darkbg' onClick={() => { sortByDate() }}> Date </button>
 
-                <button onClick={() => { sortByView() }} >  Popularité </button>
+                <button className='mbutton btn darkbg' onClick={() => { sortByView() }} >  Popularité </button>
 
             </div>
 
@@ -128,9 +125,9 @@ const ArticleComponent = () => {
                     {article.imageURL && <img className='article-image' src={article.imageURL} />}
                     {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                    <div className='article-description'>{article.description}</div>
-                    <div>{article.content}</div>
-                    <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+                    <div dangerouslySetInnerHTML={{ __html:article.description}} ></div>  
+              
+                    <button className='lbutton btn darkbg'><Link to={"/article/" + article.id}> Lire </Link>  </button>
 
                 </div>
 
