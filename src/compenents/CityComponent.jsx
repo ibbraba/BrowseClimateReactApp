@@ -8,7 +8,7 @@ import bg from '../assets/images/city/bangkok.jpg'
 
 const CityComponent = () => {
 
-  const [cities, setCities] = useState([])
+  const [cities, setCities] = useState(null)
 
   const [imagesUrls, setImageUrls] = useState([])
   const [callOk, setCallOK] = useState(false)
@@ -179,7 +179,7 @@ const CityComponent = () => {
             <h5 className="card-title">{city.name}</h5>
           
             <p></p>
-            <button ><Link to={"/city/" + city.id}> Visiter </Link>  </button>
+            <button className='btn lbutton darkbg'><Link to={"/city/" + city.id}> Visiter </Link>  </button>
           </div>
         </div>
 

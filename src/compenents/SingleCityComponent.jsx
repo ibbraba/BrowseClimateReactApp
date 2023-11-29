@@ -260,7 +260,7 @@ const SingleCityComponent = () => {
   return (
     <div className='city-container single-city'>.
 
-      <h1 className='single-city-title'> {city.name} </h1>
+     {city && <h1 className='single-city-title'> {city.name} </h1> }
 
 
       {imagesUrls &&
@@ -342,7 +342,7 @@ const SingleCityComponent = () => {
 
 
 
-          {articles && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
+          {articles.length > 0 && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
           {articles && articles.map((article) => (
 
             <div key={article.id}>

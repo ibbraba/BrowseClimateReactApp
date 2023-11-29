@@ -3,7 +3,12 @@ import RegisterComponent from '../compenents/RegisterComponent'
 
 const RegisterPage = () => {
   return (
+
+    <>
+ 
     <RegisterComponent></RegisterComponent>
+    
+    </>
   )
 }
 

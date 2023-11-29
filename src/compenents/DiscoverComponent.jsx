@@ -358,7 +358,7 @@ const DiscoverComponent = () => {
             <>
                 <h1> Veuillez vous connecter avant d'explorer</h1>
 
-                <Link to="/login"> Se connecter  </Link>
+                <Link to="/login" className='btn lbutton darkbg'> Se connecter  </Link>
             </>
         )
 

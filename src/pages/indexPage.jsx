@@ -98,6 +98,8 @@ const IndexPage = () => {
 
 
 
+
+
       <div className="home-rubrique-container">
         <h3>  </h3>
         <div className="home homepage-stats">

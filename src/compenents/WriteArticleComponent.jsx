@@ -253,10 +253,10 @@ const WriteArticleComponent = () => {
             </div>}
 
             {!successMessage && <>
-                <img src={articleImageURL}></img>
+                <img src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fantique.jpg?alt=media&token=caf3937d-803a-44c4-bef3-23912407dda5"></img>
 
                 {article && <h5> Ville choisie : {articleCity}</h5>}
-                <select className='admin-city-select' defaultValue={article ? article.cityId : "all"} onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">Séléctionnez une ville
+                <select className='admin-city-select write-article-select' defaultValue={article ? article.cityId : "all"} onChange={(e) => setSelectedCIty(e.target.value)} name="" id="">Séléctionnez une ville
                     <option value="all" > Choisir une ville </option>
 
                     {cities && cities.map(city => (
@@ -268,7 +268,7 @@ const WriteArticleComponent = () => {
 
                 <div className='form-group'>
                     <label htmlFor="">Choisissez l'image de l'article</label>
-                    <input className='choose-file-input' type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
+                    <input className='btn lbutton darkbg choose-file-input' type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
                 </div>
 
 
@@ -277,13 +277,13 @@ const WriteArticleComponent = () => {
 
                 <div className='form-group'>
                     <label htmlFor=""> Titre de l'article</label>
-                    <input type='text' defaultValue={article ? article.title : ""} onChange={(e) => setTitle(e.target.value)} />
+                    <input type='richtext' className='login-input title-input' defaultValue={article ? article.title : ""} onChange={(e) => setTitle(e.target.value)} />
                 </div>
 
 
                 <div className='form-group'>
-                    <label htmlFor=""> Description</label>
-                    <input type='text' defaultValue={article ? article.description : ""} placeholder='Decrivez votre article en quelques lignes' onChange={(e) => setDescription(e.target.value)} />
+                    <label htmlFor="" > Description</label>
+                    <textarea type='text' className='login-input description-input'  defaultValue={article ? article.description : ""} placeholder='Decrivez votre article en quelques lignes' onChange={(e) => setDescription(e.target.value)} />
                 </div>
 
 
@@ -296,7 +296,7 @@ const WriteArticleComponent = () => {
                 {incompleteArticleMessage &&
                     <div className='alert alert-danger'>Veuillez indiquer le titre, la description et le contenu de l'article. </div>
                 }
-                <button onClick={() => article ? EditArticle() : sendArticle()}> Envoyer  </button>
+                <button className='btn lbutton darkbg' onClick={() => article ? EditArticle() : sendArticle()}> Envoyer  </button>
             </>}
         </div>
 

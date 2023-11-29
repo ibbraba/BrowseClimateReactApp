@@ -250,7 +250,7 @@ const ProfileComponent = () => {
       {!user && <>
         <h1> Veuillez vous connecter avant d'explorer</h1>
 
-        <Link to="/login"> Se connecter  </Link>
+        <Link className='btn lbutton darkbg' to="/login"> Se connecter  </Link>
       </>}
 
 
@@ -268,19 +268,19 @@ const ProfileComponent = () => {
             <ul className='profile-page-menulist'>
 
               <li>
-                <button className='btn lbutton btn-primary' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
+                <button className='btn lbutton whitebg' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
               </li>
 
 
               <li>
-                <button className='btn lbutton btn-primary' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
+                <button className='btn lbutton whitebg' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
 
                   Mes articles
                 </button>
               </li>
 
               <li>
-                <button className='btn lbutton btn-danger' onClick={() => Logout()}>
+                <button className='btn lbutton whitebg' onClick={() => Logout()}>
                   Se deconnecter
                 </button>
               </li>
@@ -349,16 +349,21 @@ const ProfileComponent = () => {
             </div>}
 
 
-            {tab2 === true && <div>Mes articles 
-
+            {tab2 === true && <div className='profile-articles'>
+        
+ 
               {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
 
 
-                {article.title}
+                <h3> {article.title} </h3>
+
+                
+                <p>{article.description}</p>
+
                 <div>
-                  <Link  to={"/article/" + article.id}> Lire </Link>
-                  <Link className='btn lbutton darkbg' to={'/article/edit/' + article.id}>Editer </Link>
-                  <Link className='btn lbutton darkbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
+                  <Link className='btn lbutton lightbg' to={"/article/" + article.id}> Lire </Link>
+                  <Link className='btn lbutton lightbg' to={'/article/edit/' + article.id}>Editer </Link>
+                  <Link className='btn lbutton lightbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
                 </div>
 
 

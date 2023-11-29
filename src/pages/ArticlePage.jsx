@@ -8,9 +8,11 @@ const ArticlePage = () => {
     <div>
         
         <div className="best-articles">
-        <h3> Articles </h3>
+        <h1 className='page-title'> Articles </h1>
 
-        <p className='articles-intro'>Nos villes regorgent de lieux, d'événements et d'histoires qui ne demandent qu'a être partagées. A travers le temps et les différents endroits du monde, vous decouvrirez un riche ensemble d'histoires pleines d'émotions. Nous espérons que vous apprécierez nos récits et que si le coeur vous en dit, vous partagerez avec nous les vôtres. Bonne lecture.  </p>
+        <p className='articles-intro'>
+          <h3> Les récits de notre monde </h3>
+          Nos villes regorgent de lieux, d'événements et d'histoires qui ne demandent qu'a être partagées. A travers le temps et les différents endroits du monde, vous decouvrirez un riche ensemble d'histoires pleines d'émotions. Nous espérons que vous apprécierez nos récits et que si le coeur vous en dit, vous partagerez avec nous les vôtres. Bonne lecture.  </p>
         </div>
 
 
