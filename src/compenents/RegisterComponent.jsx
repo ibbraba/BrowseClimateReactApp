@@ -165,7 +165,7 @@ const RegisterComponent = () => {
 
                         </select>
                     </div>
-                    <button type='submit' className='lbutton btn darkbg' onClick={(e) => { e.preventDefault(); RegisterUser() }}> S'inscrire </button>
+                    <button type='submit' className='lbutton btn darkbg mt-3' onClick={(e) => { e.preventDefault(); RegisterUser() }}> S'inscrire </button>
 
                 </form>
             }

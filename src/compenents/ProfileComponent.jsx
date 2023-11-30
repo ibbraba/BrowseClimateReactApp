@@ -258,6 +258,8 @@ const ProfileComponent = () => {
       {successMessage && <Alert variant='success'> {successMessage} </Alert>}  
 
 
+        <img className='my-5 app-photo' src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fnikon.jpg?alt=media&token=46e0deca-ca4a-4273-9b61-5c7a9767e0cb" alt="" />
+
       {user && <>
         <h1>Profil de {user.name} {user.firstName}</h1>
 
@@ -365,6 +367,9 @@ const ProfileComponent = () => {
                   <Link className='btn lbutton lightbg' to={'/article/edit/' + article.id}>Editer </Link>
                   <Link className='btn lbutton lightbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
                 </div>
+
+
+
 
 
               </div>)}
