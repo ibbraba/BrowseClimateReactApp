@@ -52,7 +52,7 @@ const AdminPage = () => {
         <div>
 
             {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
-                <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+                <Link to="/" className='btn lbutton darkbg'> Retour à l'acceuil</Link>
 
             </div>}
             {permission && <>

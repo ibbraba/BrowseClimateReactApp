@@ -60,12 +60,15 @@ body {
 
 /* BUTTONS */
 
-.lbutton {
-  padding: 1% 8%;
+.lbutton{
+  padding: 1% 6%;
 }
 
 .lbutton a {
   color: white;
+  width: 100%;
+  padding: 0% 8%;
+  display: block;
 }
 
 .lbutton a:hover {
@@ -112,6 +115,11 @@ ul {
   border: 3px solid #feb5b5;
 }
 
+.large-input{
+   min-width: 300px;
+}
+
+
 .login-input {
   background-color: white;
   color: black;
@@ -144,6 +152,7 @@ header nav {
   width: 80%;
   margin: 0 auto;
   margin-top: 200px;
+
 }
 
 
@@ -355,7 +364,7 @@ CITIES PAGE
 
 .city-card {
   border: 3px solid #feb5b5 !important;
-  height: 200px;
+  height: 1100px;
   width: 100%;
   margin-top: 20PX;
   background-size: unset;
@@ -411,8 +420,7 @@ CITIES PAGE
 }
 
 .city-overview {
-  width: 75%;
-  min-height: 400px;
+  min-height: 120px;
 
 }
 
@@ -544,6 +552,8 @@ CITIES PAGE
 .discover-favoritecity {
   padding: 5%;
   margin-top: 50px;
+  border: 3px dotted #feb5b5;
+  margin-bottom: 50px;
 }
 
 .single-fact {
@@ -649,6 +659,12 @@ CITIES PAGE
 
 /* ADMIN */
 
+.app-photo{
+  
+  max-width: 100%;
+}
+
+
 .admin-city-select {
   height: 40px;
   width: 200px;
@@ -662,6 +678,21 @@ CITIES PAGE
   flex-direction: column;
   justify-content: space-around;
   height: 300px;
+}
+
+.admin-city-form{
+  border: 3px solid #feb5b5;
+  min-width: 70%;
+  padding: 5%;
+}
+
+.admin-city-form textarea{
+  min-height: 70px;
+}
+
+
+.admin-city-form .login-input{
+  width: 80%;
 }
 
 .upload-button {
@@ -680,6 +711,28 @@ CITIES PAGE
 
 .gallerie-input {
   margin: 0 auto;
+}
+
+.fact-form{
+  margin-bottom: 100px;
+}
+
+.fact-card {
+  border: 3px solid #feb5b5;
+  margin-bottom: 50px;
+}
+
+.write-fact{
+  padding-top: 4%;
+  border: 3px solid #feb5b5;
+}
+
+.user-input{
+  width: 400px;
+}
+
+.users-dashboard{
+  border: 3px solid #feb5b5;
 }
 
 
@@ -772,6 +825,7 @@ CITIES PAGE
 
   .profile-page-menu {
     width: 100%;
+    margin-bottom: 40px;
   }
 
   .profile-page-display {
@@ -784,11 +838,21 @@ CITIES PAGE
 
   }
 
+
+
   .city-display {
     DISPLAY: flex;
     flex-direction: column;
   }
 
+  header nav { 
+    margin-top: 0;
+  }
+
+  .app-photo{
+    max-width: 100%;
+  
+  }
 
 }
 

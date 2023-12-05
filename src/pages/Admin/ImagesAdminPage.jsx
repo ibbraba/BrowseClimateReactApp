@@ -203,15 +203,17 @@ const ImagesAdminPage = () => {
     <div>
 
       {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
-        <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+        <Link to="/" className='btn lbutton darkbg'> Retour à l'acceuil</Link>
 
       </div>}
 
       {permission && <>
 
-        <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+        <Link to={"/admin"} className='darkbg  btn lbutton'> Menu administrateur </Link>
 
         <h1>Gallerie</h1>
+
+        <img className='app-photo' src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fmuseum.jpg?alt=media&token=01c5d67d-3998-4ab3-a5b9-14f2a5d48b0e'></img>
 
         <div className="admin-gallerie">
 
@@ -234,7 +236,7 @@ const ImagesAdminPage = () => {
             <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
           </div>
 
-          <button className='upload-button btn btn-primary' onClick={uploadImage}>Envoyer l'image</button>
+          <button className='darkbg  btn lbutton' onClick={uploadImage}>Envoyer l'image</button>
 
 
         </div>
@@ -244,7 +246,7 @@ const ImagesAdminPage = () => {
           <div className='admin-image' key={url}>
 
 
-            <img src={url}></img>
+            <img className='app-photo' src={url}></img>
 
 
             <div>

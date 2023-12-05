@@ -75,12 +75,12 @@ const CityAdminPage = () => {
     return (
       <>
       {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
-                <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+                <Link to="/" className='btn lbutton darkbg'> Retour à l'acceuil</Link>
 
             </div>}
             
       {permission && <>
-      <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+      <Link to={"/admin"} className='btn lbutton darkbg'> Menu administrateur </Link>
       
 
       
@@ -93,7 +93,7 @@ const CityAdminPage = () => {
               <h5 className="card-title">{city.name}</h5>
               <p className="card-text">{city.country}</p>
           
-              <button className='btn btn-info'><Link to={"/admin/city/" + city.id  }> Editer les informations</Link> </button>
+              <Link className='btn lbutton darkbg' to={"/admin/city/" + city.id  }> Editer </Link>
        
             </div>
           </div>

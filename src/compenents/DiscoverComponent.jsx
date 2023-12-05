@@ -15,7 +15,7 @@ const DiscoverComponent = () => {
     const [facts, setFacts] = useState([])
     const [allObjects, setAllObjects] = useState(null)
     const [showDiscover, setShowDiscover] = useState(false)
-    const [favoriteCity, setFavoriteCity] =  useState(null)
+    const [favoriteCity, setFavoriteCity] = useState(null)
     const [userFactLikes, setUserFactLikes] = useState(null)
     // Fetch Articles from favorite cities 
     // Fecth liked articles from user 
@@ -26,34 +26,34 @@ const DiscoverComponent = () => {
     const params = useParams()
     const { id } = params
 
-    
+
     useEffect(() => {
-       GetProfile()
+        GetProfile()
 
         const allObjects = []
         async function LoadDiscoverElements() {
 
 
-            
-            
+
+
             const articles = await getDiscoverArticles()
             const cities = await FetchCities()
             const facts = await FetchFacts()
-          
+
             const articleswithImages = await GetArticleImage(articles)
-            
+
             setArticles(articles)
 
         }
 
-        
+
         LoadDiscoverElements()
 
 
     }, [])
 
     useEffect(() => {
- 
+
 
     }, [user])
 
@@ -99,25 +99,25 @@ const DiscoverComponent = () => {
 
     useEffect(() => {
 
-       if(articles){
-        GetArticleImage()
-       
-        
-       }
+        if (articles) {
+            GetArticleImage()
+
+
+        }
 
     }, [articles])
 
 
     useEffect(() => {
 
-        if(cities && user){
-           
+        if (cities && user) {
+
             cities.forEach(city => {
-               
-            if(city.id == user.favoriteCity){
-                setFavoriteCity(city)
-           
-            }
+
+                if (city.id == user.favoriteCity) {
+                    setFavoriteCity(city)
+
+                }
 
             });
         }
@@ -128,7 +128,7 @@ const DiscoverComponent = () => {
 
     useEffect(() => {
 
-        if(facts && !userFactLikes){
+        if (facts && !userFactLikes) {
             console.log("Loading userFactLikes");
             GetFactsLikedByUser()
         }
@@ -139,27 +139,27 @@ const DiscoverComponent = () => {
     useEffect(() => {
 
 
-        if(userFactLikes){
+        if (userFactLikes) {
 
             console.log("Adding like property to facts ...")
             console.log(facts);
             const newFacts = [...facts]
             newFacts.forEach(fact => {
-                
-                if(userFactLikes.includes(fact.id)){
+
+                if (userFactLikes.includes(fact.id)) {
                     fact.isLiked = true
-                }else{
+                } else {
                     fact.isLiked = false
                 }
 
-                
+
             });
 
-           
+
             setFacts(newFacts)
             console.log(newFacts);
             console.log(userFactLikes);
-            
+
         }
 
     }, [userFactLikes])
@@ -167,27 +167,27 @@ const DiscoverComponent = () => {
     async function GetProfile() {
 
         try {
-          
-          const userLogged = await GetUserLogged()
-          const token = GetToken()
-        
-          if (userLogged) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    
-            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
-    
-   
-    
-            setUser(res.data)
-           
-            setFavoriteCity(user.favoriteCity)
-          }
-    
+
+            const userLogged = await GetUserLogged()
+            const token = GetToken()
+
+            if (userLogged) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+                const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
+
+
+
+                setUser(res.data)
+
+                setFavoriteCity(user.favoriteCity)
+            }
+
         } catch (err) {
-          console.log(err);
+            console.log(err);
         }
-    
-      }
+
+    }
 
 
     async function getDiscoverArticles() {
@@ -202,13 +202,13 @@ const DiscoverComponent = () => {
                 const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetDiscoverArticles?userId=" + id)
 
                 for (const article of res.data) {
-                  
+
                     const s = new Date(article.timestamp * 1000).toLocaleDateString()
-                 
+
                     article.date = s
                 }
                 setArticles(res.data)
-            
+
 
 
             } catch (error) {
@@ -218,31 +218,31 @@ const DiscoverComponent = () => {
 
 
 
-    
+
     }
 
 
-    async function GetArticleImage(){
+    async function GetArticleImage() {
 
-        
 
-        for(const article of articles ) {
+
+        for (const article of articles) {
             let imageListRef = ref(storage, `/articles/${article.id}`)
 
             const res = await listAll(imageListRef)
-    
-            if(res.items.length > 0){
+
+            if (res.items.length > 0) {
                 console.log(res);
                 console.log("Image on article " + article.id);
                 const url = await getDownloadURL(res.items[0])
                 article.imageURL = url;
 
-            
+
             }
         }
 
         return articles
-    }    
+    }
 
     const CheckUserLogged = async () => {
 
@@ -268,7 +268,7 @@ const DiscoverComponent = () => {
     
         }) */
     useEffect(() => {
-  
+
     }, [allObjects])
 
     //Fetch cities 
@@ -299,16 +299,16 @@ const DiscoverComponent = () => {
 
     }
 
-    async function GetFactsLikedByUser(){
+    async function GetFactsLikedByUser() {
 
-        
-        if(user) {
+
+        if (user) {
             console.log("Loading Facts Likes ...");
             const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/UserLikes?userId=" + user.id)
-            console.log(res);       
+            console.log(res);
 
-            if(res.status==200){
-                
+            if (res.status == 200) {
+
                 setUserFactLikes(res.data)
             }
         }
@@ -316,12 +316,12 @@ const DiscoverComponent = () => {
     }
 
 
-    async function AddLikeToFact(id){
-        
-        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" +id + "&userId=" + user.id)
-        if(res.status == 200){
+    async function AddLikeToFact(id) {
+
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.id)
+        if (res.status == 200) {
             console.log("Like ajouté");
-        }else{
+        } else {
             console.log(res);
 
         }
@@ -329,11 +329,11 @@ const DiscoverComponent = () => {
     }
 
 
-    async function DeleteFactLike(id){
-        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id  + "&userId=" + user.id)
-        if(res.status == 200){
+    async function DeleteFactLike(id) {
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.id)
+        if (res.status == 200) {
             console.log("Like supprimé ");
-        }else{
+        } else {
             console.log(res);
         }
         GetFactsLikedByUser()
@@ -371,29 +371,38 @@ const DiscoverComponent = () => {
             <h1>Discover</h1>
 
 
-            <div className='articles-intro'> 
-            <h3>Explorez, découvrez, ressentez </h3>
-            <p> Discover vous fera découvrir votre environnement selon les préferences de votre profil. Vous retrouverez différents articles, faits et informations sur votre ville favorite. </p> 
-            <p> Votre fil d'actualité est prêt, bon voyage </p>
-            </div>            
+            <div className='articles-intro'>
+                <h3>Explorez, découvrez, ressentez </h3>
+                <p> Discover vous fera découvrir votre environnement selon les préferences de votre profil. Vous retrouverez différents articles, faits et informations sur votre ville favorite. </p>
+                <p> Votre fil d'actualité est prêt, bon voyage </p>
+            </div>
 
 
-            { !showDiscover && <button className='btn lbutton darkbg' onClick={(e) => {setShowDiscover(true)}}>  Start Discover</button>}
+            {!showDiscover && <button className='btn lbutton darkbg' onClick={(e) => { setShowDiscover(true) }}>  Start Discover</button>}
 
 
 
-            {showDiscover && favoriteCity && <div className='discover-favoritecity'>
-                
-                <p>Votre ville préférée</p>
+            {showDiscover && favoriteCity && <div className='discover-container'>
 
-                <h5> {favoriteCity.name} </h5>
-                
-                <p>{favoriteCity.timeZone}
-                </p>
-                
-                <p>{favoriteCity.temperature} °C</p>
+   
 
-                </div>}
+                <div className='discover-favoritecity'>
+
+
+
+
+                    <h1>Votre ville préférée</h1>
+
+                    <h5> {favoriteCity.name} </h5>
+
+                    <p>{favoriteCity.timeZone}
+                    </p>
+
+                    <p>{favoriteCity.temperature} °C</p>
+
+                </div>
+            </div>
+            }
 
 
             {allObjects && showDiscover && allObjects.map((object) =>
@@ -401,15 +410,15 @@ const DiscoverComponent = () => {
 
 
                 <div key={object.objKey}>
-          
-             
-                
+
+
+
                     {object.type == "article" &&
 
-                           
+
                         <div className='article-container' key={object.objKey} >
-                          
-                            <p>{object.date }</p>
+
+                            <p>{object.date}</p>
                             <h4 className='article-title'> {object.title}</h4>
                             {object.imageURL && <img className='article-image' src={object.imageURL} />}
                             {!object.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
@@ -418,25 +427,25 @@ const DiscoverComponent = () => {
                             <div>{object.content}</div>
                             <button className='btn lbutton darkbg'><Link to={"/article/" + object.id}> Lire </Link>  </button>
                         </div>
-                 
+
                     }
 
 
-                    {object.type === 'fact' && 
-                    
+                    {object.type === 'fact' &&
+
                         <div className='single-fact'>
                             <h3>Fact</h3>
 
                             <p>{object.description}</p>
-                            {object.isLiked &&   <button onClick={() => DeleteFactLike(object.id)}>  &#128148;  </button> }
-                            {!object.isLiked  &&  <button onClick={() => AddLikeToFact(object.id)}> &hearts;  </button>}
-                            
+                            {object.isLiked && <button onClick={() => DeleteFactLike(object.id)}>  &#128148;  </button>}
+                            {!object.isLiked && <button onClick={() => AddLikeToFact(object.id)}> &hearts;  </button>}
+
 
                         </div>
-                    
+
                     }
 
-                </div>    
+                </div>
             )}
 
 

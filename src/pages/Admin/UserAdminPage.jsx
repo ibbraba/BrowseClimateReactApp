@@ -8,6 +8,8 @@ const UserAdminPage = () => {
   const [selectedUser, setSelectedUser] = useState(null)
   const [user, setuser] = useState(null)
   const [permission, setpermission] = useState(false)
+  const [userInput, setUserInput] = useState("")
+  const [searchResult, setSearchResult] = useState(null)
 
   useState(() => {
 
@@ -19,6 +21,30 @@ const UserAdminPage = () => {
 
   }, [permission])
 
+  useEffect(() => {
+
+
+    if (userInput == "") {
+      setSearchResult(users)
+      console.log(users);
+    }
+
+    if (userInput != "") {
+      console.log("User Input:" + userInput);
+      const result = users.filter((user) => user.pseudo.includes(userInput) )
+      console.log(result);
+
+      setSearchResult(result)
+    }
+
+
+
+  }, [userInput])
+
+
+  useEffect(() => {
+
+  }, [searchResult])
 
   async function verifyAdminPermission() {
     const token = GetToken()
@@ -89,31 +115,36 @@ const UserAdminPage = () => {
 
   }
 
+
+
+
   return (
 
     <div>
 
 
       {!permission && <div className='alert alert-danger'>  <h3>Vous n'avez pas les droits d'accés à cette ressource.</h3>
-        <Link to="/" className='btn btn-primary'> Retour à l'acceuil</Link>
+        <Link to="/" className='btn lbutton darkbg'> Retour à l'acceuil</Link>
 
       </div>}
 
       {permission && <>
 
-        <Link to={"/admin"} className='btn btn-primary'> Menu administrateur </Link>
+        <Link to={"/admin"} className='btn lbutton darkbg mb-2'> Menu administrateur </Link>
 
 
         <h1>Tous les utilisateurs</h1>
 
 
+        <input type='text' className='login-input user-input' placeholder='Rechercher un utilisateur' onChange={(e) => setUserInput(e.target.value)} />
+
         <div className='users-dashboard'>
           <div>
-            {users && users.map((u) => (
+            {users && searchResult.map((u) => (
 
               <div key={u.id}>
                 <p>{u.name}</p>
-                <button onClick={() => {
+                <button className=' btn darkbg' onClick={() => {
 
                   DisplayInfo(u)
                 }}>Informations </button>

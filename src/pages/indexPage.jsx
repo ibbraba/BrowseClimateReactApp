@@ -50,7 +50,7 @@ const IndexPage = () => {
 
 
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore facilis odio, ratione placeat quidem iusto, repellat autem, laudantium cumque obcaecati dignissimos! Corporis, nemo quis ullam consequuntur placeat commodi temporibus, exercitationem unde laudantium facere odio voluptatum necessitatibus facilis doloremque nulla! Reprehenderit?</p>
-          <img src='../src/assets/images/app/home/compass.jpg'></img>
+          <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fcompass.jpg?alt=media&token=8491aeee-958d-4132-8b38-0f05c790250e'></img>
         </div>
 
 
@@ -66,7 +66,7 @@ const IndexPage = () => {
         <div className="home homepage-ville">
 
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, doloremque voluptatibus pariatur, voluptas quo corporis eius optio vero ab, nihil nobis sunt at quae! Dignissimos dolorum natus tenetur quia veritatis a similique? Veritatis debitis ad distinctio ducimus, quia sunt vel aliquid dolor, nihil at iure? Quo, quas? Consequatur, alias culpa! Eius consectetur atque eaque est perspiciatis, praesentium beatae sequi fugit laborum reiciendis sit provident tempora quis voluptatum odio dignissimos, reprehenderit, sapiente corrupti. Fugiat dolores error quia ad saepe doloribus deleniti!</p>
-          <img src='../src/assets/images/app/home/tokyoHome.jpg'></img>
+          <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2FtokyoHome.jpg?alt=media&token=8258b8d8-c90e-4ebc-8f9c-fadd841f490c'></img>
         </div>
         <Link className='lbutton btn darkbg' to="/city"> Decouvrir les villes </Link>
 
@@ -77,7 +77,7 @@ const IndexPage = () => {
         <h3 className='mb-4'> Nos plus belles écritures </h3>
         <div className='home homepage-article'>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis vero aliquam voluptas obcaecati quibusdam quidem quam, nostrum laudantium nemo commodi inventore facilis doloremque facere? Similique voluptatibus quibusdam itaque id velit suscipit fugiat, molestiae culpa delectus ipsum facilis reiciendis natus quis omnis cupiditate, hic distinctio repellendus minima rem at non dolorem earum magni magnam. Sint quae ab totam architecto molestiae perferendis, deserunt nesciunt iure nobis quis repellat cumque odit in ea!</p>
-          <img src='../src/assets/images/app/home/pen.jpg'></img>
+          <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fpen.jpg?alt=media&token=8a3044cc-2719-4b09-afc1-3d7b3d348c46'></img>
         </div>
         <Link className='lbutton btn darkbg' to="/article"> Lire les articles </Link>
       </div>

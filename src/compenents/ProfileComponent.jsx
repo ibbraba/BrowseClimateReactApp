@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { GetToken, GetUserLogged } from './LoginComponent';
+import { DecodeUser, GetToken, GetUserLogged } from './LoginComponent';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
@@ -29,6 +29,8 @@ const ProfileComponent = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccesMessage] = useState(null)
 
+  const [permission, setpermission] = useState(null)
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -54,6 +56,20 @@ const ProfileComponent = () => {
 
     }
   }, [user, tab])
+
+  useEffect(() => {
+
+    if(user){
+      verifyAdminPermission()
+    }
+
+  }, [user])
+
+  useEffect(() => {
+
+
+  }, [permission])
+
 
   useEffect(() => {
 
@@ -118,6 +134,34 @@ const ProfileComponent = () => {
     }
 
   }
+
+
+
+  async function verifyAdminPermission() {
+    const token = GetToken()
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+        if (res.status != 200) {
+            setpermission(false)
+            console.log("Permission Denied");
+        }
+
+        const user = DecodeUser()
+        console.log(user);
+
+        if (user.role == "Admin") {
+
+            setpermission(true)
+            console.log("Permission OK");
+            return
+
+        }
+
+        console.log("Permission Denied");
+        setpermission(false)
+    }
+}
 
   async function FetchCities() {
 
@@ -282,12 +326,18 @@ const ProfileComponent = () => {
               </li>
 
               <li>
+              {permission && <Link to="/admin" className='btn lbutton whitebg'> Espace administrateur </Link> }
+              </li>
+
+
+
+              <li>
                 <button className='btn lbutton whitebg' onClick={() => Logout()}>
                   Se deconnecter
                 </button>
               </li>
 
-
+         
             </ul>
           </div>
 
@@ -366,6 +416,7 @@ const ProfileComponent = () => {
                   <Link className='btn lbutton lightbg' to={"/article/" + article.id}> Lire </Link>
                   <Link className='btn lbutton lightbg' to={'/article/edit/' + article.id}>Editer </Link>
                   <Link className='btn lbutton lightbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
+          
                 </div>
 
 
