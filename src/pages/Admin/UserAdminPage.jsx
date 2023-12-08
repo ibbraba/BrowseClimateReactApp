@@ -4,7 +4,7 @@ import { DecodeUser, GetToken } from '../../compenents/LoginComponent';
 import { Link } from 'react-router-dom';
 const UserAdminPage = () => {
 
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(null)
   const [selectedUser, setSelectedUser] = useState(null)
   const [user, setuser] = useState(null)
   const [permission, setpermission] = useState(false)
@@ -25,22 +25,30 @@ const UserAdminPage = () => {
 
 
     if (userInput == "") {
+
       setSearchResult(users)
       console.log(users);
+
     }
 
     if (userInput != "") {
+
       console.log("User Input:" + userInput);
-      const result = users.filter((user) => user.pseudo.includes(userInput) )
+      const result = users.filter((user) => user.pseudo.includes(userInput))
       console.log(result);
-
       setSearchResult(result)
+
     }
-
-
-
   }, [userInput])
 
+
+  useEffect(() => {
+
+    if (users) {
+      console.log("Users loaded");
+    }
+
+  }, [users])
 
   useEffect(() => {
 
@@ -50,7 +58,7 @@ const UserAdminPage = () => {
     const token = GetToken()
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+      const res = await axios.get("https://localhost:7226/api/User/validate")
       if (res.status != 200) {
         setpermission(false)
         console.log("Permission Denied");
@@ -87,8 +95,6 @@ const UserAdminPage = () => {
   function DisplayInfo(user) {
     setSelectedUser(user)
     console.log(selectedUser);
-
-
   }
 
   async function AllUsers() {
@@ -98,7 +104,7 @@ const UserAdminPage = () => {
       const token = GetToken()
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/GetAll");
+      const response = await axios.get("https://localhost:7226/api/User/GetAll");
       setUsers(response.data)
 
     } catch (err) {
@@ -111,7 +117,7 @@ const UserAdminPage = () => {
     const token = GetToken()
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Delete?id=" + id);
+    const response = await axios.get("https://localhost:7226/api/User/Delete?id=" + id);
 
   }
 
@@ -130,7 +136,7 @@ const UserAdminPage = () => {
 
       {permission && <>
 
-        <Link to={"/admin"} className='btn lbutton darkbg mb-2'> Menu administrateur </Link>
+        <Link to={"/admin"} className='btn lbutton darkbg mb-4'> Menu administrateur </Link>
 
 
         <h1>Tous les utilisateurs</h1>
@@ -140,11 +146,23 @@ const UserAdminPage = () => {
 
         <div className='users-dashboard'>
           <div>
-            {users && searchResult.map((u) => (
+            {users && !searchResult && users.map((u) => (
 
               <div key={u.id}>
                 <p>{u.name}</p>
-                <button className=' btn darkbg' onClick={() => {
+                <button className=' btn darkbg lbutton' onClick={() => {
+
+                  DisplayInfo(u)
+                }}>Informations </button>
+              </div>
+
+            ))}
+
+            {users && searchResult && searchResult.map((u) => (
+
+              <div key={u.id}>
+                <p>{u.name}</p>
+                <button className=' btn darkbg lbutton' onClick={() => {
 
                   DisplayInfo(u)
                 }}>Informations </button>
@@ -166,7 +184,7 @@ const UserAdminPage = () => {
                 <p> Role : {selectedUser.role} </p>
               </div>
 
-              <button className='btn btn-danger' onClick={() => DeleteUser(selectedUser.id)}> Supprimer </button>
+              <button className='btn lbutton darkbg' onClick={() => DeleteUser(selectedUser.id)}> Supprimer </button>
 
             </div>
           }

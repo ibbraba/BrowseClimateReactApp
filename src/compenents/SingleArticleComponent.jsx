@@ -73,7 +73,7 @@ const SingleArticleComponent = () => {
     async function GetArticle() {
 
         console.log("Call Single article with id " + id);
-        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/Get?id=" + id)
+        const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
         setArticle(res.data)
     }
 
@@ -96,7 +96,7 @@ async function GetUserLikes() {
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetArticlesLikedByUser?userId=" + user.UserId)
+    const res = await axios.post("https://localhost:7226/api/Article/GetArticlesLikedByUser?userId=" + user.UserId)
     console.log(res.data);
     setArticlesLiked(res.data)
 
@@ -105,7 +105,7 @@ async function GetUserLikes() {
 
 
 async function AddLike() {
-    const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/Article/AddLike?articleId=${article.id}&userId=${user.UserId}`, {
+    const res = await axios.post(`https://localhost:7226/api/Article/AddLike?articleId=${article.id}&userId=${user.UserId}`, {
         articleId: article.Id,
         userId: user.Id
     });
@@ -116,7 +116,7 @@ async function AddLike() {
 
 
 async function RemoveLike() {
-    const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/Article/RemoveLike?articleId=${article.id}&userId=${user.UserId}`, {
+    const res = await axios.post(`https://localhost:7226/api/Article/RemoveLike?articleId=${article.id}&userId=${user.UserId}`, {
         articleId: article.Id,
         userId: user.Id
     });

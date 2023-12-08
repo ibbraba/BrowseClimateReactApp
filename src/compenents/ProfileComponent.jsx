@@ -117,7 +117,7 @@ const ProfileComponent = () => {
       if (userLogged) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
+        const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
         console.log(res);
         console.log("End RES");
 
@@ -141,7 +141,7 @@ const ProfileComponent = () => {
     const token = GetToken()
     if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+        const res = await axios.get("https://localhost:7226/api/User/validate")
         if (res.status != 200) {
             setpermission(false)
             console.log("Permission Denied");
@@ -168,7 +168,7 @@ const ProfileComponent = () => {
     const token = GetToken()
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
+    const cities = await axios.get("https://localhost:7226/api/City/GetAll")
 
     setCities(cities.data)
 
@@ -198,7 +198,7 @@ const ProfileComponent = () => {
         
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.put("https://browseclimate20231121101412.azurewebsites.net/api/User/Update", {
+      const res = await axios.put("https://localhost:7226/api/User/Update", {
 
         "id": user.id,
         "name": user.name,
@@ -241,7 +241,7 @@ const ProfileComponent = () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       console.log(user);
-      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetUserArticle?id=" + user.id)
+      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + user.id)
       setUserArticles(res.data)
 
     } catch (error) {
@@ -256,7 +256,7 @@ const ProfileComponent = () => {
       const token = GetToken()
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.delete("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
+      const res = await axios.delete("https://localhost:7226/api/Article/Delete?id=" + articleId)
       console.log(res);
       if (res.status === 200) {
         let index = userArticles.findIndex(item => item.id === articleId)
@@ -345,7 +345,7 @@ const ProfileComponent = () => {
 
             {tab && <div>
 
-              <form className='profile-page-form' method='POST' action='https://browseclimate20231121101412.azurewebsites.net/api/User/Update'>
+              <form className='profile-page-form' method='POST' action='https://localhost:7226/api/User/Update'>
 
                 <div className='form-group'>
 

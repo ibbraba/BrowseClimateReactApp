@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { DecodeUser, GetToken } from '../../compenents/LoginComponent'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../../firebase'
@@ -12,6 +12,14 @@ const SingleCityAdminPage = () => {
   const [city, setCity] = useState(null)
   const [imagesUrls, setImageUrls] = useState(null)
   const [permission, setpermission] = useState(false)
+
+  const [cityName, setCityName] = useState(null)
+  const [country, setCountry] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [numberResidents, setNumberResidents] = useState(0)
+
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccesMessage] = useState(null)
 
   useState(() => {
 
@@ -23,12 +31,17 @@ const SingleCityAdminPage = () => {
 
   }, [permission])
 
+  useEffect(() => {
+
+  }, [city])
+
+   const navigate = useNavigate()
 
   async function verifyAdminPermission() {
     const token = GetToken()
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+      const res = await axios.get("https://localhost:7226/api/User/validate")
       if (res.status != 200) {
         setpermission(false)
         console.log("Permission Denied");
@@ -85,8 +98,9 @@ const SingleCityAdminPage = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/City/Delete?id=" + id)
+        const response = await axios.post("https://localhost:7226/api/City/Delete?id=" + id)
         console.log(response);
+        navigate("/admin/city")
 
       } catch (error) {
 
@@ -137,7 +151,7 @@ const SingleCityAdminPage = () => {
     try {
 
       console.log("call single city");
-      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/Get?id=" + id)
+      const response = await axios.get("https://localhost:7226/api/City/Get?id=" + id)
       setCity(response.data)
       console.log(response.data);
       console.log("End call city");
@@ -147,6 +161,49 @@ const SingleCityAdminPage = () => {
       console.log(error);
     }
   }
+
+  async function EditCity() {
+
+    try {
+
+
+
+ 
+
+      const res = await axios.post("https://localhost:7226/api/City/Update", {
+        "id": city.id,
+        "name": cityName ? cityName : city.name,
+        "country": country ? country : city.country,
+        "description": description ? description : city.description,
+        "numberResidents": numberResidents ? parseInt(numberResidents) : city.numberResidents,
+        "createdAt": "2023-12-08T08:43:48.603Z",
+        "timeZone": "string",
+        "lat": 0,
+        "lon": 0,
+        "temperature": 0,
+        "imageURL": "string",
+        "facts": [],
+        "timestamp": 0,
+        "note": 0,
+        "numberFans": 0
+      })
+
+      console.log(res);
+      setErrorMessage(false)
+      setSuccesMessage("Ville modifiée !")
+      GetCity()
+
+    } catch (error) {
+
+      console.log(error);
+      setSuccesMessage(false)
+      setErrorMessage("Une erreur est survenue")
+
+    }
+
+  }
+
+
 
   return (
 
@@ -161,6 +218,10 @@ const SingleCityAdminPage = () => {
 
       {city && permission && <div>
 
+        <Link to="/admin" className='btn lbutton darkbg mb-4'> Menu administrateur </Link>
+
+        {successMessage && < div className="alert alert-success"> {successMessage} </div>}
+        {errorMessage && <div className="alert alert-danger"> {errorMessage} </div>}
 
 
         <div className='city-overview'>
@@ -186,24 +247,24 @@ const SingleCityAdminPage = () => {
           <form className='admin-city-form' action="">
 
             <div className="form-group">
-              <input type="text" className='login-input' placeholder='Nom de la ville' defaultValue={city.name.trim()} />
+              <input onChange={(e) => setCityName(e.target.value)}  type="text" className='login-input' placeholder='Nom de la ville' defaultValue={city.name.trim()} />
             </div>
 
             <div className="form-group">
-              <input type="text" className='login-input' placeholder='Pays' defaultValue={city.country.trim()} />
-            </div>
-
-
-            <div className="form-group">
-              <input type="number" className='login-input' placeholder='Nombre de résidens' defaultValue={city.numberResidents} />
+              <input onChange={(e) => setCountry(e.target.value)} type="text" className='login-input' placeholder='Pays' defaultValue={city.country.trim()} />
             </div>
 
 
             <div className="form-group">
-              <textarea placeholder='Descritpion de la ville' className='login-input' defaultValue={city.description} />
+              <input onChange={(e) => setNumberResidents(e.target.value)} type="number" className='login-input' placeholder='Nombre de résidents' defaultValue={city.numberResidents} />
             </div>
 
-            <button className='btn lbutton darkbg'> Mettre à jour les informations </button>
+
+            <div className="form-group">
+              <textarea onChange={(e) => setDescription(e.target.value)} placeholder='Descritpion de la ville' className='login-input' defaultValue={city.description} />
+            </div>
+
+            <button onClick={(e) => { e.preventDefault(); EditCity() }} className='btn lbutton darkbg'> Mettre à jour les informations </button>
 
           </form>
 

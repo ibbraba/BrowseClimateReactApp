@@ -8,7 +8,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage'
 import { storage } from '../firebase'
 
-const WriteArticleComponent = () => {
+const WriteArticleComponent = (props) => {
 
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
@@ -19,16 +19,44 @@ const WriteArticleComponent = () => {
     const [imageUpload, setImageUpload] = useState(null)
     const [incompleteArticleMessage, setIncompleteArticleMessage] = useState(false)
     const [user, setUser] = useState(null)
-    const [successMessage, setSuccesMessage] = useState(null)
     const [article, setArticle] = useState(null)
     const [articleImageURL, setArticleImageURL] = useState("")
     const [articleCity, setArticleCity] = useState(null)
-
+    const [permission, setpermission] = useState(null)
+    
+    const [successMessage, setSuccesMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const params = useParams()
-    const { id } = params
+    const { id, from } = params
+    
+    async function verifyAdminPermission() {
+        const token = GetToken()
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const res = await axios.get("https://localhost:7226/api/User/validate")
+            if (res.status != 200) {
+                setpermission(false)
+                console.log("Permission Denied");
+            }
 
+            const user = DecodeUser()
+            console.log(user);
 
+            if (user.role == "Admin") {
+
+                setpermission(true)
+                console.log("Permission OK");
+                return
+
+            }
+
+            console.log("Permission Denied");
+            setpermission(false)
+        }
+    }
+
+ 
 
     useEffect(() => {
         GetAllCities()
@@ -39,6 +67,7 @@ const WriteArticleComponent = () => {
             GetArticle()
         }
 
+        console.log(from);
     }, [])
 
 
@@ -50,6 +79,20 @@ const WriteArticleComponent = () => {
 
     }, [article])
 
+
+    useEffect(() => {
+
+        if( article && user && permission == false){
+            
+            if(user.UserId != article.createdBy){
+
+                setErrorMessage("Vous n'avez pas les droits pour acceder à cette ressource")
+            }
+
+        }
+
+
+    }, [user, permission, article])
 
     useEffect(() => {
 
@@ -69,7 +112,7 @@ const WriteArticleComponent = () => {
 
     async function GetAllCities() {
         try {
-            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
+            const response = await axios.get("https://localhost:7226/api/City/GetAll")
             setCities(response.data)
 
             console.log(cities);
@@ -86,7 +129,7 @@ const WriteArticleComponent = () => {
     async function GetArticle() {
 
         console.log("Call Single article with id " + id);
-        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/Get?id=" + id)
+        const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
         setArticle(res.data)
     }
 
@@ -96,8 +139,11 @@ const WriteArticleComponent = () => {
         const imageListRef = ref(storage, `/articles/` + id)
 
         const res = await listAll(imageListRef)
+        console.log(res);
+        
 
         if (res.items[0]) {
+        
             const url = await getDownloadURL(res.items[0])
             console.log(url);
             setArticleImageURL(url)
@@ -121,7 +167,7 @@ const WriteArticleComponent = () => {
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 console.log(user);
-                const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Create", {
+                const res = await axios.post("https://localhost:7226/api/Article/Create", {
 
                     "title": title,
                     "description": description,
@@ -177,7 +223,7 @@ const WriteArticleComponent = () => {
         console.log(description)
         console.log(data)
         console.log(selectedCity);
-        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Update", {
+        const res = await axios.post("https://localhost:7226/api/Article/Update", {
             "id": id,
             "title": title ? title : article.title,
             "description": description ?  description : article.description,
@@ -200,7 +246,7 @@ const WriteArticleComponent = () => {
 
 
 
-        if (imageUpload != null || id != null) {
+        if (imageUpload != null && id != null) {
 
             try {
                 console.log("Uploading image ...");
@@ -210,15 +256,16 @@ const WriteArticleComponent = () => {
                 console.log(res);
                 
                 console.log(imageUpload);
+
                 if(res.items[0] && imageUpload ){
 
                     deleteObject(ref(storage, `/articles/${id}/${id}`))
                         
-                  const folder = ref(storage, `/articles/${id}/${id}`);
 
-                uploadBytes(folder, imageUpload)
                 }
-
+                
+                const folder = ref(storage, `/articles/${id}/${id}`);
+                uploadBytes(folder, imageUpload)
         
 
             } catch (error) {
@@ -246,9 +293,17 @@ const WriteArticleComponent = () => {
     return (
         <div className='write-article-container'>
 
+            {errorMessage && <div className='alert alert-error'>
+                    {errorMessage}
+
+                    <Link className='btn lbutton darkbg' to="/"> Retour à l'acceuil</Link>
+
+                </div>}
+
             {successMessage && <div className='alert alert-success'>
                 {successMessage}
 
+                {from == "admin" && <Link to="/admin"> Menu administrateur</Link>}
                 <Link to="/article"> Retour à la liste des articles </Link>
             </div>}
 
@@ -268,7 +323,7 @@ const WriteArticleComponent = () => {
 
                 <div className='form-group'>
                     <label htmlFor="">Choisissez l'image de l'article</label>
-                    <input className='btn lbutton darkbg choose-file-input' type='file' onChange={e => setImageUpload(e.target.files[0])}></input>
+                    <input className='btn lbutton darkbg choose-file-input' type='file' onChange={(e) => setImageUpload(e.target.files[0])}></input>
                 </div>
 
 

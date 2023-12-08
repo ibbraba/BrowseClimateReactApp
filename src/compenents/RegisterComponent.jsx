@@ -35,7 +35,7 @@ const RegisterComponent = () => {
 
     async function GetAllCities() {
         try {
-            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
+            const response = await axios.get("https://localhost:7226/api/City/GetAll")
             setCities(response.data)
 
             console.log(cities);
@@ -61,7 +61,7 @@ const RegisterComponent = () => {
 
             console.log(favoriteCity);
 
-            const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/User/Create", {
+            const res = await axios.post("https://localhost:7226/api/User/Create", {
 
                 "id": 0,
                 "name": name,

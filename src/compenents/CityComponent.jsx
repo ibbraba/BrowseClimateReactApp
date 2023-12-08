@@ -57,7 +57,7 @@ const CityComponent = () => {
 
   async function GetAllCities() {
     try {
-      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
+      const response = await axios.get("https://localhost:7226/api/City/GetAll")
       return response.data
 
     } catch (error) {

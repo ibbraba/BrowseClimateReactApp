@@ -394,7 +394,10 @@ CITIES PAGE
   border: 3px solid #feb5b5;
   padding: 2%;
   padding-top: 5%;
+  min-width: 240px;
+  width: 20%;
 }
+
 
 .city-facts {
   margin-left: 10%;
@@ -435,12 +438,14 @@ CITIES PAGE
 
 .single-city-image {
   max-width: 100%;
+  width: 100%;
   margin-bottom: 10%;
 }
 
 .single-city-description {
   padding: 5%;
   border: 3px solid #feb5b5;
+  margin-left: 15%;
 
 }
 

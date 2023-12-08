@@ -7,11 +7,12 @@ import { storage } from '../../firebase';
 
 const ArticleAdminPage = () => {
 
-    const [articles, setArticles] = useState([])
+    const [articles, setArticles] = useState(null)
     const [user, setuser] = useState(null)
     const [permission, setpermission] = useState(false)
+    const [imgLoaded, setImgLoaded] = useState(false)
 
-
+    const [successMessage, setSuccesMessage] = useState(null)
     useState(() => {
 
     }, [permission])
@@ -21,8 +22,9 @@ const ArticleAdminPage = () => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+            const res = await axios.get("https://localhost:7226/api/User/validate")
             if (res.status != 200) {
+                
                 setpermission(false)
                 console.log("Permission Denied");
             }
@@ -51,8 +53,7 @@ const ArticleAdminPage = () => {
         async function getArticles() {
 
             const articles = await AllArticles()
-            const images = await GetArticleImage()
-            console.log("Update" + articles)
+      
             setArticles(articles)
         }
 
@@ -61,15 +62,21 @@ const ArticleAdminPage = () => {
     }, [])
 
     useEffect(() => {
+        
+        if(articles && !imgLoaded){
+           
+            GetArticleImage()
+            console.log(articles);
+
+        }
 
 
-
-    }, [articles])
+    }, [articles, imgLoaded])
 
     async function AllArticles() {
         try {
             console.log("Call all Articles");
-            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetAll")
+            const response = await axios.get("https://localhost:7226/api/Article/GetAll")
 
             return response.data
 
@@ -84,14 +91,18 @@ const ArticleAdminPage = () => {
 
 
         if (window.confirm("Supprimer l'article?")) {
+            
+            
+
             try {
                 const token = GetToken()
     
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const response = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete", { id: articleId })
-    
-    
+                const response = await axios.post("https://localhost:7226/api/Article/Delete?id=" + articleId)
+                setSuccesMessage("Article supprimé !")
+                
                 console.log(response);
+                
             } catch (error) {
                 console.log(error);
             }
@@ -103,13 +114,16 @@ const ArticleAdminPage = () => {
 
     async function GetArticleImage() {
 
+        const newArticles = [...articles]
 
-        for (const article of articles) {
+
+        for (const article of newArticles) {
             let imageListRef = ref(storage, `/articles/${article.id}`)
 
             const res = await listAll(imageListRef)
+            
 
-            if (res.items.length > 0) {
+            if (res.items[0]) {
                 console.log(res);
                 console.log("Image on article " + article.id);
                 const url = await getDownloadURL(res.items[0])
@@ -120,10 +134,8 @@ const ArticleAdminPage = () => {
         }
 
         console.log(articles);
-        return articles
-
-
-
+        setImgLoaded(true)
+        setArticles(newArticles)
     }
 
 
@@ -136,6 +148,8 @@ const ArticleAdminPage = () => {
 
             </div>}
             {permission && <>
+
+            {successMessage && <div className='alert alert-success'> {successMessage} </div>}
 
             <Link to={"/admin"} className='btn lbutton darkbg'> Menu administrateur </Link>
 

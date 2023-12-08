@@ -70,7 +70,7 @@ const ArticleComponent = () => {
     async function AllArticles() {
         try {
             console.log("Call all Articles");
-            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetAll")
+            const response = await axios.get("https://localhost:7226/api/Article/GetAll")
             return response.data
 
 
