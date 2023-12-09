@@ -268,6 +268,8 @@ const SingleCityComponent = () => {
         <img className='single-city-image' src={imagesUrls[0]}></img>
       }
 
+      {  }
+
       {city && <div>
 
         {user && <div className='user-rate'>

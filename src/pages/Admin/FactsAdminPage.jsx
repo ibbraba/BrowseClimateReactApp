@@ -30,6 +30,8 @@ const FactsAdminPage = () => {
     }, [permission])
 
 
+
+
     useEffect(() => {
 
 
@@ -64,12 +66,26 @@ const FactsAdminPage = () => {
 
     async function LoadFacts() {
 
+        let factsResponse = []
         const res = await axios.get("https://localhost:7226/api/Fact/GetAll")
         if (res.status == 200) {
-            console.log(res.data);
-            setfacts(res.data)
+            factsResponse = res.data
         }
 
+        if(factsResponse.length > 0 ){
+            const responseCity = await axios.get("https://localhost:7226/api/City/GetAll")
+            const cities = responseCity.data
+            
+            for( let fact of factsResponse){
+    
+                const city = cities.find(x => x.id == fact.cityId)
+    
+                fact.cityName = city.name
+    
+            }
+        }
+        console.log(factsResponse);
+        setfacts(factsResponse)
     }
 
 
@@ -80,6 +96,8 @@ const FactsAdminPage = () => {
         const cities = await axios.get("https://localhost:7226/api/City/GetAll")
 
         setCities(cities.data)
+
+
 
     }
 
@@ -225,13 +243,14 @@ const FactsAdminPage = () => {
 
                         <Card>
                             <Card.Header>
+                                <h3> {fact.cityName} </h3>
                                 <h5> {fact.title} </h5>
                             </Card.Header>
                             <Card.Body>
 
                                 <p>{fact.description}</p>
 
-                                
+
                             </Card.Body>
 
                             <Card.Footer>
