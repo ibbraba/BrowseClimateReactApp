@@ -170,7 +170,7 @@ const CityComponent = () => {
       {cities && cities.map(city =>
 
 
-        <div style={{ "backgroundImage": `url(${city.imageURL})` }} className="card city-card" key={city.id} >
+         <div style={{ "backgroundImage":   city.imageURL ? `url(${city.imageURL})` : `url(https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fbuilding.jpg?alt=media&token=3d2a399e-25c4-4485-b06e-bc32df5cb582)`    }} className="card city-card" key={city.id} >
 
 
 

@@ -284,7 +284,7 @@ const ImagesAdminPage = () => {
 
           <div className='admin-image' key={image.url}>
 
-            <p>{image.fileLocation}</p>
+ 
 
             <img className='app-photo' src={image.url}></img>
 

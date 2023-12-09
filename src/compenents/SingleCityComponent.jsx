@@ -342,7 +342,7 @@ const SingleCityComponent = () => {
 
 
 
-          {articles.length > 0 && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
+          {articles &&  articles.length > 0 && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
           {articles && articles.map((article) => (
 
             <div key={article.id}>
