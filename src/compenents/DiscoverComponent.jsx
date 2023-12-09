@@ -5,6 +5,7 @@ import { DecodeUser, GetToken, GetUserLogged, IsUserLoggedIn } from './LoginComp
 import { useCallback } from 'react'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../firebase'
+import { Card } from 'react-bootstrap'
 
 const DiscoverComponent = () => {
 
@@ -384,7 +385,7 @@ const DiscoverComponent = () => {
 
             {showDiscover && favoriteCity && <div className='discover-container'>
 
-   
+
 
                 <div className='discover-favoritecity'>
 
@@ -433,15 +434,30 @@ const DiscoverComponent = () => {
 
                     {object.type === 'fact' &&
 
-                        <div className='single-fact'>
-                            <h3>Fact</h3>
+                        <div className='fact-card' key={object.id}>
 
-                            <p>{object.description}</p>
-                            {object.isLiked && <button onClick={() => DeleteFactLike(object.id)}>  &#128148;  </button>}
-                            {!object.isLiked && <button onClick={() => AddLikeToFact(object.id)}> &hearts;  </button>}
+                            <Card>
+                                <Card.Header>
+
+                                    <h5> {object.title} </h5>
+                                </Card.Header>
+                                <Card.Body>
+
+                                    <p>{object.description}</p>
+
+
+                                </Card.Body>
+
+                                <Card.Footer>
+                                    {object.isLiked && <button onClick={() => DeleteFactLike(object.id)}>  &#128148;  </button>}
+                                    {!object.isLiked && <button onClick={() => AddLikeToFact(object.id)}> &hearts;  </button>}
+                                </Card.Footer>
+
+                            </Card>
 
 
                         </div>
+
 
                     }
 

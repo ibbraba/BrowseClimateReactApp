@@ -7,6 +7,7 @@ import { Typography, Rating, Slider } from '@mui/material'
 import { GetUserLogged } from './LoginComponent'
 import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Card } from 'react-bootstrap'
 
 const SingleCityComponent = () => {
 
@@ -66,14 +67,14 @@ const SingleCityComponent = () => {
 
     console.log(userFactLikes);
 
-    if(facts){
+    if (facts) {
 
       if (!userFactLikes) {
         GetFactsLikedByUser()
       }
     }
-    
-   
+
+
   }, [facts])
 
   useEffect(() => {
@@ -260,7 +261,7 @@ const SingleCityComponent = () => {
   return (
     <div className='city-container single-city'>.
 
-     {city && <h1 className='single-city-title'> {city.name} </h1> }
+      {city && <h1 className='single-city-title'> {city.name} </h1>}
 
 
       {imagesUrls &&
@@ -268,7 +269,7 @@ const SingleCityComponent = () => {
         <img className='single-city-image' src={imagesUrls[0]}></img>
       }
 
-      {  }
+      { }
 
       {city && <div>
 
@@ -307,17 +308,34 @@ const SingleCityComponent = () => {
 
         <div className='single-city-facts'>
 
-          {facts && facts.map((fact) => (
-
-            <div key={fact.id} className='single-fact'>
-              <h3>Fact</h3>
-
-              <p>{fact.description}</p>
-              {fact.isLiked && <button onClick={() => DeleteFactLike(fact.id)}>  &#128148;  </button>}
-              {!fact.isLiked && <button onClick={() => AddLikeToFact(fact.id)}> &hearts;  </button>}
 
 
-            </div>
+
+
+          {facts && facts.map((fact) => (<div className='fact-card' key={fact.id}>
+
+            <Card>
+              <Card.Header>
+
+                <h5> {fact.title} </h5>
+              </Card.Header>
+              <Card.Body>
+
+                <p>{fact.description}</p>
+
+
+              </Card.Body>
+
+              <Card.Footer>
+                {fact.isLiked && <button onClick={() => DeleteFactLike(fact.id)}>  &#128148;  </button>}
+                {!fact.isLiked && <button onClick={() => AddLikeToFact(fact.id)}> &hearts;  </button>}
+              </Card.Footer>
+
+            </Card>
+
+
+          </div>
+
           ))}
 
 
@@ -344,7 +362,7 @@ const SingleCityComponent = () => {
 
 
 
-          {articles &&  articles.length > 0 && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
+          {articles && articles.length > 0 && <h3 className='my-3'>Articles en lien avec {city.name}</h3>}
           {articles && articles.map((article) => (
 
             <div key={article.id}>
