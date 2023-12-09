@@ -11,6 +11,9 @@ const UserAdminPage = () => {
   const [userInput, setUserInput] = useState("")
   const [searchResult, setSearchResult] = useState(null)
 
+  const [successMessage, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+
   useState(() => {
 
     verifyAdminPermission()
@@ -44,9 +47,7 @@ const UserAdminPage = () => {
 
   useEffect(() => {
 
-    if (users) {
-      console.log("Users loaded");
-    }
+
 
   }, [users])
 
@@ -115,9 +116,23 @@ const UserAdminPage = () => {
   async function DeleteUser(id) {
 
     const token = GetToken()
+    if (window.confirm("Supprimer l'utilisateur ?")) {
+      try {
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get("https://localhost:7226/api/User/Delete?id=" + id);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const response = await axios.delete("https://localhost:7226/api/User/Delete?id=" + id);
+
+        setErrorMessage(false)
+        setSuccessMessage("Utilisateur supprimé !")
+        AllUsers()
+      } catch (error) {
+
+        setErrorMessage("Une erreur est survenue")
+        setSuccessMessage(false)
+        console.log(error);
+
+      }
+    }
 
   }
 
@@ -136,10 +151,17 @@ const UserAdminPage = () => {
 
       {permission && <>
 
+        {successMessage && <div className='alert alert-success'> {successMessage}  </div>}
+        {errorMessage && <div className='alert alert-danger'> {err}  </div>}
+        
         <Link to={"/admin"} className='btn lbutton darkbg mb-4'> Menu administrateur </Link>
 
 
+
+
         <h1>Tous les utilisateurs</h1>
+
+
 
 
         <input type='text' className='login-input user-input' placeholder='Rechercher un utilisateur' onChange={(e) => setUserInput(e.target.value)} />
@@ -148,8 +170,8 @@ const UserAdminPage = () => {
           <div>
             {users && !searchResult && users.map((u) => (
 
-              <div key={u.id}>
-                <p>{u.name}</p>
+              <div key={u.id} className='mb-4'>
+                <p>{u.pseudo}</p>
                 <button className=' btn darkbg lbutton' onClick={() => {
 
                   DisplayInfo(u)
@@ -160,9 +182,9 @@ const UserAdminPage = () => {
 
             {users && searchResult && searchResult.map((u) => (
 
-              <div key={u.id}>
+              <div key={u.id} className='mb-4 admin-info-user'>
                 <p>{u.name}</p>
-                <button className=' btn darkbg lbutton' onClick={() => {
+                <button className=' btn whitebg lbutton' onClick={() => {
 
                   DisplayInfo(u)
                 }}>Informations </button>
@@ -174,9 +196,9 @@ const UserAdminPage = () => {
           </div>
 
           {selectedUser &&
-            <div className='user-nformations'>
+            <div >
 
-              <div>
+              <div className='user-informations bordered'>
                 <p> Pseudo : {selectedUser.pseudo}   </p>
                 <p> Nom : {selectedUser.name} </p>
                 <p> Prenom : {selectedUser.firstName} </p>

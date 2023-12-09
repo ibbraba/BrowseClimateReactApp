@@ -86,6 +86,9 @@ const ImagesAdminPage = () => {
         }
 
         const imageRef = ref(storage, `/city/${selectedCity.trim()}/presentation/main`);
+
+
+
         uploadBytes(imageRef, imageUpload).then((image) => {
           getDownloadURL(image.ref).then((url) => {
             setImageUrls((prev) => [...prev, url])
@@ -97,8 +100,9 @@ const ImagesAdminPage = () => {
       } else {
         const imageRef = ref(storage, `/city/${selectedCity.trim()}/${imageUpload.name}`);
         uploadBytes(imageRef, imageUpload).then((image) => {
+          const fileLocation = image.ref._location.path_
           getDownloadURL(image.ref).then((url) => {
-            setImageUrls((prev) => [...prev, url])
+            setImageUrls((prev) => [...prev, {fileLocation, url}])
           })
 
         })
@@ -124,6 +128,9 @@ const ImagesAdminPage = () => {
     console.log(imagesUrls);
   }, []);
 
+  useEffect(() =>{
+
+  }, [imagesUrls])
 
   async function GetAllCities() {
     try {
@@ -169,23 +176,55 @@ const ImagesAdminPage = () => {
 
 
       if (items != null) {
-        const urls = []
+        console.log(items);
+        const images = []
 
         for (const item of items) {
-
+          const fileLocation = items[0]._location.path_
+     
           const url = await getDownloadURL(item)
-          urls.push(url)
+          const image = {fileLocation, url}
+          images.push(image)
 
         }
-        setImageUrls(urls)
+
+        console.log(images);
+        setImageUrls(images)
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function DeleteImage(url) {
-    console.log(url);
+  async function DeleteImage(image) {
+
+    
+    console.log(image.fileLocation);
+    if(window.confirm("Supprimer l'image ?")){
+
+      try {
+
+        deleteObject(ref(storage, image.fileLocation))
+        console.log("Deleted");
+
+        let newImages = [...imagesUrls]
+
+        newImages = newImages.filter(function( img ) {
+          return img.url !== image.url 
+        });
+
+
+       // console.log(newImages);
+      //  const index = newImages.indexOf(x => x.url == image.url)
+       // console.log(index);
+      //  newImages.splice(index, 1)
+     //   console.log(newImages);
+        setImageUrls(newImages)
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
 
   }
@@ -230,7 +269,7 @@ const ImagesAdminPage = () => {
 
           <input className='gallerie-input' type='file' onChange={e => { setImageUpload(e.target.files[0]) }}></input>
           {imageUpload && <p> {imageUpload.name} </p>}
-
+          {console.log(imagesUrls)}
           <div className='form-group my-2'>
             <label className='btn-primary' htmlFor=""> Choisir comme image principale </label>
             <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
@@ -240,20 +279,19 @@ const ImagesAdminPage = () => {
 
 
         </div>
-        {imagesUrls && imagesUrls.map(url => (
+        {imagesUrls && imagesUrls.map(image => (
 
 
-          <div className='admin-image' key={url}>
+          <div className='admin-image' key={image.url}>
 
+            <p>{image.fileLocation}</p>
 
-            <img className='app-photo' src={url}></img>
+            <img className='app-photo' src={image.url}></img>
 
 
             <div>
               <button className='btn btn-danger' onClick={(e) => {
-                setSelectedImageURL(url)
-                DeleteImage(url)
-
+                DeleteImage(image)       
               }}>Supprimer</button>
 
 

@@ -57,6 +57,10 @@ body {
   height: auto;
 }
 
+.bordered {
+  border: 3px solid #feb5b5;
+}
+
 
 /* BUTTONS */
 
@@ -740,6 +744,21 @@ CITIES PAGE
   border: 3px solid #feb5b5;
 }
 
+.admin-info-user p {
+  margin-bottom: 2px !important;
+}
+
+
+.user-informations{
+  padding: 10% 5%;
+  min-width: 200px;
+}
+
+.admin-gallerie button{
+  padding: 1% 6%;
+    max-width: 300px;
+    margin: 0 auto;
+}
 
 /* ARTICLE PAGE */
 
