@@ -42,7 +42,7 @@ const FactsAdminPage = () => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://localhost:7226/api/User/validate")
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
             if (res.status != 200) {
                 setpermission(false)
                 console.log("Permission Denied");
@@ -67,13 +67,13 @@ const FactsAdminPage = () => {
     async function LoadFacts() {
 
         let factsResponse = []
-        const res = await axios.get("https://localhost:7226/api/Fact/GetAll")
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetAll")
         if (res.status == 200) {
             factsResponse = res.data
         }
 
         if(factsResponse.length > 0 ){
-            const responseCity = await axios.get("https://localhost:7226/api/City/GetAll")
+            const responseCity = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
             const cities = responseCity.data
             
             for( let fact of factsResponse){
@@ -93,7 +93,7 @@ const FactsAdminPage = () => {
     async function FetchCities() {
 
 
-        const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+        const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
 
         setCities(cities.data)
 
@@ -110,7 +110,7 @@ const FactsAdminPage = () => {
 
                 console.log("city:" + city);
 
-                const res = await axios.post("https://localhost:7226/api/Fact/Create", {
+                const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/Create", {
 
                     "id": 0,
                     "title": intitule,
@@ -151,7 +151,7 @@ const FactsAdminPage = () => {
 
         try {
             console.log("Deleting fact");
-            const res = await axios.post("https://localhost:7226/api/Fact/Delete?factId=" + id)
+            const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/Delete?factId=" + id)
 
             if (res.status == 200) {
                 setsuccessMessage("Supprimé !")

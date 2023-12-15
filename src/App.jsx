@@ -52,7 +52,7 @@ function App() {
 
 
   const client = axios.create({
-    baseURL: "https://localhost:7226/api/"
+    baseURL: "https://browseclimate20231121101412.azurewebsites.net/api/"
   })
 
 

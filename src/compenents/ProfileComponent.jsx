@@ -117,7 +117,7 @@ const ProfileComponent = () => {
       if (userLogged) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
         console.log(res);
         console.log("End RES");
 
@@ -141,7 +141,7 @@ const ProfileComponent = () => {
     const token = GetToken()
     if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const res = await axios.get("https://localhost:7226/api/User/validate")
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
         if (res.status != 200) {
             setpermission(false)
             console.log("Permission Denied");
@@ -168,7 +168,7 @@ const ProfileComponent = () => {
     const token = GetToken()
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+    const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
 
     setCities(cities.data)
 
@@ -198,7 +198,7 @@ const ProfileComponent = () => {
         
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.put("https://localhost:7226/api/User/Update", {
+      const res = await axios.put("https://browseclimate20231121101412.azurewebsites.net/api/User/Update", {
 
         "id": user.id,
         "name": user.name,
@@ -241,7 +241,7 @@ const ProfileComponent = () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       console.log(user);
-      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + user.id)
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetUserArticle?id=" + user.id)
       setUserArticles(res.data)
 
     } catch (error) {
@@ -251,36 +251,44 @@ const ProfileComponent = () => {
   }
 
   async function DeleteArticle(articleId) {
+    if(window.confirm("Supprimer l'article ?")){
 
-    try {
-      const token = GetToken()
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      const res = await axios.delete("https://localhost:7226/api/Article/Delete?id=" + articleId)
-      console.log(res);
-      if (res.status === 200) {
-        let index = userArticles.findIndex(item => item.id === articleId)
-        console.log(index);
-        const newArticlesArray = [...userArticles]
-        newArticlesArray.splice(index, 1)
-        setUserArticles(newArticlesArray)
-
+      try {
+        const token = GetToken()
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  
+        const res = await axios.delete("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
+        console.log(res);
+        if (res.status === 200) {
+          let index = userArticles.findIndex(item => item.id === articleId)
+          console.log(index);
+          const newArticlesArray = [...userArticles]
+          newArticlesArray.splice(index, 1)
+          setUserArticles(newArticlesArray)
+  
+        }
+  
+      } catch (error) {
+        console.log(error);
       }
 
-    } catch (error) {
-      console.log(error);
     }
+    
 
   }
 
   function Logout() {
-    const token = localStorage.getItem('bc-token')
-    if (token) {
-      localStorage.removeItem("bc-token")
+
+    if(window.confirm("Se déconnecter ?")){
+      const token = localStorage.getItem('bc-token')
+      if (token) {
+        localStorage.removeItem("bc-token")
+      }
+      console.log("User logout ...");
+      setUser(null)
+      navigate('/')
     }
-    console.log("User logout ...");
-    setUser(null)
-    navigate('/')
+
   }
 
 
@@ -302,7 +310,7 @@ const ProfileComponent = () => {
       {successMessage && <Alert variant='success'> {successMessage} </Alert>}  
 
 
-        <img className='my-5 app-photo' src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fnikon.jpg?alt=media&token=46e0deca-ca4a-4273-9b61-5c7a9767e0cb" alt="" />
+        <img className='my-5 app-photo profile-photo' src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fnikon.jpg?alt=media&token=46e0deca-ca4a-4273-9b61-5c7a9767e0cb" alt="" />
 
       {user && <>
         <h1>Profil de {user.name} {user.firstName}</h1>
@@ -345,7 +353,7 @@ const ProfileComponent = () => {
 
             {tab && <div>
 
-              <form className='profile-page-form' method='POST' action='https://localhost:7226/api/User/Update'>
+              <form className='profile-page-form' method='POST' action='https://browseclimate20231121101412.azurewebsites.net/api/User/Update'>
 
                 <div className='form-group'>
 

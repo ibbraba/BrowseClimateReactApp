@@ -52,7 +52,7 @@ export async function IsUserLoggedIn() {
   } else {
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get("https://localhost:7226/api/User/validate")
+    const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
 
     return response
   }
@@ -99,7 +99,7 @@ const LoginComponent = () => {
   async function Login() {
     try {
       console.log("Call login");
-      const response = await axios.post(`https://localhost:7226/api/User/login?pseudo=${pseudo}&password=${password}`)
+      const response = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/User/login?pseudo=${pseudo}&password=${password}`)
 
 
       localStorage.setItem("bc-token", response.data)

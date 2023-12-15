@@ -823,6 +823,10 @@ CITIES PAGE
   padding: 5%;
 }
 
+.profile-photo{
+  width: 100% !important;
+}
+
 @media (max-width: 767px) {
 
   .hamburger {

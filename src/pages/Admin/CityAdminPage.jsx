@@ -32,7 +32,7 @@ const CityAdminPage = () => {
     const token = GetToken()
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const res = await axios.get("https://localhost:7226/api/User/validate")
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
       if (res.status != 200) {
         setpermission(false)
         console.log("Permission Denied");
@@ -67,7 +67,7 @@ const CityAdminPage = () => {
     try {
 
       console.log("call cities");
-      const response = await axios.get("https://localhost:7226/api/City/GetAll")
+      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
       setCities(response.data)
 
       console.log("End call cities");
@@ -86,7 +86,7 @@ const CityAdminPage = () => {
     }
 
     try {
-      const res = await axios.post("https://localhost:7226/api/City/Create", {
+      const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/City/Create", {
 
       "id": 0,
       "name": cityName,

@@ -24,7 +24,7 @@ const EditArticlePage = () => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://localhost:7226/api/User/validate")
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
             if (res.status != 200) {
                 setpermission(false)
                 console.log("Permission Denied");
@@ -59,7 +59,7 @@ const EditArticlePage = () => {
     async function GetArticle() {
 
         console.log("Call Single article with id " + id);
-        const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/Get?id=" + id)
         console.log(res.data);
         setArticle(res.data)
 

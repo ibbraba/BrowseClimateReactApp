@@ -104,7 +104,7 @@ const IndexPage = () => {
         <h3>  </h3>
         <div className="home homepage-stats">
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus voluptatibus atque distinctio exercitationem natus accusantium sapiente nostrum quis. Voluptas, libero!</p>
-          <img src='../src/assets/images/app/home/stats.jpg'></img>
+          <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fstats.jpg?alt=media&token=9c00d698-750e-4975-95ad-623dc030b587'></img>
         </div>
 
 

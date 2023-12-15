@@ -33,7 +33,7 @@ const ImagesAdminPage = () => {
     const token = GetToken()
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const res = await axios.get("https://localhost:7226/api/User/validate")
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
       if (res.status != 200) {
         setpermission(false)
         console.log("Permission Denied");
@@ -136,7 +136,7 @@ const ImagesAdminPage = () => {
     try {
 
       console.log("call cities");
-      const response = await axios.get("https://localhost:7226/api/City/GetAll")
+      const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
       setCities(response.data)
 
       console.log("End call cities");
@@ -290,7 +290,7 @@ const ImagesAdminPage = () => {
 
 
             <div>
-              <button className='btn btn-danger' onClick={(e) => {
+              <button className='btn btn-danger mb-5' onClick={(e) => {
                 DeleteImage(image)       
               }}>Supprimer</button>
 

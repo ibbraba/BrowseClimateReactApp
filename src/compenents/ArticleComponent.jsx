@@ -70,7 +70,8 @@ const ArticleComponent = () => {
     async function AllArticles() {
         try {
             console.log("Call all Articles");
-            const response = await axios.get("https://localhost:7226/api/Article/GetAll")
+            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetAll")
+            console.log(response);
             return response.data
 
 
@@ -122,12 +123,12 @@ const ArticleComponent = () => {
 
 
                     <p>  {article.likes}  &hearts; </p>
-                    {article.imageURL && <img className='article-image' src={article.imageURL} />}
-                    {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
+                    {article.imageURL && <img className='article-image mb-5' src={article.imageURL} />}
+                    {!article.imageURL && <img className='article-image mb-5' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                    <div dangerouslySetInnerHTML={{ __html:article.description}} ></div>  
+                    <div className='mb-5' dangerouslySetInnerHTML={{ __html:article.description}} ></div>  
               
-                    <button className='lbutton btn darkbg'><Link to={"/article/" + article.id}> Lire </Link>  </button>
+                    <Link className='lbutton btn darkbg' to={"/article/" + article.id}> Lire </Link> 
 
                 </div>
 

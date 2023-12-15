@@ -34,7 +34,7 @@ const WriteArticleComponent = (props) => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://localhost:7226/api/User/validate")
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
             if (res.status != 200) {
                 setpermission(false)
                 console.log("Permission Denied");
@@ -112,7 +112,7 @@ const WriteArticleComponent = (props) => {
 
     async function GetAllCities() {
         try {
-            const response = await axios.get("https://localhost:7226/api/City/GetAll")
+            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
             setCities(response.data)
 
             console.log(cities);
@@ -129,7 +129,7 @@ const WriteArticleComponent = (props) => {
     async function GetArticle() {
 
         console.log("Call Single article with id " + id);
-        const res = await axios.get("https://localhost:7226/api/Article/Get?id=" + id)
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/Get?id=" + id)
         setArticle(res.data)
     }
 
@@ -167,7 +167,7 @@ const WriteArticleComponent = (props) => {
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 console.log(user);
-                const res = await axios.post("https://localhost:7226/api/Article/Create", {
+                const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Create", {
 
                     "title": title,
                     "description": description,
@@ -223,7 +223,7 @@ const WriteArticleComponent = (props) => {
         console.log(description)
         console.log(data)
         console.log(selectedCity);
-        const res = await axios.post("https://localhost:7226/api/Article/Update", {
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Update", {
             "id": id,
             "title": title ? title : article.title,
             "description": description ?  description : article.description,

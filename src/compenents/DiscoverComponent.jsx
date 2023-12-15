@@ -34,27 +34,19 @@ const DiscoverComponent = () => {
         const allObjects = []
         async function LoadDiscoverElements() {
 
-
-
-
             const articles = await getDiscoverArticles()
             const cities = await FetchCities()
             const facts = await FetchFacts()
-
             const articleswithImages = await GetArticleImage(articles)
-
             setArticles(articles)
 
         }
 
-
         LoadDiscoverElements()
-
 
     }, [])
 
     useEffect(() => {
-
 
     }, [user])
 
@@ -177,7 +169,7 @@ const DiscoverComponent = () => {
             if (userLogged) {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                const res = await axios.get("https://localhost:7226/api/User/Get?id=" + userLogged.UserId)
+                const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
 
                 setUser(res.data)
 
@@ -200,7 +192,7 @@ const DiscoverComponent = () => {
                 const token = GetToken()
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const res = await axios.get("https://localhost:7226/api/Article/GetDiscoverArticles?userId=" + id)
+                const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetDiscoverArticles?userId=" + id)
 
                 for (const article of res.data) {
 
@@ -279,7 +271,7 @@ const DiscoverComponent = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const cities = await axios.get("https://localhost:7226/api/City/GetAll")
+        const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
 
         setCites(cities.data)
 
@@ -293,7 +285,7 @@ const DiscoverComponent = () => {
         const token = GetToken()
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const facts = await axios.get("https://localhost:7226/api/Fact/GetAll")
+        const facts = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetAll")
 
 
         setFacts(facts.data)
@@ -305,7 +297,7 @@ const DiscoverComponent = () => {
 
         if (user) {
             console.log("Loading Facts Likes ...");
-            const res = await axios.get("https://localhost:7226/api/Fact/UserLikes?userId=" + user.id)
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/UserLikes?userId=" + user.id)
             console.log(res);
 
             if (res.status == 200) {
@@ -319,7 +311,7 @@ const DiscoverComponent = () => {
 
     async function AddLikeToFact(id) {
 
-        const res = await axios.post("https://localhost:7226/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.id)
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.id)
         if (res.status == 200) {
             console.log("Like ajouté");
         } else {
@@ -331,7 +323,7 @@ const DiscoverComponent = () => {
 
 
     async function DeleteFactLike(id) {
-        const res = await axios.post("https://localhost:7226/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.id)
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.id)
         if (res.status == 200) {
             console.log("Like supprimé ");
         } else {
@@ -424,9 +416,9 @@ const DiscoverComponent = () => {
                             {object.imageURL && <img className='article-image' src={object.imageURL} />}
                             {!object.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                            <div className='article-description'>{object.description}</div>
-                            <div>{object.content}</div>
-                            <button className='btn lbutton darkbg'><Link to={"/article/" + object.id}> Lire </Link>  </button>
+                            <div className='article-description mt-3'>{object.description}</div>
+                         
+                            <Link className='btn lbutton darkbg mt-4' to={"/article/" + object.id}> Lire </Link> 
                         </div>
 
                     }

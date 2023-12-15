@@ -22,7 +22,7 @@ const ArticleAdminPage = () => {
         const token = GetToken()
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.get("https://localhost:7226/api/User/validate")
+            const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
             if (res.status != 200) {
                 
                 setpermission(false)
@@ -76,7 +76,7 @@ const ArticleAdminPage = () => {
     async function AllArticles() {
         try {
             console.log("Call all Articles");
-            const response = await axios.get("https://localhost:7226/api/Article/GetAll")
+            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetAll")
 
             return response.data
 
@@ -98,7 +98,7 @@ const ArticleAdminPage = () => {
                 const token = GetToken()
     
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const response = await axios.post("https://localhost:7226/api/Article/Delete?id=" + articleId)
+                const response = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
                 setSuccesMessage("Article supprimé !")
                 
                 console.log(response);
