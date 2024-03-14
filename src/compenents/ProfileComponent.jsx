@@ -256,8 +256,9 @@ const ProfileComponent = () => {
       try {
         const token = GetToken()
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
-        const res = await axios.delete("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
+        
+
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
         console.log(res);
         if (res.status === 200) {
           let index = userArticles.findIndex(item => item.id === articleId)

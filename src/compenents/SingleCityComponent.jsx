@@ -3,7 +3,7 @@ import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { storage } from '../firebase'
-import { Typography, Rating, Slider } from '@mui/material'
+import { Typography, Rating, Slider, Portal, ListItemButton } from '@mui/material'
 import { GetUserLogged } from './LoginComponent'
 import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -65,7 +65,7 @@ const SingleCityComponent = () => {
 
   useEffect(() => {
 
-    console.log(userFactLikes);
+     console.log(userFactLikes);
 
     if (facts) {
 
@@ -192,6 +192,9 @@ const SingleCityComponent = () => {
 
   }
 
+
+  
+
   async function GetUserNote() {
 
     try {
@@ -288,9 +291,7 @@ const SingleCityComponent = () => {
 
 
         <div className='city-display'>
-
-
-
+          
           <div className='city-informations'>
             <div> Pays : {city.country} </div>
             <div> Nombre d'habitants : {city.numberResidents} </div>
@@ -307,11 +308,6 @@ const SingleCityComponent = () => {
 
 
         <div className='single-city-facts'>
-
-
-
-
-
           {facts && facts.map((fact) => (<div className='fact-card' key={fact.id}>
 
             <Card>

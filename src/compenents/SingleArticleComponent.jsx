@@ -1,6 +1,6 @@
 import axios, { Axios } from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { GetToken, GetUserLogged } from './LoginComponent'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../firebase'
@@ -149,6 +149,8 @@ return (
 
 
        <div dangerouslySetInnerHTML={{ __html:article.content}} ></div>  
+
+       <Link className='lbutton btn darkbg' to="/article"> Retour aux articles  </Link>
 
     </div>
 )

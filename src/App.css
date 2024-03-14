@@ -11,7 +11,7 @@
 
 
 body {
-  font-size: 12px;
+  font-size: 16px !important;
 }
 
 /* VAR */
@@ -506,6 +506,10 @@ CITIES PAGE
 }
 
 
+.article-container p {
+  font-size: 18px;
+  line-height: 27px;
+}
 
 .articles-list>div {
   margin-bottom: 200px;
@@ -845,6 +849,7 @@ CITIES PAGE
     margin: 0;
     margin-top: 50px;
   }
+
 
 
   .profile-page {
