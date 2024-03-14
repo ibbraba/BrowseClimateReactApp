@@ -167,7 +167,10 @@ function App() {
           <Route path='/write' element={<WriteArticlePage></WriteArticlePage>}></Route>
           <Route path='/mentions' element={<MentionsLegalesPage></MentionsLegalesPage>}></Route>
           <Route path='/confidentialite' element={<ConfidentialitePage></ConfidentialitePage>}></Route>
-
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
+          />
 
           {/* ADMIN */}
 
