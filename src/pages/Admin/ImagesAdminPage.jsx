@@ -162,6 +162,7 @@ const ImagesAdminPage = () => {
     return res.items
   }
 
+  // Fetch images 
   const getImagesUrls = async () => {
     try {
 

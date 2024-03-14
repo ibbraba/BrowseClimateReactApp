@@ -122,6 +122,8 @@ const SingleCityAdminPage = () => {
     return res.items
   }
 
+
+  // Get images from city
   const getImagesUrls = async () => {
     try {
 

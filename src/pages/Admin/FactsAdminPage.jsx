@@ -37,7 +37,7 @@ const FactsAdminPage = () => {
 
     }, [facts, cities, errorMessage, successMessage])
 
-
+    //Check if user is admin
     async function verifyAdminPermission() {
         const token = GetToken()
         if (token) {
@@ -64,6 +64,8 @@ const FactsAdminPage = () => {
         }
     }
 
+
+    //Fetch facts
     async function LoadFacts() {
 
         let factsResponse = []
@@ -101,7 +103,7 @@ const FactsAdminPage = () => {
 
     }
 
-
+    // Add a fact
     async function SendFact() {
 
         try {

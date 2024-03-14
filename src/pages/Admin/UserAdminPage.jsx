@@ -55,6 +55,8 @@ const UserAdminPage = () => {
 
   }, [searchResult])
 
+
+  //Check if user is admin
   async function verifyAdminPermission() {
     const token = GetToken()
     if (token) {
