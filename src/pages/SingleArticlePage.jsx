@@ -15,7 +15,7 @@ const SingleArticlePage = () => {
   
     return (
     <div>
-
+     
     
         <SingleArticleComponent></SingleArticleComponent>
 

@@ -1,7 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { GetToken } from './LoginComponent';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { DecodeUser, GetToken, GetUserLogged } from './LoginComponent';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Alert from 'react-bootstrap/Alert';
+
+
 
 
 
@@ -10,77 +15,191 @@ const ProfileComponent = () => {
 
   const [user, setUser] = useState(null)
   const [tab, setTab] = useState(false)
+  const [tab2, setTab2] = useState(true)
   const [userArticles, setUserArticles] = useState([])
   const [inputName, setName] = useState("")
   const [inputFirstName, setFirstname] = useState("")
   const [inputEmail, setEmail] = useState("")
   const [inputPassword, setPassword] = useState("")
-  const [inputavoriteCity, setFavoriteCity] = useState(null)
+  const [inputavoriteCity, setInputFavoriteCity] = useState(null)
+  const [cities, setCities] = useState(null)
+  const [favoriteCity, setFavoriteCity] = useState(null)
+  const [show, setShow] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccesMessage] = useState(null)
+
+  const [permission, setpermission] = useState(null)
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
-
-
-
-
-  const params = useParams()
-  const { id } = params
+  const navigate = useNavigate();
 
 
   console.log("Init component");
 
   useEffect(() => {
     GetProfile()
-    FetchUserArticles()
-    console.log(userArticles);
 
-  }, [tab])
 
+  }, [])
+
+
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      FetchUserArticles()
+      FetchCities()
+
+
+    }
+  }, [user, tab])
+
+  useEffect(() => {
+
+    if(user){
+      verifyAdminPermission()
+    }
+
+  }, [user])
+
+  useEffect(() => {
+
+
+  }, [permission])
+
+
+  useEffect(() => {
+
+    if (cities && user) {
+
+
+      cities.forEach(city => {
+
+        if (city.id == user.favoriteCity) {
+          setFavoriteCity(city)
+
+        }
+
+      });
+
+    }
+
+
+
+  }, [cities, user])
+
+
+  useEffect(() => {
+
+  }, [favoriteCity])
+
+
+  useEffect(() => {
+
+  }, [userArticles])
+
+  useEffect(() => {
+
+  }, [show, successMessage, errorMessage])
+
+
+  //Get current user's profile
   async function GetProfile() {
 
     try {
       console.log("Fetching User ... ");
+      const userLogged = await GetUserLogged()
       const token = GetToken()
+      console.log(userLogged);
+      if (userLogged) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/Get?id=" + userLogged.UserId)
+        console.log(res);
+        console.log("End RES");
 
-      const res = await axios.get("https://localhost:7226/api/User/Get?id=" + id)
 
-      setUser(res.data)
-      setName(user.name)
-      setFirstname(user.firstName)
-      setEmail(user.email)
-      setFavoriteCity(user.favoriteCity)
+        setUser(res.data)
+        setName(res.data.name)
+        setFirstname(res.data.firstName)
+        setEmail(res.data.email)
+        setFavoriteCity(res.data.favoriteCity)
+      }
+
     } catch (err) {
       console.log(err);
     }
 
   }
 
+
+  //Check if current user is admin or not
+  async function verifyAdminPermission() {
+    const token = GetToken()
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/User/validate")
+        if (res.status != 200) {
+            setpermission(false)
+            console.log("Permission Denied");
+        }
+
+        const user = DecodeUser()
+        console.log(user);
+
+        if (user.role == "Admin") {
+
+            setpermission(true)
+            console.log("Permission OK");
+            return
+
+        }
+
+        console.log("Permission Denied");
+        setpermission(false)
+    }
+}
+
+
+  async function FetchCities() {
+
+    const token = GetToken()
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const cities = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
+
+    setCities(cities.data)
+
+  }
+
+  //Update user informations
   async function UpdateUser() {
 
     //Updating informations
 
-
-
-
-
     try {
       console.log("Updating User ... ");
       const token = GetToken()
-      
-      user.name = inputName
+
+      user.name = inputName 
       user.firstName = inputFirstName
-      user.email = inputEmail 
+      user.email = inputEmail
       user.password = inputPassword
       user.favoriteCity = inputavoriteCity
 
+      if(inputName == "" || inputFirstName == "" || inputEmail == "" || inputavoriteCity == "test"){
 
-      console.log(user)       
-      
-      
+        setErrorMessage("Veuillez renseigner les champs")
+        setSuccesMessage(falses)
+        return
+      }else{
+        
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.post("https://localhost:7226/api/User/Get?id=" + id, {
+      const res = await axios.put("https://browseclimate20231121101412.azurewebsites.net/api/User/Update", {
 
         "id": user.id,
         "name": user.name,
@@ -90,21 +209,30 @@ const ProfileComponent = () => {
         "password": user.password,
         "role": user.role,
         "createdAt": "2023-10-06T12:31:43.456Z",
-        "favoriteCity": 0
+        "favoriteCity": user.favoriteCity
 
       })
 
-      setUser(res.data)
+      if(res.status == 200){
+        setUser(res.data)
+        setErrorMessage(null)
+        setSuccesMessage("Profil mis à jour")
+        
+
+      }}
+      
+
+
+
     } catch (err) {
       console.log(err);
+      setErrorMessage("Une erreur est survenue. Merci de réessayer")
+      setSuccesMessage(null)
     }
-
-
-
-
   }
 
 
+  //Get all articles written by current user
   async function FetchUserArticles() {
 
     try {
@@ -113,7 +241,8 @@ const ProfileComponent = () => {
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const res = await axios.get("https://localhost:7226/api/Article/GetUserArticle?id=" + id)
+      console.log(user);
+      const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetUserArticle?id=" + user.id)
       setUserArticles(res.data)
 
     } catch (error) {
@@ -122,117 +251,196 @@ const ProfileComponent = () => {
 
   }
 
-  if (user == null)
-    return null
+  //Deletes an article
+  async function DeleteArticle(articleId) {
+    if(window.confirm("Supprimer l'article ?")){
+
+      try {
+        const token = GetToken()
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+
+        const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Article/Delete?id=" + articleId)
+        console.log(res);
+        if (res.status === 200) {
+          let index = userArticles.findIndex(item => item.id === articleId)
+          console.log(index);
+          const newArticlesArray = [...userArticles]
+          newArticlesArray.splice(index, 1)
+          setUserArticles(newArticlesArray)
+  
+        }
+  
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+    
+
+  }
+
+  //Logout user
+  function Logout() {
+
+    if(window.confirm("Se déconnecter ?")){
+      const token = localStorage.getItem('bc-token')
+      if (token) {
+        localStorage.removeItem("bc-token")
+      }
+      console.log("User logout ...");
+      setUser(null)
+      navigate('/')
+    }
+
+  }
+
+
+
+
+
+
 
   return (
     <>
+      {!user && <>
+        <h1> Veuillez vous connecter avant d'explorer</h1>
 
-      <h1>Profil de {user.name} {user.firstName}</h1>
-
-
-      <div className='profile-page'>
-
-        <div className='profile-page-menu'>
-          <ul className='profile-page-menulist'>
-
-            <li>
-              <button className='btn btn-primary' onClick={() => { setTab(false); console.log(tab); }}>Informations du profil</button>
-            </li>
+        <Link className='btn lbutton darkbg' to="/login"> Se connecter  </Link>
+      </>}
 
 
-            <li>
-              <button className='btn btn-primary' onClick={() => { setTab(true); console.log(tab); }}>
+      {errorMessage && <Alert variant='danger'> {errorMessage} </Alert>}
+      {successMessage && <Alert variant='success'> {successMessage} </Alert>}  
 
-                Articles et commentaires
-              </button>
-            </li>
 
-            <li>
-              <button className='btn btn-danger' onClick={() => { setTab(3); console.log(tab); }}>
-                Se deconnecter
-              </button>
-            </li>
+        <img className='my-5 app-photo profile-photo' src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fnikon.jpg?alt=media&token=46e0deca-ca4a-4273-9b61-5c7a9767e0cb" alt="" />
 
-          </ul>
+      {user && <>
+        <h1>Profil de {user.name} {user.firstName}</h1>
+
+
+        <div className='profile-page'>
+
+          <div className='profile-page-menu'>
+            <ul className='profile-page-menulist'>
+
+              <li>
+                <button className='btn lbutton whitebg' onClick={() => { setTab(true); setTab2(false); console.log(tab); }}>Informations du profil</button>
+              </li>
+
+
+              <li>
+                <button className='btn lbutton whitebg' onClick={() => { setTab(false); setTab2(true); console.log(tab); }}>
+
+                  Mes articles
+                </button>
+              </li>
+
+              <li>
+              {permission && <Link to="/admin" className='btn lbutton whitebg'> Espace administrateur </Link> }
+              </li>
+
+
+
+              <li>
+                <button className='btn lbutton whitebg' onClick={() => Logout()}>
+                  Se deconnecter
+                </button>
+              </li>
+
+         
+            </ul>
+          </div>
+
+          <div className='profile-page-display'>
+
+            {tab && <div>
+
+              <form className='profile-page-form' method='POST' action='https://browseclimate20231121101412.azurewebsites.net/api/User/Update'>
+
+                <div className='form-group'>
+
+                  <label >Nom</label>
+                  <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)} />
+                </div>
+
+                <div className='form-group'>
+
+                  <label>Prénom</label>
+                  <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)} />
+                </div>
+
+                <div className='form-group'>
+
+                  <label>Email</label>
+                  <input className="form-control" type='mail' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+
+
+
+                <div className='form-group my-3 profile-select-city'>
+
+                  
+                  {favoriteCity && <>
+                    <label>Ville préférée : {favoriteCity.name} </label>
+                    <select className='admin-city-select my-2' defaultValue="test" onChange={(e) => { setInputFavoriteCity(e.target.value); console.log(e.target.value); }} name="" id="">
+                      <option value="all">Selectionnez une ville </option>
+
+                      {cities && cities.map((city) => (
+
+                        <option key={city.id} value={city.id}> {city.name} </option>
+
+                      ))}
+
+
+                    </select>
+                    </>
+                  }
+                </div>
+
+
+
+
+                <button className='btn lbutton darkbg' type='submit' onClick={(e) => {
+                  e.preventDefault()
+                  UpdateUser()
+
+                }}> Mettre à jour les Informations </button>
+
+
+              </form>
+            </div>}
+
+
+            {tab2 === true && <div className='profile-articles'>
+        
+ 
+              {userArticles && userArticles.map((article) => <div className='profile-article' key={article.id}>
+
+
+                <h3> {article.title} </h3>
+
+                
+                <p>{article.description}</p>
+
+                <div>
+                  <Link className='btn lbutton lightbg' to={"/article/" + article.id}> Lire </Link>
+                  <Link className='btn lbutton lightbg' to={'/article/edit/' + article.id}>Editer </Link>
+                  <Link className='btn lbutton lightbg' onClick={(e) => { DeleteArticle(article.id) }}>Supprimer </Link>
+          
+                </div>
+
+
+
+
+
+              </div>)}
+            </div>}
+
+          </div>
         </div>
-
-        <div className='profile-page-display'>
-
-          {tab == false && <div>
-
-            <form method='POST' action='https://localhost:7226/api/User/Update'>
-
-              <div className='form-group'>
-
-                <label >Nom</label>
-                <input className="form-control" type='text' defaultValue={user.name.trim()} onChange={(e) => setName(e.target.value)}  />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Prénom</label>
-                <input className="form-control" type='text' defaultValue={user.firstName.trim()} onChange={(event) => setFirstname(event.target.value)}  />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Email</label>
-                <input className="form-control" type='text' defaultValue={user.email.trim()} onChange={(e) => setEmail(e.target.value)}  />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Mot de passe</label>
-                <input className="form-control" type='text' defaultValue={user.password.trim()} onChange={(e) => setPassword(e.target.value)}  />
-              </div>
-
-              <div className='form-group'>
-
-                <label>Ville préférée </label>
-                <input className="form-control" type='text' defaultValue={user.favoriteCity} value={user.favoriteCity} />
-              </div>
-
-
-
-
-              <button className='btn btn-primary' type='submit' onClick={(e) => {
-                e.preventDefault()
-                UpdateUser()
-
-              }}> Mettre à jour les Informations </button>
-
-
-            </form>
-
-
-            <div>Mes articles et commentaires
-
-              {userArticles && userArticles.map((article) => <div key={article.id}> {article.title} </div>)}
-
-
-            </div>
-
-
-
-
-
-          </div>}
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-
-      </div>
+      </>}
     </>
   )
 }

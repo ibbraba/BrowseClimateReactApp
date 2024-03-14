@@ -8,7 +8,7 @@ const ProfilePage = () => {
     <div>
    
 
-            <ProfileComponent></ProfileComponent>
+       <ProfileComponent></ProfileComponent>
 
     </div>
       )

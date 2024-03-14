@@ -1,51 +1,147 @@
 import axios from 'axios';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { storage } from '../firebase';
 
 const ArticleComponent = () => {
-  
-    const [articles, setArticles ] = useState(null)
+
+    const [articles, setArticles] = useState(null)
+    const [filterDate, setFilterDate] = useState(false)
 
 
     useEffect(() => {
-        AllArticles(), 
-        console.log("Update" + articles)
+
+        async function getArticles() {
+            const articles = await AllArticles()
+            const articleswithImages = await GetArticleImage(articles)
+            articles.sort(function (x, y) {
+                return y.timestamp - x.timestamp;
+            })
+            setArticles(articles)
+
+        }
+
+        getArticles()
+
     }, [])
 
-    async function AllArticles(){
-        try{
-            console.log("Call all Articles");
-            const response = await axios.get("https://localhost:7226/api/Article/GetAll")
-            console.log(response.data);                 
-            setArticles(response.data)
-            console.log("End call articles");
+    useEffect(() => {
 
-       }catch(err){
+
+    }, [filterDate])
+
+
+    useEffect(() => {
+        console.log("updat");
+    }, [articles])
+
+    function sortByDate() {
+        if (articles) {
+
+
+            const newarticles = [... articles]
+            newarticles.sort(function (x, y) {
+                return y.timestamp - x.timestamp;
+            })
+            setArticles(newarticles)
+        }
+
+    }
+
+
+    //Sort articles by views
+    function sortByView() {
+
+        if (articles) {
+
+            const newarticles = [... articles]
+            newarticles.sort(function (x, y) {
+                
+            setArticles(newarticles)
+                return y.views - x.views;
+            })
+
+            setArticles(newarticles)
+
+        }
+
+    }
+
+    //Fetch all articles
+    async function AllArticles() {
+        try {
+            console.log("Call all Articles");
+            const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Article/GetAll")
+            console.log(response);
+            return response.data
+
+
+        } catch (err) {
             console.log(err);
         }
     }
-  
-   
+
+    //Fetch image related to article
+    async function GetArticleImage(articles) {
+
+        console.log(articles);
+
+        for (const article of articles) {
+            let imageListRef = ref(storage, `/articles/${article.id}`)
+
+            const res = await listAll(imageListRef)
+
+            if (res.items.length > 0) {
+                console.log(res);
+                console.log("Image on article " + article.id);
+                const url = await getDownloadURL(res.items[0])
+                article.imageURL = url;
+                console.log(article);
+
+            }
+        }
+
+        console.log(articles);
+        return articles
+    }
+
     return (
-    <div className='articles-list'>
-        { articles && articles.map(article => (
-            <div key={article.id} >
-                <h4 className='article-title'> {article.title}</h4>                
-                <div className='article-description'>{article.description}</div>
-                <div>{article.content}</div>
-                <button ><Link to={"/article/" + article.id }> Lire </Link>  </button>
+        <div className='articles-list'>
+
+            <div className='articles-sort'>
+
+                <p>Trier par : </p>
+                <button className='mbutton btn darkbg' onClick={() => { sortByDate() }}> Date </button>
+
+                <button className='mbutton btn darkbg' onClick={() => { sortByView() }} >  Popularité </button>
 
             </div>
 
-            
-        ) 
+            {articles && articles.map(article => (
+
+                <div className='article-container' key={article.id} >
+                    <h4 className='article-title'> {article.title}</h4>
+                    <p></p>
+
+
+                    <p>  {article.likes}  &hearts; </p>
+                    {article.imageURL && <img className='article-image mb-5' src={article.imageURL} />}
+                    {!article.imageURL && <img className='article-image mb-5' src="../src/assets/images/app/articles/telescope.jpg" />}
+
+                    <div className='mb-5' dangerouslySetInnerHTML={{ __html:article.description}} ></div>  
+              
+                    <Link className='lbutton btn darkbg' to={"/article/" + article.id}> Lire </Link> 
+
+                </div>
+
+
+            )
             )}
 
 
-
-
-    </div>
-  )
+        </div>
+    )
 }
 
 export default ArticleComponent
