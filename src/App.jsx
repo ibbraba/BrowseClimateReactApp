@@ -30,6 +30,7 @@ import InfoPage from './pages/InfoPage'
 import FactsAdminPage from './pages/Admin/FactsAdminPage'
 import MentionsLegalesPage from './pages/infos/MentionsLegalesPage'
 import ConfidentialitePage from './pages/infos/ConfidentialitePage'
+import IndexPage from './pages/indexPage'
 
 
 function App() {
@@ -140,7 +141,7 @@ function App() {
 
       </header>
 
-
+      <IndexPage></IndexPage>
 
 
 
