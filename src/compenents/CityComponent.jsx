@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { storage } from "../firebase";
 import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
-import bg from '../assets/images/city/bangkok.jpg'
+
 
 
 const CityComponent = () => {
