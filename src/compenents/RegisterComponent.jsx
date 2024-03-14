@@ -46,7 +46,7 @@ const RegisterComponent = () => {
     }
 
 
-
+    // Register a user
     async function RegisterUser() {
 
         try {

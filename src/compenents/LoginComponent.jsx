@@ -7,13 +7,14 @@ import Alert from 'react-bootstrap/Alert' ;
 
 
 
+//Find active token
 export function GetToken(){
   const token = localStorage.getItem('bc-token')
   return token
 }
 
 
-
+//Find current user
 export const GetUserLogged = async () => {
 
   console.log("Calling CheckUserLogged from main");
@@ -34,6 +35,7 @@ export const GetUserLogged = async () => {
   }
 
 }
+
 
 export async function IsUserLoggedIn() {
   const token = localStorage.getItem('bc-token')
@@ -59,7 +61,7 @@ export async function IsUserLoggedIn() {
 }
 
 
-
+//Decode User from token
 export  function DecodeUser() {
 
   const token = localStorage.getItem('bc-token')

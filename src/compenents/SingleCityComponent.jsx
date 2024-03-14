@@ -120,7 +120,7 @@ const SingleCityComponent = () => {
 
   }
 
-
+  //Fetch city facts
   async function GetFacts() {
 
     const res = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/Fact/GetCityFacts?cityId=" + id)
@@ -129,7 +129,7 @@ const SingleCityComponent = () => {
 
   }
 
-
+  //Fetch facts liked
   async function GetFactsLikedByUser() {
 
 
@@ -146,6 +146,8 @@ const SingleCityComponent = () => {
 
   }
 
+
+  //Fetch images from article
   const getImagesUrls = async () => {
     try {
 
@@ -194,7 +196,7 @@ const SingleCityComponent = () => {
 
 
   
-
+  //Get the user's note
   async function GetUserNote() {
 
     try {

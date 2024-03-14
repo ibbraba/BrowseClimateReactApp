@@ -89,7 +89,7 @@ const SingleArticleComponent = () => {
     }
 
 
-
+//Get Articles Liked by user
 async function GetUserLikes() {
 
     const token = GetToken()
@@ -103,7 +103,7 @@ async function GetUserLikes() {
 
 }
 
-
+//Add like to article
 async function AddLike() {
     const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/Article/AddLike?articleId=${article.id}&userId=${user.UserId}`, {
         articleId: article.Id,
@@ -114,7 +114,7 @@ async function AddLike() {
     article.likes = article.likes + 1
 }
 
-
+//Deletes a like 
 async function RemoveLike() {
     const res = await axios.post(`https://browseclimate20231121101412.azurewebsites.net/api/Article/RemoveLike?articleId=${article.id}&userId=${user.UserId}`, {
         articleId: article.Id,

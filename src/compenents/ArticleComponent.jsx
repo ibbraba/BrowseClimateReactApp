@@ -50,6 +50,7 @@ const ArticleComponent = () => {
     }
 
 
+    //Sort articles by views
     function sortByView() {
 
         if (articles) {
@@ -67,6 +68,7 @@ const ArticleComponent = () => {
 
     }
 
+    //Fetch all articles
     async function AllArticles() {
         try {
             console.log("Call all Articles");
@@ -80,6 +82,7 @@ const ArticleComponent = () => {
         }
     }
 
+    //Fetch image related to article
     async function GetArticleImage(articles) {
 
         console.log(articles);

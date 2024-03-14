@@ -55,6 +55,7 @@ const CityComponent = () => {
     console.log("Call OK");
   }, [callOk])
 
+  //Fetch all cities
   async function GetAllCities() {
     try {
       const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
@@ -70,7 +71,7 @@ const CityComponent = () => {
 
 
 
-
+  //Fetch city images
   async function getimagesItems(cities) {
 
     const newCities = [...cities]

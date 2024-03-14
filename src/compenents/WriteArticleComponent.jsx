@@ -125,7 +125,7 @@ const WriteArticleComponent = (props) => {
 
 
 
-
+    //Fetch article 
     async function GetArticle() {
 
         console.log("Call Single article with id " + id);
@@ -133,7 +133,7 @@ const WriteArticleComponent = (props) => {
         setArticle(res.data)
     }
 
-
+    //Fecth article's image
     async function GetArticleImage() {
         console.log("Fetching article image");
         const imageListRef = ref(storage, `/articles/` + id)
@@ -153,6 +153,7 @@ const WriteArticleComponent = (props) => {
 
     }
 
+    //Publish article
     async function sendArticle() {
 
         let articleid = null
@@ -217,6 +218,7 @@ const WriteArticleComponent = (props) => {
     }
 
 
+    //Edit article
     async function EditArticle() {
 
         console.log(title)

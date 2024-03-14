@@ -159,6 +159,7 @@ const DiscoverComponent = () => {
 
     }, [userFactLikes])
 
+    //Get current user
     async function GetProfile() {
 
         try {
@@ -182,7 +183,7 @@ const DiscoverComponent = () => {
 
     }
 
-
+    //Get Articles
     async function getDiscoverArticles() {
 
 
@@ -214,7 +215,7 @@ const DiscoverComponent = () => {
 
     }
 
-
+    //Get images for each article
     async function GetArticleImage() {
 
 
@@ -308,7 +309,7 @@ const DiscoverComponent = () => {
 
     }
 
-
+    // Add a like
     async function AddLikeToFact(id) {
 
         const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/AddLikeToFact?factId=" + id + "&userId=" + user.id)
@@ -321,7 +322,7 @@ const DiscoverComponent = () => {
         GetFactsLikedByUser()
     }
 
-
+    //Remove a like
     async function DeleteFactLike(id) {
         const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/Fact/DeleteLike?factId=" + id + "&userId=" + user.id)
         if (res.status == 200) {
@@ -331,21 +332,9 @@ const DiscoverComponent = () => {
         }
         GetFactsLikedByUser()
     }
-    //Fetch favorite city images 
-    //Fetch liked images 
-    //Fetch top likes 
-    //Display image every 5 elements
+  
 
-
-    //Fetch Data? 
-    //Fetch favorite city data 
-    //Fetch liked data 
-    //Fetch top Data
-
-
-    //Sort all data by date to create thread 
-
-
+    //Redirect to login if no user connected
     if (user == null) {
         return (
             <>

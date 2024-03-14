@@ -106,7 +106,7 @@ const ProfileComponent = () => {
   }, [show, successMessage, errorMessage])
 
 
-
+  //Get current user's profile
   async function GetProfile() {
 
     try {
@@ -136,7 +136,7 @@ const ProfileComponent = () => {
   }
 
 
-
+  //Check if current user is admin or not
   async function verifyAdminPermission() {
     const token = GetToken()
     if (token) {
@@ -163,6 +163,7 @@ const ProfileComponent = () => {
     }
 }
 
+
   async function FetchCities() {
 
     const token = GetToken()
@@ -174,7 +175,7 @@ const ProfileComponent = () => {
 
   }
 
-
+  //Update user informations
   async function UpdateUser() {
 
     //Updating informations
@@ -231,7 +232,7 @@ const ProfileComponent = () => {
   }
 
 
-
+  //Get all articles written by current user
   async function FetchUserArticles() {
 
     try {
@@ -250,6 +251,7 @@ const ProfileComponent = () => {
 
   }
 
+  //Deletes an article
   async function DeleteArticle(articleId) {
     if(window.confirm("Supprimer l'article ?")){
 
@@ -278,6 +280,7 @@ const ProfileComponent = () => {
 
   }
 
+  //Logout user
   function Logout() {
 
     if(window.confirm("Se déconnecter ?")){
