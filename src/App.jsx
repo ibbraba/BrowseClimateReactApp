@@ -141,7 +141,7 @@ function App() {
 
       </header>
 
-      <IndexPage></IndexPage>
+
 
 
 
