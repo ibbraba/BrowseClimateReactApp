@@ -49,7 +49,7 @@ const IndexPage = () => {
         <div className='home homepage-presentation'>
 
 
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore facilis odio, ratione placeat quidem iusto, repellat autem, laudantium cumque obcaecati dignissimos! Corporis, nemo quis ullam consequuntur placeat commodi temporibus, exercitationem unde laudantium facere odio voluptatum necessitatibus facilis doloremque nulla! Reprehenderit?</p>
+          <p>Vous retrouverez sur Browse Climate une multitude d'informations, d'articles et d'anecdotes dans le seul but de vous faire voyager à travers les plus belles destinations.</p>
           <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fcompass.jpg?alt=media&token=8491aeee-958d-4132-8b38-0f05c790250e'></img>
         </div>
 
@@ -65,7 +65,7 @@ const IndexPage = () => {
         <h3 className='mb-4'> Les plus belles villes du monde sont la  </h3>
         <div className="home homepage-ville">
 
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, doloremque voluptatibus pariatur, voluptas quo corporis eius optio vero ab, nihil nobis sunt at quae! Dignissimos dolorum natus tenetur quia veritatis a similique? Veritatis debitis ad distinctio ducimus, quia sunt vel aliquid dolor, nihil at iure? Quo, quas? Consequatur, alias culpa! Eius consectetur atque eaque est perspiciatis, praesentium beatae sequi fugit laborum reiciendis sit provident tempora quis voluptatum odio dignissimos, reprehenderit, sapiente corrupti. Fugiat dolores error quia ad saepe doloribus deleniti!</p>
+          <p>Paris, Londres, Tokyo, Kuala Lumpur… Visitez les plus belles villes du monde à travers des articles sur leurs plus belles activités et un carrousel d'images. Immersion garantie</p>
           <img src='https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2FtokyoHome.jpg?alt=media&token=8258b8d8-c90e-4ebc-8f9c-fadd841f490c'></img>
         </div>
         <Link className='lbutton btn darkbg' to="/city"> Decouvrir les villes </Link>

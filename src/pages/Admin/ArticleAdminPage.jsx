@@ -17,7 +17,9 @@ const ArticleAdminPage = () => {
 
     }, [permission])
 
-    //Check if user is admin
+    /**
+     * Check if user is admin
+     */
     async function verifyAdminPermission() {
         const token = GetToken()
         if (token) {
@@ -73,6 +75,11 @@ const ArticleAdminPage = () => {
 
     }, [articles, imgLoaded])
 
+
+    /**
+     * Fetch all articles in database
+     * @returns JSON Objet of articles
+     */
     async function AllArticles() {
         try {
             console.log("Call all Articles");
@@ -86,7 +93,10 @@ const ArticleAdminPage = () => {
         }
     }
 
-
+    /**
+     * Send a request to backend server to delete an article
+     * @param  articleId The Id of the article
+     */
     async function DeleteArticle(articleId) {
 
 
@@ -111,7 +121,9 @@ const ArticleAdminPage = () => {
    
     }
 
-
+    /**
+     * Fetch in Firebase the image associated to the article
+     */
     async function GetArticleImage() {
 
         const newArticles = [...articles]

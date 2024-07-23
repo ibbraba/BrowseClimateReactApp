@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { GetToken, GetUserLogged } from './LoginComponent'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../firebase'
+import BCLogoComonent from './app/BCLogoComonent'
 
 const SingleArticleComponent = () => {
     const [article, setArticle] = useState(null)
@@ -137,7 +138,8 @@ return (
             {user && articleLiked && <button onClick={() => RemoveLike()}>  &#128148; </button>}
             {user && !articleLiked && <button onClick={() => AddLike()}> &hearts;  </button>}
 
-            <p> {article.likes} likes </p>
+            
+            {article.likes < 2 ? <p> {article.likes} like </p> : <p> {article.likes} likes </p> }
 
         </div>
 
@@ -149,9 +151,11 @@ return (
 
 
        <div dangerouslySetInnerHTML={{ __html:article.content}} ></div>  
+        <div className='single-article-bottom mt-5'>
+        <BCLogoComonent></BCLogoComonent>
 
-       <Link className='lbutton btn darkbg' to="/article"> Retour aux articles  </Link>
-
+       <Link className='mt-5 lbutton btn darkbg' to="/article"> Retour aux articles  </Link>
+       </div>
     </div>
 )
 }

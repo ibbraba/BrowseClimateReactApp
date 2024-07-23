@@ -193,7 +193,7 @@ const ProfileComponent = () => {
       if(inputName == "" || inputFirstName == "" || inputEmail == "" || inputavoriteCity == "test"){
 
         setErrorMessage("Veuillez renseigner les champs")
-        setSuccesMessage(falses)
+        setSuccesMessage(false)
         return
       }else{
         
@@ -232,7 +232,9 @@ const ProfileComponent = () => {
   }
 
 
-  //Get all articles written by current user
+  /**
+   * Get all articles written by current user
+   */
   async function FetchUserArticles() {
 
     try {

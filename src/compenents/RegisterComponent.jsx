@@ -32,7 +32,9 @@ const RegisterComponent = () => {
 
     }, [formError, errorMessage])
 
-
+    /**
+     * Fetch all cities to fill the select favorite city input
+     */
     async function GetAllCities() {
         try {
             const response = await axios.get("https://browseclimate20231121101412.azurewebsites.net/api/City/GetAll")
@@ -165,6 +167,11 @@ const RegisterComponent = () => {
 
                         </select>
                     </div>
+
+                    <div className='warning-data my-4'> 
+                        <p> En vous inscrivant, vous acceptez que BrowseClimate sauvegarde vos données personelles.  </p>
+                    </div>
+
                     <button type='submit' className='lbutton btn darkbg mt-3' onClick={(e) => { e.preventDefault(); RegisterUser() }}> S'inscrire </button>
 
                 </form>

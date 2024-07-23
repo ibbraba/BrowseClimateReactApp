@@ -63,6 +63,10 @@ const CityAdminPage = () => {
     console.log(cities);
   }, [])
 
+
+  /**
+   * Fetch all cities
+   */
   async function GetAllCities() {
     try {
 
@@ -78,6 +82,9 @@ const CityAdminPage = () => {
   }
 
 
+  /**
+   * Register a city in Database
+   */
   async function AddCity() {
 
     if (cityName == "" || country == "" || description == "" || numberResidents == 0 || file == null) {

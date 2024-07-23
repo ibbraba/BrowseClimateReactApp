@@ -139,6 +139,10 @@ ul {
   margin: 0 auto;
 }
 
+.bc-logo{
+  max-width: 450px;
+}
+
 /* HOME PAGE */
 
 header {
@@ -222,6 +226,11 @@ footer h4 {
   color: ghostwhite;
 }
 
+.doranco-logo{
+  max-width: 35%;
+  margin: 0 auto;
+}
+
 .mentions {
   display: flex;
   height: 73px;
@@ -274,6 +283,13 @@ input {
 
 .registration-form .login-input {
   min-width: 300px;
+}
+
+.warning-data{
+  font-size: small;
+  font-style: italic;
+
+  
 }
 
 input {
@@ -558,6 +574,11 @@ CITIES PAGE
   margin-bottom: 0;
 }
 
+.single-article-bottom{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* DISCOVER */
 

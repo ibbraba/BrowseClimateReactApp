@@ -71,7 +71,9 @@ const CityComponent = () => {
 
 
 
-  //Fetch city images
+  /**
+   * Fetch city images
+   */
   async function getimagesItems(cities) {
 
     const newCities = [...cities]
@@ -99,6 +101,7 @@ const CityComponent = () => {
 
   }
 
+  
   async function getImagesUrls() {
     try {
 
@@ -147,21 +150,6 @@ const CityComponent = () => {
     }
 
   }
-
-
-  /* function AddCityImage(){
-    if(cities != null && imagesUrls != null){
-  
-      //LOOP CITY
-      cities.forEach(city => {
-        
-          imagesUrls.forEach(url)
-  
-      });
-  
-    }
-  }
-   */
 
 
 

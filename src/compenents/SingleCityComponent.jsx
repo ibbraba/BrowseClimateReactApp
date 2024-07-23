@@ -171,7 +171,9 @@ const SingleCityComponent = () => {
   }
 
 
-  // Call City properties, Wheather , Pictures, Number of members, Note, Articles about the city
+  /**
+   *  Call City properties, Wheather , Pictures, Number of members, Note, Articles about the city
+   */
 
   async function GetCity() {
     try {

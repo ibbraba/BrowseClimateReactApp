@@ -29,6 +29,9 @@ const ImagesAdminPage = () => {
   }, [permission])
 
 
+  /**
+   * Check if logged user is admin
+   */
   async function verifyAdminPermission() {
     const token = GetToken()
     if (token) {
@@ -215,11 +218,7 @@ const ImagesAdminPage = () => {
         });
 
 
-       // console.log(newImages);
-      //  const index = newImages.indexOf(x => x.url == image.url)
-       // console.log(index);
-      //  newImages.splice(index, 1)
-     //   console.log(newImages);
+
         setImageUrls(newImages)
         
       } catch (error) {

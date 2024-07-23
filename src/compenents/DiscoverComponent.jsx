@@ -334,7 +334,9 @@ const DiscoverComponent = () => {
     }
   
 
-    //Redirect to login if no user connected
+    /**
+     * Redirect to login if no user connected
+     */
     if (user == null) {
         return (
             <>

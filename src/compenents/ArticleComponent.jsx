@@ -36,6 +36,10 @@ const ArticleComponent = () => {
         console.log("updat");
     }, [articles])
 
+    
+    /**
+     * Sort articles by date
+     */
     function sortByDate() {
         if (articles) {
 
@@ -50,7 +54,9 @@ const ArticleComponent = () => {
     }
 
 
-    //Sort articles by views
+    /**
+     * Sort articles by views
+     */
     function sortByView() {
 
         if (articles) {
@@ -82,7 +88,9 @@ const ArticleComponent = () => {
         }
     }
 
-    //Fetch image related to article
+    /**
+     * Fetch image related to article
+     */
     async function GetArticleImage(articles) {
 
         console.log(articles);

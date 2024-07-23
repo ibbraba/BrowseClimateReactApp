@@ -20,7 +20,9 @@ const AdminPage = () => {
     }, [permission])
 
 
-    //Check if user is admin
+    /**
+     * Check if the current connected user is an admin
+     */
     async function verifyAdminPermission() {
         const token = GetToken()
         if (token) {

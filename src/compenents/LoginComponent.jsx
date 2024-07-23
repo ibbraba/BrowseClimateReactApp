@@ -40,14 +40,6 @@ export const GetUserLogged = async () => {
 export async function IsUserLoggedIn() {
   const token = localStorage.getItem('bc-token')
 
-
-
-  /*  const headers = {
-      "Authorization":  token
-    }
-*/
-
-
   if (!token) {
 
     return false

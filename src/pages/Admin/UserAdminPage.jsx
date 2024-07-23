@@ -100,6 +100,9 @@ const UserAdminPage = () => {
     console.log(selectedUser);
   }
 
+  /**
+   * Fetch all users
+   */
   async function AllUsers() {
     try {
 

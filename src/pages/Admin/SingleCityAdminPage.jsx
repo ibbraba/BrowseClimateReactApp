@@ -147,8 +147,9 @@ const SingleCityAdminPage = () => {
 
 
 
-  // Call City properties, Wheather , Pictures, Number of members, Note, Articles about the city
-
+  /**
+   *  Call City properties, Wheather , Pictures, Number of members, Note, Articles about the city
+   */
   async function GetCity() {
     try {
 
@@ -167,10 +168,6 @@ const SingleCityAdminPage = () => {
   async function EditCity() {
 
     try {
-
-
-
- 
 
       const res = await axios.post("https://browseclimate20231121101412.azurewebsites.net/api/City/Update", {
         "id": city.id,

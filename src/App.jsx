@@ -106,9 +106,12 @@ function App() {
 
 
       <header>
-
+        <div>
+   
         <h3 className='bc-top'>Browse Climate</h3>
         <p className='bc-speech'>Explore your world</p>
+
+        </div>
 
 
         <nav>
@@ -194,10 +197,10 @@ function App() {
 
       <footer>
 
-
+    
         <h4 className='footer-quote'>Explore your world</h4>
 
-
+      <img className='doranco-logo' src="https://firebasestorage.googleapis.com/v0/b/browseclimate.appspot.com/o/app%2Fdoranco.png?alt=media&token=ea2a225c-f4d3-4c46-bec7-5aa8d8a0830f" alt="" />
 
         <div className='mentions'>
           <Link to='/mentions'>Mentions légales</Link>
