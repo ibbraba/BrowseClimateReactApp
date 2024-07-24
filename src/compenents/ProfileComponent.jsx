@@ -5,6 +5,7 @@ import { DecodeUser, GetToken, GetUserLogged } from './LoginComponent';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
+import BCLogoComponent from './app/BCLogoComonent';
 
 
 
@@ -443,6 +444,8 @@ const ProfileComponent = () => {
           </div>
         </div>
       </>}
+
+      <BCLogoComponent></BCLogoComponent>
     </>
   )
 }

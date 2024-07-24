@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import SingleCityComponent from '../compenents/SingleCityComponent'
 import { Typography } from '@mui/material'
+import BCLogoComponent from '../compenents/app/BCLogoComonent'
 
 const SingleCityPage = () => {
 
@@ -12,6 +13,7 @@ const SingleCityPage = () => {
 
 
       <SingleCityComponent></SingleCityComponent>
+      <BCLogoComponent></BCLogoComponent>
     </>
   )
 }

@@ -8,6 +8,7 @@ import { GetUserLogged } from './LoginComponent'
 import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Card } from 'react-bootstrap'
+import BCLogoComponent from './app/BCLogoComonent'
 
 const SingleCityComponent = () => {
 
@@ -374,11 +375,11 @@ const SingleCityComponent = () => {
 
                 <p>  {article.likes}  &hearts; </p>
                 {article.imageURL && <img className='article-image' src={article.imageURL} />}
-                {!article.imageURL && <img className='article-image' src="../src/assets/images/app/articles/telescope.jpg" />}
+                {!article.imageURL && <img className='article-image mb-5' src="../src/assets/images/app/articles/telescope.jpg" />}
 
-                <div className='article-description'>{article.description}</div>
-                <div>{article.content}</div>
-                <button ><Link to={"/article/" + article.id}> Lire </Link>  </button>
+             
+                <div  dangerouslySetInnerHTML={{ __html:article.content}}/> 
+                <Link className='lbutton btn darkbg' to={"/article/" + article.id}> Lire </Link>
 
               </div>
 
@@ -389,7 +390,7 @@ const SingleCityComponent = () => {
       </div>}
 
 
-
+            <BCLogoComponent></BCLogoComponent>
 
     </div>
 

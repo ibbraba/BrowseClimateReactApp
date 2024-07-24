@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { GetToken, GetUserLogged } from './LoginComponent'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '../firebase'
-import BCLogoComonent from './app/BCLogoComonent'
+import BCLogoComponent from './app/BCLogoComonent'
 
 const SingleArticleComponent = () => {
     const [article, setArticle] = useState(null)
@@ -152,7 +152,7 @@ return (
 
        <div dangerouslySetInnerHTML={{ __html:article.content}} ></div>  
         <div className='single-article-bottom mt-5'>
-        <BCLogoComonent></BCLogoComonent>
+        <BCLogoComponent></BCLogoComponent>
 
        <Link className='mt-5 lbutton btn darkbg' to="/article"> Retour aux articles  </Link>
        </div>

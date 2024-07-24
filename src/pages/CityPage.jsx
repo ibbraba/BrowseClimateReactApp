@@ -11,7 +11,7 @@ const CityPage = () => {
 
         <div className='articles-intro'>
           <h3> Les lieux à decouvrir </h3>
-           <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus enim iusto eius, obcaecati suscipit eveniet tenetur sed, necessitatibus dolorem officiis accusantium, tempora natus illo numquam. Voluptatem ducimus provident necessitatibus et facere enim minus reiciendis similique numquam aliquam sequi, animi repudiandae tempore aliquid molestiae illo eveniet dolorem nostrum temporibus. Assumenda, aliquam. </p>
+           <p>  C'est ici que vous retrouverez les lus grandes villes du monde et leur caractéristiques. Des articles, anectodes et carousel d'images vous sont proposés.  </p>
         </div>
 
 
